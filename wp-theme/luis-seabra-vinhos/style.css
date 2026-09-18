@@ -1,0 +1,42 @@
+/*
+Theme Name: Luís Seabra Vinhos
+Theme URI: https://sotomura777.github.io/luis-seabra-vinhos/
+Author: Pedro Ferreira
+Description: Tema clássico à medida para Luís Seabra Vinhos — hero em vídeo com scroll, carrosséis 3D de garrafas por região, PT/EN via Polylang. Design portado do site estático original.
+Version: 1.0.0
+Requires at least: 6.4
+Requires PHP: 8.0
+Text Domain: luisseabra
+*/
+
+html { scroll-behavior: smooth; background: #000; }
+body { margin: 0; background: #FFFFFF; color: #000000; font-family: 'Jost', system-ui, sans-serif; font-weight: 300; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+a:hover { color: #6E6E6E; }
+p { text-wrap: pretty; }
+input { font-family: inherit; }
+img { max-width: 100%; }
+::selection { background: #000; color: #fff; }
+@keyframes lsvCue { 0%, 100% { transform: translateY(0); opacity: .3 } 50% { transform: translateY(7px); opacity: .9 } }
+
+/* --- estados de hover (o motor DC original fazia isto via style-hover) --- */
+.lsv-cta { transition: background .2s, color .2s, border-color .2s; }
+.lsv-cta:hover { background: #FFFFFF; color: #000000; border-color: #FFFFFF; }
+.lsv-cta-invert:hover { background: none; color: #FFFFFF; }
+.lsv-cta-outline { transition: border-color .2s, color .2s; }
+.lsv-cta-outline:hover { border-color: #FFFFFF; color: #FFFFFF; }
+.lsv-btn-ghost { transition: background .2s, color .2s, border-color .2s; }
+.lsv-btn-ghost:hover { background: #000000; color: #FFFFFF; border-color: #000000; }
+.lsv-sub-btn { transition: background .2s, color .2s, border-color .2s; }
+.lsv-sub-btn:hover { background: #FFFFFF; color: #000000; border-color: #FFFFFF; }
+
+/* mensagem de estado do formulário de reservas */
+.lsv-form-msg { font-size: 13px; letter-spacing: .04em; margin: 4px 0 0; }
+.lsv-form-msg.ok { color: #2E7D32; }
+.lsv-form-msg.err { color: #C62828; }
+
+/* barra de admin (só afeta o dono logado): empurra o hero sticky para baixo dela */
+.admin-bar .lsv-hero-sticky { top: 32px; height: calc(100svh - 32px); }
+@media (max-width: 782px) {
+  .admin-bar .lsv-hero-sticky { top: 46px; height: calc(100svh - 46px); }
+}
