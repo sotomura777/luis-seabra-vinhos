@@ -157,7 +157,7 @@
 
       <article data-wine="douro" style="display:flex; flex-direction:column; gap:16px">
         <div style="position:relative; aspect-ratio:3/4; background:#000000">
-          <image-slot id="lsv-w1" shape="rect" src="assets/bottle.png" placeholder="Xisto Cru Tinto"></image-slot>
+          <image-slot id="lsv-w1" shape="rect" fit="contain" src="assets/bottle.png" placeholder="Xisto Cru Tinto"></image-slot>
         </div>
         <div style="display:flex; flex-direction:column; gap:8px">
           <h3 style="margin:0; font-size:19px; font-weight:400; letter-spacing:.06em; text-transform:uppercase">Xisto Cru Tinto</h3>
@@ -604,7 +604,7 @@ class Component extends DCLogic {
       const now = performance.now();
       const dt = Math.min(0.25, (now - (this.lastRaf || now)) / 1000);
       this.lastRaf = now;
-      this.p += (this.target - this.p) * (1 - Math.exp(-dt * 9));
+      this.p += (this.target - this.p) * (1 - Math.exp(-dt * 6));
       apply(this.p);
       requestAnimationFrame(tick);
     };
