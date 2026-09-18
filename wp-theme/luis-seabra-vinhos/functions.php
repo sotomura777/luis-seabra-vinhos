@@ -37,10 +37,8 @@ require LSV_DIR . '/inc/enqueue.php';
 require LSV_DIR . '/inc/polylang.php';
 require LSV_DIR . '/inc/reservas.php';
 
-// Seeder: só existe/corre via WP-CLI. Apagar o ficheiro depois de semear.
-if ( defined( 'WP_CLI' ) && WP_CLI && file_exists( LSV_DIR . '/inc/seed-vinhos.php' ) ) {
-	require LSV_DIR . '/inc/seed-vinhos.php';
-}
+// Nota: o seeder (inc/seed-vinhos.php) NÃO é carregado aqui de propósito.
+// Corre-se uma única vez, à mão: wp eval-file .../inc/seed-vinhos.php
 
 /**
  * Helpers de i18n com fallback quando o Polylang não está ativo,

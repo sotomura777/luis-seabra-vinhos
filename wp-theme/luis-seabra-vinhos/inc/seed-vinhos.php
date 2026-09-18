@@ -107,7 +107,10 @@ foreach ( $vinhos as $w ) {
 		continue;
 	}
 
-	wp_set_object_terms( $post_id, $regiao_slug, 'regiao' );
+	$rterm = get_term_by( 'slug', $regiao_slug, 'regiao' );
+	if ( $rterm ) {
+		wp_set_object_terms( $post_id, array( (int) $rterm->term_id ), 'regiao' );
+	}
 	update_field( 'vinho_tipo', $tipo, $post_id );
 	update_field( 'vinho_ano', $ano, $post_id );
 	update_field( 'vinho_preco', $preco, $post_id );
@@ -159,7 +162,10 @@ foreach ( $vinhas as $v ) {
 	if ( is_wp_error( $vid ) || ! $vid ) {
 		continue;
 	}
-	wp_set_object_terms( $vid, $regiao_slug, 'regiao' );
+	$vterm = get_term_by( 'slug', $regiao_slug, 'regiao' );
+	if ( $vterm ) {
+		wp_set_object_terms( $vid, array( (int) $vterm->term_id ), 'regiao' );
+	}
 	update_field( 'vinha_subtitulo', $subtitulo, $vid );
 	if ( function_exists( 'pll_set_post_language' ) ) {
 		pll_set_post_language( $vid, 'pt' );
