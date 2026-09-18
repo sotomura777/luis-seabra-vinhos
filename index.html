@@ -512,18 +512,16 @@ class Component extends DCLogic {
     const band = (p, s, e, f) => clamp(Math.min((p - s) / f, (e - p) / f), 0, 1);
     const smooth = t => t * t * (3 - 2 * t);
 
-    // Drive playback rather than seek every frame: sequential decode is smooth,
-    // seeking is not. Seek only for big jumps or when scrolling backwards.
+    // Os vídeos são all-intra (keyframe em cada fotograma): saltar para qualquer
+    // instante é instantâneo, por isso fazemos scrubbing 1:1 — a posição do vídeo
+    // segue directamente a posição (suavizada) do scroll. Nada de "tocar" a acelerar.
     const drive = (v, T, active) => {
       if (!active) { if (!v.paused) v.pause(); return; }
-      if (v.readyState < 2 || v.seeking) return;
-      const d = T - v.currentTime;
-      // seek only for genuinely big jumps or backwards; sequential decode is what looks smooth
-      if (d > 1.5 || d < -0.12) { if (!v.paused) v.pause(); v.currentTime = clamp(T, 0, dur(v)); return; }
-      if (d > 0.02) {
-        v.playbackRate = clamp(d * 8, 0.5, 12);
-        if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-      } else if (!v.paused) v.pause();
+      if (v.readyState < 1) return;
+      if (!v.paused) v.pause();
+      if (v.seeking) return;                       // deixa o salto em curso terminar
+      const t = clamp(T, 0, dur(v));
+      if (Math.abs(t - v.currentTime) > 0.008) v.currentTime = t;
     };
 
     const HAND = 0.48;
