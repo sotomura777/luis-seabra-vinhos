@@ -512,34 +512,30 @@ class Component extends DCLogic {
     const band = (p, s, e, f) => clamp(Math.min((p - s) / f, (e - p) / f), 0, 1);
     const smooth = t => t * t * (3 - 2 * t);
 
-    // Os vídeos são all-intra (keyframe em cada fotograma): saltar para qualquer
-    // instante é instantâneo, por isso fazemos scrubbing 1:1 — a posição do vídeo
-    // segue directamente a posição (suavizada) do scroll. Nada de "tocar" a acelerar.
-    const drive = (v, T, active) => {
-      if (!active) { if (!v.paused) v.pause(); return; }
-      if (v.readyState < 1) return;
-      if (!v.paused) v.pause();
-      if (v.seeking) return;                       // deixa o salto em curso terminar
+    // Vídeos all-intra (keyframe em cada fotograma): saltar para qualquer instante é
+    // instantâneo. Salta o vídeo para o instante exacto — sem "tocar" a acelerar.
+    const seekTo = (v, T) => {
+      if (v.readyState < 1 || v.seeking) return;   // se estiver a saltar, o frame seguinte corrige
       const t = clamp(T, 0, dur(v));
-      if (Math.abs(t - v.currentTime) > 0.008) v.currentTime = t;
+      if (Math.abs(t - v.currentTime) > 0.01) v.currentTime = t;
     };
 
     const HAND = 0.48;
+    // Sem estados presos: cada frame determina tudo a partir de p. A troca A→B é só
+    // uma questão de qual está visível; o A fica estacionado no último frame por baixo,
+    // por isso nunca fica preso mesmo em scroll rápido.
     const apply = (p) => {
-      const aEnd = dur(a) - 0.12;
+      const onB = p >= HAND;
       const pa = clamp(p / HAND, 0, 1);
       const pb = clamp((p - HAND) / (1 - HAND), 0, 1);
-      // park A on its last frame just before the swap — B's first frame is the same shot,
-      // so the cut only disappears if A actually got there
-      if (p > HAND - 0.03 && a.readyState >= 1 && !a.seeking && a.currentTime < aEnd) {
-        if (!a.paused) a.pause();
-        a.currentTime = dur(a) - 0.05;
+      if (!a.paused) a.pause();
+      if (!b.paused) b.pause();
+      if (onB) {
+        seekTo(b, pb * (dur(b) - 0.02));
+        seekTo(a, dur(a) - 0.02);                  // A no último frame, escondido sob o B
+      } else {
+        seekTo(a, pa * (dur(a) - 0.02));
       }
-      if (p >= HAND && a.currentTime >= aEnd) this.cutDone = true;
-      if (p < HAND - 0.03) this.cutDone = false;
-      const onB = !!this.cutDone;
-      drive(a, pa * (dur(a) - 0.05), !onB && p < HAND - 0.03);
-      drive(b, pb * (dur(b) - 0.05), onB);
       a.style.opacity = onB ? '0' : '1';
       b.style.opacity = onB ? '1' : '0';
       if (prog) prog.style.width = (p * 100).toFixed(2) + '%';
@@ -559,24 +555,30 @@ class Component extends DCLogic {
       }
     };
 
-    this.p = 0; this.target = 0; this.lastRaf = 0;
-    this.onScroll = () => {
+    // Um único passo: suaviza p -> target e desenha. É chamado tanto pelos eventos de
+    // scroll (que disparam mesmo durante a inércia do trackpad, quando o Safari
+    // estrangula o requestAnimationFrame) como pelo loop rAF (para assentar no fim).
+    // Assim o vídeo segue o scroll por inércia em vez de encravar.
+    this.p = 0; this.target = 0; this.lastT = 0;
+    const step = (nowT) => {
+      const dt = this.lastT ? Math.min(0.05, (nowT - this.lastT) / 1000) : 0.016;
+      this.lastT = nowT;
+      this.p += (this.target - this.p) * (1 - Math.exp(-dt * 12));
+      if (Math.abs(this.target - this.p) < 0.0004) this.p = this.target;
+      apply(this.p);
+    };
+    const readTarget = () => {
       const r = pin.getBoundingClientRect();
       const span = pin.offsetHeight - window.innerHeight;
       this.target = clamp(-r.top / (span > 0 ? span : 1), 0, 1);
-      if (performance.now() - this.lastRaf > 260) { this.p = this.target; apply(this.p); }
     };
+    this.onScroll = () => { readTarget(); step(performance.now()); };
     window.addEventListener('scroll', this.onScroll, { passive: true });
-    this.onScroll();
-    apply(this.target);
+    readTarget(); this.p = this.target; apply(this.p);
 
     const tick = () => {
       if (this.stopped) return;
-      const now = performance.now();
-      const dt = Math.min(0.25, (now - (this.lastRaf || now)) / 1000);
-      this.lastRaf = now;
-      this.p += (this.target - this.p) * (1 - Math.exp(-dt * 6));
-      apply(this.p);
+      step(performance.now());
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
