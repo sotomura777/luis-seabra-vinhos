@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Luís Seabra Vinhos</title>
+<meta name="description" content="Luís Seabra Vinhos — Douro, Dão e Vinho Verde. Vinhos de xisto e granito, desde 2013.">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="Luís Seabra Vinhos">
+<meta property="og:description" content="Douro, Dão e Vinho Verde. Vinhos de xisto e granito, desde 2013.">
+<meta property="og:type" content="website">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin" />
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+<style>
+  html { scroll-behavior: smooth; background: #000; }
+  body { margin: 0; background: #FFFFFF; color: #000000; font-family: 'Jost', system-ui, sans-serif; font-weight: 300; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: #6E6E6E; }
+  p { text-wrap: pretty; }
+  input { font-family: inherit; }
+  ::selection { background: #000; color: #fff; }
+  @keyframes lsvCue { 0%, 100% { transform: translateY(0); opacity: .3 } 50% { transform: translateY(7px); opacity: .9 } }
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div style="background:#FFFFFF">
+
+<header id="lsv-head" style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:20px clamp(18px,4vw,56px); color:#FFFFFF; transition:color .35s ease, background-color .35s ease">
+  <a href="#top" style="display:flex; align-items:center; gap:11px; color:inherit">
+    <span style="font-size:clamp(12px,1.4vw,14px); letter-spacing:.3em; text-transform:uppercase; font-weight:400">Luís Seabra</span>
+    <span style="font-size:clamp(12px,1.4vw,14px); letter-spacing:.3em; text-transform:uppercase; font-weight:200; opacity:.6">Vinhos</span>
+  </a>
+  <nav style="display:flex; align-items:center; gap:clamp(14px,2vw,26px); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:inherit">
+    <span style="display:flex; align-items:center; gap:7px">
+      <button type="button" onClick="{{ langPt }}" id="lsv-lang-pt" style="background:none; border:none; padding:0; cursor:pointer; color:inherit; font:inherit; letter-spacing:.2em; opacity:1">PT</button>
+      <span style="opacity:.35">/</span>
+      <button type="button" onClick="{{ langEn }}" id="lsv-lang-en" style="background:none; border:none; padding:0; cursor:pointer; color:inherit; font:inherit; letter-spacing:.2em; opacity:.45">EN</button>
+    </span>
+    <a href="#gama" data-i18n="navShop" style="color:inherit; border-bottom:1px solid currentColor; padding-bottom:2px">Loja</a>
+    <button type="button" onClick="{{ openMenu }}" data-i18n="navMenu" style="background:none; border:none; color:inherit; font:inherit; letter-spacing:.2em; text-transform:uppercase; padding:0; cursor:pointer">Menu</button>
+  </nav>
+</header>
+
+<div id="lsv-menu" style="display:none; position:fixed; inset:0; z-index:60; background:#000000; color:#FFFFFF; padding:clamp(22px,5vw,56px); overflow-y:auto; flex-direction:column; gap:clamp(28px,5vh,64px)">
+  <div style="display:flex; align-items:center; justify-content:space-between">
+    <span style="font-size:13px; letter-spacing:.3em; text-transform:uppercase">Luís Seabra Vinhos</span>
+    <button type="button" onClick="{{ closeMenu }}" data-i18n="close" style="background:none; border:none; color:inherit; font:inherit; font-size:11px; letter-spacing:.24em; text-transform:uppercase; cursor:pointer; opacity:.6">Fechar</button>
+  </div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:clamp(24px,3vw,44px); font-size:15px">
+    <div style="display:flex; flex-direction:column; gap:12px">
+      <span data-i18n="mVinho" style="font-size:10px; letter-spacing:.28em; text-transform:uppercase; opacity:.45">Vinho</span>
+      <a href="#gama">Dão</a><a href="#gama">Douro</a><a href="#gama">Vinho Verde</a>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px">
+      <span data-i18n="mVindimas" style="font-size:10px; letter-spacing:.28em; text-transform:uppercase; opacity:.45">Vindimas</span>
+      <a href="#regioes">Dão</a><a href="#regioes">Douro</a><a href="#regioes">Vinho Verde</a>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px">
+      <span data-i18n="mRegioes" style="font-size:10px; letter-spacing:.28em; text-transform:uppercase; opacity:.45">Regiões</span>
+      <a href="#regioes">Dão</a><a href="#regioes">Douro</a><a href="#regioes">Vinho Verde</a>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px">
+      <span data-i18n="mMais" style="font-size:10px; letter-spacing:.28em; text-transform:uppercase; opacity:.45">Mais</span>
+      <a href="#vinhas" data-i18n="mVinhas">Vinhas</a>
+      <a href="#sobre" data-i18n="mSobre">Sobre Nós</a>
+      <a href="#contactos" data-i18n="mVisitas">Visitas</a>
+      <a href="#noticias" data-i18n="mNoticias">Notícias</a>
+      <a href="#contactos" data-i18n="mContactos">Contactos / Mailing List</a>
+    </div>
+  </div>
+  <div style="margin-top:auto; display:flex; gap:22px; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; opacity:.6">
+    <a href="https://www.instagram.com/lseabrawine" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.facebook.com/luis.seabra.vinhos" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://x.com/lseabrawine" target="_blank" rel="noopener">X</a>
+  </div>
+</div>
+
+<section id="top" data-screen-label="Hero vídeo" style="position:relative; height:560vh; background:#000000">
+  <div style="position:sticky; top:0; height:100svh; overflow:hidden; background:#000000">
+    <video id="lsv-vid-a" src="uploads/video-6.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:1"></video>
+    <video id="lsv-vid-b" src="uploads/video-5.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0"></video>
+
+    <div id="lsv-name" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(14px,2.6vh,26px); text-align:center; color:#FFFFFF; padding:0 clamp(20px,5vw,60px); pointer-events:none">
+      <span style="font-size:clamp(26px,6.4vw,74px); letter-spacing:.24em; text-transform:uppercase; font-weight:300; line-height:1.15; padding-left:.24em">Luís Seabra</span>
+      <span style="font-size:clamp(12px,2.1vw,24px); letter-spacing:.66em; text-transform:uppercase; font-weight:200; opacity:.75; padding-left:.66em">Vinhos</span>
+      <span data-i18n="heroEyebrow" style="margin-top:clamp(10px,2vh,22px); font-size:clamp(10px,1.15vw,12px); letter-spacing:.34em; text-transform:uppercase; opacity:.9">Douro · Dão · Vinho Verde — desde 2013</span>
+      <span style="display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:clamp(16px,4vh,44px); animation:lsvCue 2.4s ease-in-out infinite">
+        <span data-i18n="scrollCue" style="font-size:9.5px; letter-spacing:.32em; text-transform:uppercase">Desça</span>
+        <span style="width:1px; height:40px; background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(255,255,255,0))"></span>
+      </span>
+    </div>
+
+    <div style="position:absolute; inset:0; pointer-events:none; background:linear-gradient(0deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,0) 38%)"></div>
+    <div style="position:absolute; inset:auto 0 0 0; display:flex; padding:0 clamp(20px,6vw,90px) clamp(46px,9vh,96px)">
+      <div style="position:relative; width:100%; min-height:clamp(140px,24vh,220px)">
+        <div id="lsv-cap-1" style="position:absolute; inset:auto auto 0 0; max-width:min(520px,88vw); color:#FFFFFF; opacity:0">
+          <span style="font-size:10px; letter-spacing:.3em; text-transform:uppercase; opacity:.55">Xisto Cru 2023 · Douro</span>
+          <p data-i18n="cap1" style="margin:14px 0 0; font-size:clamp(22px,3.1vw,38px); line-height:1.24; font-weight:200; letter-spacing:.005em">Uma vinha de 80 anos, plantada em xisto micáceo a 600 metros.</p>
+        </div>
+        <div id="lsv-cap-2" style="position:absolute; inset:auto auto 0 0; max-width:min(520px,88vw); color:#FFFFFF; opacity:0">
+          <span data-i18n="cap2Eyebrow" style="font-size:10px; letter-spacing:.3em; text-transform:uppercase; opacity:.55">Adega</span>
+          <p data-i18n="cap2" style="margin:14px 0 0; font-size:clamp(22px,3.1vw,38px); line-height:1.24; font-weight:200; letter-spacing:.005em">Fermentação espontânea, cachos inteiros, extração mínima.</p>
+        </div>
+        <div id="lsv-cap-3" style="position:absolute; inset:auto auto 0 0; max-width:min(520px,88vw); color:#FFFFFF; opacity:0">
+          <span data-i18n="cap3Eyebrow" style="font-size:10px; letter-spacing:.3em; text-transform:uppercase; opacity:.55">No copo</span>
+          <p data-i18n="cap3" style="margin:14px 0 18px; font-size:clamp(22px,3.1vw,38px); line-height:1.24; font-weight:200; letter-spacing:.005em">Framboesa, cereja ácida, pedra molhada. 12% de álcool.</p>
+          <a href="#gama" style="display:inline-flex; align-items:center; gap:14px; border:1px solid rgba(255,255,255,.5); padding:13px 22px; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#FFFFFF" style-hover="background:#FFFFFF; color:#000000; border-color:#FFFFFF">
+            <span data-i18n="cta">Comprar Xisto Cru</span>
+            <span data-price="1" style="opacity:.6">45 €</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute; bottom:0; left:0; right:0; height:1px; background:rgba(255,255,255,.18)">
+      <div id="lsv-prog" style="height:100%; width:0%; background:#FFFFFF"></div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre" data-screen-label="Sobre" style="background:#FFFFFF; padding:clamp(74px,13vh,160px) clamp(22px,6vw,96px)">
+  <div style="max-width:1180px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:clamp(30px,5vw,80px); align-items:start">
+    <p data-i18n="aboutLead" style="margin:0; font-size:clamp(23px,2.9vw,38px); line-height:1.32; font-weight:200; letter-spacing:.005em">Depois de uma década a fazer vinho na Niepoort, Luís Seabra montou a sua própria adega em 2013 para provar que o Douro também dá vinhos frescos e elegantes.</p>
+    <div style="display:flex; flex-direction:column; gap:clamp(22px,3vh,34px)">
+      <p data-i18n="aboutBody" style="margin:0; font-size:16px; line-height:1.8; color:#4A4A4A">Trabalha vinhas velhas, pequenas e remotas, escolhidas pelo solo. Intervenção mínima da terra à garrafa: leveduras indígenas, fermentação em madeira, aço inox só quando é indispensável. A série Cru nasceu em 2013 e organiza-se por vinha, não por casta.</p>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; border-top:1px solid #E4E2DF; padding-top:24px">
+        <div><div style="font-size:clamp(24px,2.8vw,34px); font-weight:300; letter-spacing:.02em">2013</div><div data-i18n="stat1" style="font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:#6E6E6E; margin-top:9px">Primeira colheita</div></div>
+        <div><div style="font-size:clamp(24px,2.8vw,34px); font-weight:300; letter-spacing:.02em">8 ha</div><div data-i18n="stat2" style="font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:#6E6E6E; margin-top:9px">Vinha trabalhada</div></div>
+        <div><div style="font-size:clamp(24px,2.8vw,34px); font-weight:300; letter-spacing:.02em">3</div><div data-i18n="stat3" style="font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:#6E6E6E; margin-top:9px">Regiões</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gama" data-screen-label="Gama / Loja" style="background:#FFFFFF; padding:clamp(20px,4vh,40px) clamp(22px,6vw,96px) clamp(74px,13vh,160px)">
+  <div style="max-width:1400px; margin:0 auto">
+    <div style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:22px; margin-bottom:clamp(30px,5vh,56px); border-top:1px solid #E4E2DF; padding-top:clamp(24px,4vh,40px)">
+      <div>
+        <span data-i18n="shopEyebrow" style="font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:#6E6E6E">Loja</span>
+        <h2 data-i18n="shopTitle" style="margin:14px 0 0; font-size:clamp(30px,4.2vw,52px); line-height:1.05; font-weight:200; letter-spacing:.01em">A gama</h2>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px">
+        <button type="button" data-filter="all" onClick="{{ filterAll }}" data-i18n="fAll" style="background:#000000; color:#FFFFFF; border:1px solid #000000; font:inherit; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; padding:11px 16px; cursor:pointer">Todos</button>
+        <button type="button" data-filter="douro" onClick="{{ filterDouro }}" style="background:none; color:#6E6E6E; border:1px solid #D9D6D2; font:inherit; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; padding:11px 16px; cursor:pointer" style-hover="color:#000000; border-color:#000000">Douro</button>
+        <button type="button" data-filter="dao" onClick="{{ filterDao }}" style="background:none; color:#6E6E6E; border:1px solid #D9D6D2; font:inherit; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; padding:11px 16px; cursor:pointer" style-hover="color:#000000; border-color:#000000">Dão</button>
+        <button type="button" data-filter="vv" onClick="{{ filterVv }}" style="background:none; color:#6E6E6E; border:1px solid #D9D6D2; font:inherit; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; padding:11px 16px; cursor:pointer" style-hover="color:#000000; border-color:#000000">Vinho Verde</button>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:clamp(18px,2.4vw,40px)">
+
+      <article data-wine="douro" style="display:flex; flex-direction:column; gap:16px">
+        <div style="position:relative; aspect-ratio:3/4; background:#000000">
+          <image-slot id="lsv-w1" shape="rect" src="assets/bottle.png" placeholder="Xisto Cru Tinto"></image-slot>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <h3 style="margin:0; font-size:19px; font-weight:400; letter-spacing:.06em; text-transform:uppercase">Xisto Cru Tinto</h3>
+          <span style="font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:#6E6E6E">Douro · 2023</span>
+          <p style="margin:4px 0 0; font-size:14px; line-height:1.7; color:#4A4A4A">Field blend de uma vinha de 80 anos. Rufete, Touriga Franca, Tinta Carvalha, Alicante Bouschet, Donzelinho.</p>
+        </div>
+        <div style="margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:16px; border-top:1px solid #E4E2DF">
+          <span data-price="1" style="font-size:15px">45 €</span>
+          <button type="button" onClick="{{ addToCart }}" data-i18n="add" style="background:none; border:1px solid #D9D6D2; color:#000000; font:inherit; font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; padding:11px 15px; cursor:pointer" style-hover="background:#000000; color:#FFFFFF; border-color:#000000">Adicionar</button>
+        </div>
+      </article>
+
+      <article data-wine="douro" style="display:flex; flex-direction:column; gap:16px">
+        <div style="position:relative; aspect-ratio:3/4; background:#F5F4F2">
+          <image-slot id="lsv-w2" shape="rect" placeholder="Xisto Cru Branco"></image-slot>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <h3 style="margin:0; font-size:19px; font-weight:400; letter-spacing:.06em; text-transform:uppercase">Xisto Cru Branco</h3>
+          <span style="font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:#6E6E6E">Douro · 2023</span>
+          <p style="margin:4px 0 0; font-size:14px; line-height:1.7; color:#4A4A4A">Vinha única a 650–700 m, plantada entre 1920 e 1933. Rabigato com Códega, Gouveio e Viosinho.</p>
+        </div>
+        <div style="margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:16px; border-top:1px solid #E4E2DF">
+          <span data-price="1" style="font-size:15px">42 €</span>
+          <button type="button" onClick="{{ addToCart }}" data-i18n="add" style="background:none; border:1px solid #D9D6D2; color:#000000; font:inherit; font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; padding:11px 15px; cursor:pointer" style-hover="background:#000000; color:#FFFFFF; border-color:#000000">Adicionar</button>
+        </div>
+      </article>
+
+      <article data-wine="vv" style="display:flex; flex-direction:column; gap:16px">
+        <div style="position:relative; aspect-ratio:3/4; background:#F5F4F2">
+          <image-slot id="lsv-w3" shape="rect" placeholder="Granito Cru Alvarinho"></image-slot>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <h3 style="margin:0; font-size:19px; font-weight:400; letter-spacing:.06em; text-transform:uppercase">Granito Cru Alvarinho</h3>
+          <span style="font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:#6E6E6E">Vinho Verde · 2024</span>
+          <p style="margin:4px 0 0; font-size:14px; line-height:1.7; color:#4A4A4A">Alvarinho de Melgaço criado em foudre. Granito, tensão redutiva e um travo salgado no fim.</p>
+        </div>
+        <div style="margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:16px; border-top:1px solid #E4E2DF">
+          <span data-price="1" style="font-size:15px">30 €</span>
+          <button type="button" onClick="{{ addToCart }}" data-i18n="add" style="background:none; border:1px solid #D9D6D2; color:#000000; font:inherit; font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; padding:11px 15px; cursor:pointer" style-hover="background:#000000; color:#FFFFFF; border-color:#000000">Adicionar</button>
+        </div>
+      </article>
+
+      <article data-wine="dao" style="display:flex; flex-direction:column; gap:16px">
+        <div style="position:relative; aspect-ratio:3/4; background:#F5F4F2">
+          <image-slot id="lsv-w4" shape="rect" placeholder="Granito Cru Dão"></image-slot>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <h3 style="margin:0; font-size:19px; font-weight:400; letter-spacing:.06em; text-transform:uppercase">Granito Cru Branco</h3>
+          <span style="font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:#6E6E6E">Dão · 2024</span>
+          <p style="margin:4px 0 0; font-size:14px; line-height:1.7; color:#4A4A4A">Encruzado com Bical e Cercial, em granito no sopé da Serra da Estrela. Vinhas com mais de 35 anos.</p>
+        </div>
+        <div style="margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:16px; border-top:1px solid #E4E2DF">
+          <span data-price="1" style="font-size:15px">32 €</span>
+          <button type="button" onClick="{{ addToCart }}" data-i18n="add" style="background:none; border:1px solid #D9D6D2; color:#000000; font:inherit; font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; padding:11px 15px; cursor:pointer" style-hover="background:#000000; color:#FFFFFF; border-color:#000000">Adicionar</button>
+        </div>
+      </article>
+
+      <article data-wine="douro" style="display:flex; flex-direction:column; gap:16px">
+        <div style="position:relative; aspect-ratio:3/4; background:#F5F4F2">
+          <image-slot id="lsv-w5" shape="rect" placeholder="Xisto Ilimitado Tinto"></image-slot>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <h3 style="margin:0; font-size:19px; font-weight:400; letter-spacing:.06em; text-transform:uppercase">Xisto Ilimitado Tinto</h3>
+          <span style="font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:#6E6E6E">Douro · 2024</span>
+          <p style="margin:4px 0 0; font-size:14px; line-height:1.7; color:#4A4A4A">O vinho de aldeia da casa: vários lugares do Douro num só blend, cachos inteiros e pouca extração.</p>
+        </div>
+        <div style="margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:16px; border-top:1px solid #E4E2DF">
+          <span data-price="1" style="font-size:15px">24 €</span>
+          <button type="button" onClick="{{ addToCart }}" data-i18n="add" style="background:none; border:1px solid #D9D6D2; color:#000000; font:inherit; font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; padding:11px 15px; cursor:pointer" style-hover="background:#000000; color:#FFFFFF; border-color:#000000">Adicionar</button>
+        </div>
+      </article>
+
+      <article data-wine="douro" style="display:flex; flex-direction:column; gap:16px">
+        <div style="position:relative; aspect-ratio:3/4; background:#F5F4F2">
+          <image-slot id="lsv-w6" shape="rect" placeholder="Xisto Ilimitado Branco"></image-slot>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <h3 style="margin:0; font-size:19px; font-weight:400; letter-spacing:.06em; text-transform:uppercase">Xisto Ilimitado Branco</h3>
+          <span style="font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:#6E6E6E">Douro · 2024</span>
+          <p style="margin:4px 0 0; font-size:14px; line-height:1.7; color:#4A4A4A">Xisto, mica e feldspato a 400–500 m. Field blend de vinhas com 30 a 60 anos, sem malolática nem bâtonnage.</p>
+        </div>
+        <div style="margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:16px; border-top:1px solid #E4E2DF">
+          <span data-price="1" style="font-size:15px">22 €</span>
+          <button type="button" onClick="{{ addToCart }}" data-i18n="add" style="background:none; border:1px solid #D9D6D2; color:#000000; font:inherit; font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; padding:11px 15px; cursor:pointer" style-hover="background:#000000; color:#FFFFFF; border-color:#000000">Adicionar</button>
+        </div>
+      </article>
+
+      <article data-wine="douro" style="display:flex; flex-direction:column; gap:16px">
+        <div style="position:relative; aspect-ratio:3/4; background:#F5F4F2">
+          <image-slot id="lsv-w7" shape="rect" placeholder="Indie Xisto"></image-slot>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <h3 style="margin:0; font-size:19px; font-weight:400; letter-spacing:.06em; text-transform:uppercase">Indie Xisto</h3>
+          <span style="font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:#6E6E6E">Douro · 2023</span>
+          <p style="margin:4px 0 0; font-size:14px; line-height:1.7; color:#4A4A4A">Vinha única em Alijó. Tinta Roriz à cabeça, com Touriga Franca, Tinta Amarela, Rufete e Tinta Barroca.</p>
+        </div>
+        <div style="margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:16px; border-top:1px solid #E4E2DF">
+          <span data-price="1" style="font-size:15px">28 €</span>
+          <button type="button" onClick="{{ addToCart }}" data-i18n="add" style="background:none; border:1px solid #D9D6D2; color:#000000; font:inherit; font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; padding:11px 15px; cursor:pointer" style-hover="background:#000000; color:#FFFFFF; border-color:#000000">Adicionar</button>
+        </div>
+      </article>
+
+      <article data-wine="douro" style="display:flex; flex-direction:column; gap:16px; justify-content:center; background:#000000; color:#FFFFFF; padding:clamp(22px,2.6vw,34px)">
+        <span data-i18n="caseEyebrow" style="font-size:10px; letter-spacing:.28em; text-transform:uppercase; opacity:.55">Caixa de prova</span>
+        <h3 data-i18n="caseTitle" style="margin:0; font-size:clamp(22px,2.6vw,30px); line-height:1.2; font-weight:200; letter-spacing:.02em">Xisto e Granito</h3>
+        <p data-i18n="caseBody" style="margin:0; font-size:14px; line-height:1.7; color:#C9C6C1">Seis garrafas para atravessar as três regiões: dois Cru, dois Ilimitado, um Granito do Dão e o Alvarinho de Melgaço.</p>
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:16px; border-top:1px solid rgba(255,255,255,.22)">
+          <span data-price="1" style="font-size:15px">185 €</span>
+          <button type="button" onClick="{{ addToCart }}" data-i18n="add" style="background:#FFFFFF; border:1px solid #FFFFFF; color:#000000; font:inherit; font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; padding:11px 15px; cursor:pointer" style-hover="background:none; color:#FFFFFF">Adicionar</button>
+        </div>
+      </article>
+
+    </div>
+    <p data-i18n="shipping" style="margin:clamp(26px,4vh,44px) 0 0; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#6E6E6E">Envio para Portugal continental em 48 h · Europa em 5 dias úteis</p>
+  </div>
+</section>
+
+<section id="regioes" data-screen-label="Regiões" style="background:#FFFFFF; padding:clamp(74px,13vh,160px) clamp(22px,6vw,96px); border-top:1px solid #E4E2DF">
+  <div style="max-width:1400px; margin:0 auto; display:flex; flex-direction:column; gap:clamp(50px,9vh,120px)">
+    <div>
+      <span data-i18n="regionsEyebrow" style="font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:#6E6E6E">Regiões</span>
+      <h2 data-i18n="regionsTitle" style="margin:14px 0 0; font-size:clamp(30px,4.2vw,52px); line-height:1.05; font-weight:200; letter-spacing:.01em">Xisto e granito</h2>
+    </div>
+
+    <div id="vinhas" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(24px,4vw,64px); align-items:center">
+      <div style="position:relative; aspect-ratio:4/3; background:#F5F4F2">
+        <image-slot id="lsv-r1" shape="rect" placeholder="Vinha no Douro Superior"></image-slot>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px">
+        <span style="font-size:10px; letter-spacing:.28em; text-transform:uppercase; color:#6E6E6E">01 — Douro</span>
+        <h3 style="margin:0; font-size:clamp(24px,3.2vw,40px); line-height:1.16; font-weight:200; letter-spacing:.005em">Xisto micáceo, 400 a 700 metros</h3>
+        <p data-i18n="regDouro" style="margin:0; font-size:15.5px; line-height:1.8; color:#4A4A4A">As vinhas estão em Alvites e Meda, no Douro Superior: altitude, solos de xisto e cepas que nunca souberam o que é rega. É daqui que saem os Xisto Cru e os Ilimitado.</p>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(24px,4vw,64px); align-items:center">
+      <div style="display:flex; flex-direction:column; gap:16px; order:2">
+        <span style="font-size:10px; letter-spacing:.28em; text-transform:uppercase; color:#6E6E6E">02 — Dão</span>
+        <h3 style="margin:0; font-size:clamp(24px,3.2vw,40px); line-height:1.16; font-weight:200; letter-spacing:.005em">Granito à sombra da Serra da Estrela</h3>
+        <p data-i18n="regDao" style="margin:0; font-size:15.5px; line-height:1.8; color:#4A4A4A">Uma parcela em Vila Nova de Tazém, no sopé da serra mais alta de Portugal continental. Clima fresco, granito e brancos de linha tensa.</p>
+      </div>
+      <div style="position:relative; aspect-ratio:4/3; background:#F5F4F2; order:1">
+        <image-slot id="lsv-r2" shape="rect" placeholder="Vinha no Dão"></image-slot>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(24px,4vw,64px); align-items:center">
+      <div style="position:relative; aspect-ratio:4/3; background:#F5F4F2">
+        <image-slot id="lsv-r3" shape="rect" placeholder="Vinha em Melgaço"></image-slot>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px">
+        <span style="font-size:10px; letter-spacing:.28em; text-transform:uppercase; color:#6E6E6E">03 — Vinho Verde</span>
+        <h3 style="margin:0; font-size:clamp(24px,3.2vw,40px); line-height:1.16; font-weight:200; letter-spacing:.005em">Um só vinho, em Monção e Melgaço</h3>
+        <p data-i18n="regVv" style="margin:0; font-size:15.5px; line-height:1.8; color:#4A4A4A">Do Vinho Verde sai apenas o Granito Cru Alvarinho, dos mais procurados da casa. Granito, foudre e nenhuma pressa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="noticias" data-screen-label="Notícias e prémios" style="background:#FFFFFF; padding:clamp(74px,13vh,160px) clamp(22px,6vw,96px); border-top:1px solid #E4E2DF">
+  <div style="max-width:1400px; margin:0 auto">
+    <div style="margin-bottom:clamp(30px,5vh,52px)">
+      <span data-i18n="newsEyebrow" style="font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:#6E6E6E">Notícias</span>
+      <h2 data-i18n="newsTitle" style="margin:14px 0 0; font-size:clamp(30px,4.2vw,52px); line-height:1.05; font-weight:200; letter-spacing:.01em">Prémios e imprensa</h2>
+    </div>
+    <div style="display:flex; flex-direction:column">
+      <a href="#gama" style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px; align-items:center; padding:clamp(20px,3vh,28px) 0; border-top:1px solid #E4E2DF">
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <span style="font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:#6E6E6E">James Suckling · Wine Advocate</span>
+          <span style="font-size:clamp(18px,2.1vw,26px); font-weight:300; letter-spacing:.02em">Xisto Cru Branco 2023</span>
+        </div>
+        <span style="font-size:clamp(20px,2.4vw,30px); font-weight:300">97 · 94</span>
+      </a>
+      <a href="#gama" style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px; align-items:center; padding:clamp(20px,3vh,28px) 0; border-top:1px solid #E4E2DF">
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <span style="font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:#6E6E6E">Wineanorak</span>
+          <span style="font-size:clamp(18px,2.1vw,26px); font-weight:300; letter-spacing:.02em">Granito Cru Alvarinho 2024</span>
+        </div>
+        <span style="font-size:clamp(20px,2.4vw,30px); font-weight:300">95</span>
+      </a>
+      <a href="#gama" style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px; align-items:center; padding:clamp(20px,3vh,28px) 0; border-top:1px solid #E4E2DF">
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <span style="font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:#6E6E6E">Wineanorak</span>
+          <span style="font-size:clamp(18px,2.1vw,26px); font-weight:300; letter-spacing:.02em">Xisto Cru Tinto 2023</span>
+        </div>
+        <span style="font-size:clamp(20px,2.4vw,30px); font-weight:300">95</span>
+      </a>
+      <a href="#contactos" style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px; align-items:center; padding:clamp(20px,3vh,28px) 0; border-top:1px solid #E4E2DF; border-bottom:1px solid #E4E2DF">
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <span style="font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:#6E6E6E">Porto · Fevereiro 2026</span>
+          <span data-i18n="news4" style="font-size:clamp(18px,2.1vw,26px); font-weight:300; letter-spacing:.02em">Simplesmente Vinhos, com Frederico Ferreira</span>
+        </div>
+        <span style="font-size:10px; letter-spacing:.24em; color:#6E6E6E">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="contactos" data-screen-label="Contactos" style="background:#000000; color:#FFFFFF; padding:clamp(74px,13vh,160px) clamp(22px,6vw,96px)">
+  <div style="max-width:1400px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:clamp(36px,5vw,90px)">
+    <div style="display:flex; flex-direction:column; gap:20px">
+      <span data-i18n="contactEyebrow" style="font-size:10px; letter-spacing:.3em; text-transform:uppercase; opacity:.55">Contactos</span>
+      <h2 data-i18n="contactTitle" style="margin:0; font-size:clamp(28px,3.8vw,46px); line-height:1.14; font-weight:200; letter-spacing:.005em">Provas e visitas, por marcação</h2>
+      <p data-i18n="contactBody" style="margin:0; max-width:46ch; font-size:16px; line-height:1.8; color:#C9C6C1">Recebemos na adega para provar a gama completa, incluindo garrafas que não saem daqui. Escreva-nos com a data e o número de pessoas.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:6px">
+        <a href="#contactos" data-i18n="ctaVisit" style="border:1px solid #FFFFFF; background:#FFFFFF; color:#000000; padding:14px 22px; font-size:11px; letter-spacing:.24em; text-transform:uppercase" style-hover="background:none; color:#FFFFFF">Marcar visita</a>
+        <a href="#gama" data-i18n="ctaImport" style="border:1px solid rgba(255,255,255,.4); padding:14px 22px; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#FFFFFF" style-hover="border-color:#FFFFFF">Importadores</a>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <span data-i18n="mailEyebrow" style="font-size:10px; letter-spacing:.3em; text-transform:uppercase; opacity:.55">Mailing list</span>
+      <p data-i18n="mailBody" style="margin:0; font-size:clamp(19px,2.2vw,26px); line-height:1.35; font-weight:200">Avisamos quando abre cada colheita. Duas ou três vezes por ano, nada mais.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:6px">
+        <input id="lsv-mail" type="email" placeholder="o.seu@email.pt" style="flex:1 1 200px; min-width:0; background:none; border:none; border-bottom:1px solid rgba(255,255,255,.4); color:#FFFFFF; font-size:15px; padding:12px 2px; outline:none" />
+        <button type="button" id="lsv-sub" onClick="{{ subscribe }}" data-i18n="subscribe" style="background:none; border:1px solid rgba(255,255,255,.4); color:#FFFFFF; font:inherit; font-size:11px; letter-spacing:.24em; text-transform:uppercase; padding:13px 20px; cursor:pointer" style-hover="background:#FFFFFF; color:#000000; border-color:#FFFFFF">Subscrever</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#000000; color:#FFFFFF; padding:clamp(36px,6vh,60px) clamp(22px,6vw,96px); border-top:1px solid rgba(255,255,255,.18); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:22px">
+  <span style="font-size:12px; letter-spacing:.3em; text-transform:uppercase">Luís Seabra Vinhos</span>
+  <div style="display:flex; flex-wrap:wrap; gap:22px; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:#C9C6C1">
+    <a href="https://www.instagram.com/lseabrawine" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.facebook.com/luis.seabra.vinhos" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://x.com/lseabrawine" target="_blank" rel="noopener">X</a>
+    <span data-i18n="moderation">Beba com moderação</span>
+    <span>© 2026</span>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pt&quot;,&quot;en&quot;],&quot;default&quot;:&quot;pt&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Conteúdo&quot;},&quot;scrollDepth&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:300,&quot;max&quot;:900,&quot;step&quot;:20,&quot;default&quot;:560,&quot;unit&quot;:&quot;vh&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;videoFit&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;contain&quot;,&quot;cover&quot;],&quot;default&quot;:&quot;contain&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;showPrices&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Loja&quot;}}">
+const EN = {
+  navShop: 'Shop', navMenu: 'Menu', close: 'Close',
+  mVinho: 'Wine', mVindimas: 'Harvests', mRegioes: 'Regions', mMais: 'More',
+  mVinhas: 'Vineyards', mSobre: 'About Us', mVisitas: 'Visits', mNoticias: 'News', mContactos: 'Contact / Mailing List',
+  heroEyebrow: 'Douro · Dão · Vinho Verde — since 2013', scrollCue: 'Scroll',
+  cap1: 'An 80-year-old vineyard, planted on mica schist at 600 metres.',
+  cap2Eyebrow: 'Cellar', cap2: 'Spontaneous fermentation, whole bunches, minimal extraction.',
+  cap3Eyebrow: 'In the glass', cap3: 'Raspberry, sour cherry, wet stone. 12% alcohol.',
+  cta: 'Buy Xisto Cru',
+  aboutLead: 'After a decade making wine at Niepoort, Luís Seabra set up his own cellar in 2013 to prove the Douro can also give fresh, elegant wines.',
+  aboutBody: 'He works old vineyards — small, remote, chosen for their soil. Minimal intervention from the ground to the bottle: indigenous yeasts, fermentation in wood, stainless steel only when unavoidable. The Cru series began in 2013 and is organised by vineyard, not by grape.',
+  stat1: 'First harvest', stat2: 'Vines farmed', stat3: 'Regions',
+  shopEyebrow: 'Shop', shopTitle: 'The range', fAll: 'All', add: 'Add',
+  caseEyebrow: 'Tasting case', caseTitle: 'Schist & Granite',
+  caseBody: 'Six bottles to cross all three regions: two Cru, two Ilimitado, a Granito from Dão and the Alvarinho from Melgaço.',
+  shipping: 'Mainland Portugal in 48 h · Europe in 5 working days',
+  regionsEyebrow: 'Regions', regionsTitle: 'Schist and granite',
+  regDouro: 'The vineyards sit in Alvites and Meda, in the Douro Superior: altitude, schist soils and vines that have never known irrigation. This is where the Xisto Cru and Ilimitado wines come from.',
+  regDao: 'A single parcel in Vila Nova de Tazém, at the foot of mainland Portugal\u2019s highest range. Cool climate, granite, and whites with a taut line.',
+  regVv: 'Vinho Verde gives just one wine, the Granito Cru Alvarinho — among the most sought-after of the house. Granite, foudre, and no hurry.',
+  newsEyebrow: 'News', newsTitle: 'Awards & press',
+  news4: 'Simplesmente Vinhos, with Frederico Ferreira',
+  contactEyebrow: 'Contact', contactTitle: 'Tastings and visits, by appointment',
+  contactBody: 'We welcome you at the cellar to taste the full range, including bottles that never leave it. Write to us with a date and how many are coming.',
+  ctaVisit: 'Book a visit', ctaImport: 'Importers',
+  mailEyebrow: 'Mailing list',
+  mailBody: 'We let you know when each vintage opens. Two or three times a year, no more.',
+  subscribe: 'Subscribe', moderation: 'Please drink responsibly'
+};
+
+class Component extends DCLogic {
+  state = { lang: null };
+
+  lang() { return this.state.lang || this.props.lang || 'pt'; }
+
+  renderVals() {
+    return {
+      langPt: () => this.setState({ lang: 'pt' }),
+      langEn: () => this.setState({ lang: 'en' }),
+      openMenu: () => { this.menuOpen = true; this.syncMenu(); },
+      closeMenu: () => { this.menuOpen = false; this.syncMenu(); },
+      filterAll: () => this.filter('all'),
+      filterDouro: () => this.filter('douro'),
+      filterDao: () => this.filter('dao'),
+      filterVv: () => this.filter('vv'),
+      addToCart: (e) => {
+        const b = e.currentTarget, was = b.textContent;
+        b.textContent = this.lang() === 'en' ? 'Added' : 'No cesto';
+        setTimeout(() => { b.textContent = was; }, 1500);
+      },
+      subscribe: () => {
+        const b = document.getElementById('lsv-sub'), i = document.getElementById('lsv-mail');
+        if (!b) return;
+        b.textContent = this.lang() === 'en' ? 'Thank you' : 'Obrigado';
+        if (i) i.value = '';
+      }
+    };
+  }
+
+  syncMenu() {
+    const m = document.getElementById('lsv-menu');
+    if (m) m.style.display = this.menuOpen ? 'flex' : 'none';
+  }
+
+  filter(key) {
+    this.activeFilter = key;
+    document.querySelectorAll('[data-filter]').forEach(b => {
+      const on = b.getAttribute('data-filter') === key;
+      b.style.background = on ? '#000000' : 'none';
+      b.style.color = on ? '#FFFFFF' : '#6E6E6E';
+      b.style.borderColor = on ? '#000000' : '#D9D6D2';
+    });
+    document.querySelectorAll('[data-wine]').forEach(c => {
+      c.style.display = (key === 'all' || c.getAttribute('data-wine') === key) ? 'flex' : 'none';
+    });
+  }
+
+  applyLang() {
+    const en = this.lang() === 'en';
+    if (!this.ptCache) this.ptCache = {};
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (!(k in this.ptCache)) this.ptCache[k] = el.textContent;
+      const v = en ? EN[k] : this.ptCache[k];
+      if (v) el.textContent = v;
+    });
+    const pt = document.getElementById('lsv-lang-pt'), e2 = document.getElementById('lsv-lang-en');
+    if (pt) pt.style.opacity = en ? '.45' : '1';
+    if (e2) e2.style.opacity = en ? '1' : '.45';
+    document.documentElement.lang = en ? 'en' : 'pt';
+  }
+
+  applyProps() {
+    const pin = document.getElementById('top');
+    if (pin) pin.style.height = (this.props.scrollDepth || 560) + 'vh';
+    const show = this.props.showPrices !== false;
+    document.querySelectorAll('[data-price]').forEach(el => { el.style.display = show ? '' : 'none'; });
+    const fit = this.props.videoFit || 'contain';
+    ['lsv-vid-a', 'lsv-vid-b'].forEach(id => {
+      const v = document.getElementById(id);
+      if (v) v.style.objectFit = fit;
+    });
+  }
+
+  componentDidMount() {
+    this.menuOpen = false;
+    this.applyLang();
+    this.applyProps();
+    this.setupScrub();
+    this.onKey = (ev) => { if (ev.key === 'Escape') { this.menuOpen = false; this.syncMenu(); } };
+    window.addEventListener('keydown', this.onKey);
+  }
+
+  componentDidUpdate() {
+    this.applyLang();
+    this.applyProps();
+    this.syncMenu();
+    if (this.activeFilter) this.filter(this.activeFilter);
+  }
+
+  componentWillUnmount() {
+    this.stopped = true;
+    window.removeEventListener('keydown', this.onKey);
+    if (this.onScroll) window.removeEventListener('scroll', this.onScroll);
+  }
+
+  setupScrub() {
+    const a = document.getElementById('lsv-vid-a');
+    const b = document.getElementById('lsv-vid-b');
+    const pin = document.getElementById('top');
+    const head = document.getElementById('lsv-head');
+    const name = document.getElementById('lsv-name');
+    const prog = document.getElementById('lsv-prog');
+    const caps = [1, 2, 3].map(i => document.getElementById('lsv-cap-' + i));
+    if (!a || !b || !pin) return;
+
+    [a, b].forEach(v => {
+      v.muted = true; v.pause();
+      const p = v.play();
+      if (p && p.then) p.then(() => { v.pause(); v.currentTime = 0; }).catch(() => {});
+    });
+
+    const dur = v => (isFinite(v.duration) && v.duration > 0 ? v.duration : 6);
+    const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
+    const band = (p, s, e, f) => clamp(Math.min((p - s) / f, (e - p) / f), 0, 1);
+    const smooth = t => t * t * (3 - 2 * t);
+
+    // Drive playback rather than seek every frame: sequential decode is smooth,
+    // seeking is not. Seek only for big jumps or when scrolling backwards.
+    const drive = (v, T, active) => {
+      if (!active) { if (!v.paused) v.pause(); return; }
+      if (v.readyState < 2 || v.seeking) return;
+      const d = T - v.currentTime;
+      // seek only for genuinely big jumps or backwards; sequential decode is what looks smooth
+      if (d > 1.5 || d < -0.12) { if (!v.paused) v.pause(); v.currentTime = clamp(T, 0, dur(v)); return; }
+      if (d > 0.02) {
+        v.playbackRate = clamp(d * 8, 0.5, 12);
+        if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+      } else if (!v.paused) v.pause();
+    };
+
+    const HAND = 0.48;
+    const apply = (p) => {
+      const aEnd = dur(a) - 0.12;
+      const pa = clamp(p / HAND, 0, 1);
+      const pb = clamp((p - HAND) / (1 - HAND), 0, 1);
+      // park A on its last frame just before the swap — B's first frame is the same shot,
+      // so the cut only disappears if A actually got there
+      if (p > HAND - 0.03 && a.readyState >= 1 && !a.seeking && a.currentTime < aEnd) {
+        if (!a.paused) a.pause();
+        a.currentTime = dur(a) - 0.05;
+      }
+      if (p >= HAND && a.currentTime >= aEnd) this.cutDone = true;
+      if (p < HAND - 0.03) this.cutDone = false;
+      const onB = !!this.cutDone;
+      drive(a, pa * (dur(a) - 0.05), !onB && p < HAND - 0.03);
+      drive(b, pb * (dur(b) - 0.05), onB);
+      a.style.opacity = onB ? '0' : '1';
+      b.style.opacity = onB ? '1' : '0';
+      if (prog) prog.style.width = (p * 100).toFixed(2) + '%';
+      if (name) {
+        const o = clamp(1 - p / 0.09, 0, 1);
+        name.style.opacity = String(o);
+        name.style.transform = 'translateY(' + (-p * 90).toFixed(1) + 'px)';
+      }
+      if (caps[0]) caps[0].style.opacity = String(band(p, 0.16, 0.40, 0.06));
+      if (caps[1]) caps[1].style.opacity = String(band(p, 0.46, 0.68, 0.06));
+      if (caps[2]) caps[2].style.opacity = String(band(p, 0.76, 1.1, 0.06));
+      if (head) {
+        const light = window.scrollY > pin.offsetTop + pin.offsetHeight - 110;
+        head.style.color = light ? '#000000' : '#FFFFFF';
+        head.style.backgroundColor = light ? 'rgba(255,255,255,.92)' : 'transparent';
+        head.style.backdropFilter = light ? 'blur(6px)' : 'none';
+      }
+    };
+
+    this.p = 0; this.target = 0; this.lastRaf = 0;
+    this.onScroll = () => {
+      const r = pin.getBoundingClientRect();
+      const span = pin.offsetHeight - window.innerHeight;
+      this.target = clamp(-r.top / (span > 0 ? span : 1), 0, 1);
+      if (performance.now() - this.lastRaf > 260) { this.p = this.target; apply(this.p); }
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+    apply(this.target);
+
+    const tick = () => {
+      if (this.stopped) return;
+      const now = performance.now();
+      const dt = Math.min(0.25, (now - (this.lastRaf || now)) / 1000);
+      this.lastRaf = now;
+      this.p += (this.target - this.p) * (1 - Math.exp(-dt * 9));
+      apply(this.p);
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+}
+</script>
+</body>
+</html>
