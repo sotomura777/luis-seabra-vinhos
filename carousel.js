@@ -22,9 +22,9 @@
 
     function measure() {
       var w = root.clientWidth || window.innerWidth;
-      slideW = Math.max(140, Math.min(w * 0.42, 210));
-      slideH = Math.max(300, Math.min(window.innerHeight * 0.56, 520));
-      spacing = slideW * 0.72;
+      slideW = Math.max(150, Math.min(w * 0.44, 230));
+      slideH = Math.max(320, Math.min(window.innerHeight * 0.6, 560));
+      spacing = slideW * 0.88;                 // mais afastamento entre garrafas
       deck.style.height = slideH + 'px';
       view.forEach(function (s) { s.style.width = slideW + 'px'; s.style.height = slideH + 'px'; s.style.marginLeft = (-slideW / 2) + 'px'; });
     }
@@ -37,10 +37,11 @@
         if (ao > 3.2) { s.style.opacity = '0'; s.style.pointerEvents = 'none'; s.style.visibility = 'hidden'; continue; }
         s.style.visibility = 'visible';
         var x = o * spacing;
-        var z = -ao * 150;
-        var rot = Math.max(-52, Math.min(52, -o * 36));
-        var scale = Math.max(0.55, 1 - ao * 0.16);
-        var op = Math.max(0, 1 - ao * 0.36);
+        var z = -ao * 140;
+        var rot = Math.max(-46, Math.min(46, -o * 30));
+        // centro bem maior que as laterais: a garrafa ao centro "cresce"
+        var scale = Math.max(0.5, 1 - ao * 0.27);
+        var op = Math.max(0, 1 - ao * 0.42);
         s.style.transform = 'translateX(' + x.toFixed(1) + 'px) translateZ(' + z.toFixed(1) + 'px) rotateY(' + rot.toFixed(1) + 'deg) scale(' + scale.toFixed(3) + ')';
         s.style.opacity = op.toFixed(2);
         s.style.zIndex = String(1000 - Math.round(ao * 10));
