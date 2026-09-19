@@ -90,7 +90,7 @@ function lsv_wine_sub( $post_id, $regiao = null ) {
 		$tipo_key = get_field( 'vinho_tipo', $post_id );
 		$obj      = get_field_object( 'vinho_tipo', $post_id );
 		if ( $tipo_key && isset( $obj['choices'][ $tipo_key ] ) ) {
-			$parts[] = $obj['choices'][ $tipo_key ];
+			$parts[] = pll__( $obj['choices'][ $tipo_key ] ); // "Tinto"/"Branco" traduzíveis
 		}
 		$ano = get_field( 'vinho_ano', $post_id );
 		if ( $ano ) {
@@ -109,4 +109,38 @@ function lsv_wine_sub( $post_id, $regiao = null ) {
  */
 function lsv_region_order() {
 	return array( 'douro', 'dao', 'vinho-verde' );
+}
+
+/**
+ * Devolve o termo de região correspondente ao slug base, TRADUZIDO para a
+ * língua atual (Polylang). O termo PT tem o slug canónico ('douro'); os termos
+ * EN têm outro slug, por isso resolvemos via pll_get_term em vez do slug.
+ *
+ * @param string $slug Slug canónico (PT): douro | dao | vinho-verde.
+ * @return WP_Term|null
+ */
+function lsv_current_region( $slug ) {
+	// Buscar o termo canónico (PT, slug 'douro') SEM o filtro de idioma do
+	// Polylang — senão em EN o termo com slug 'douro' fica escondido.
+	$terms = get_terms( array(
+		'taxonomy'   => 'regiao',
+		'slug'       => $slug,
+		'hide_empty' => false,
+		'number'     => 1,
+		'lang'       => '',
+	) );
+	if ( empty( $terms ) || is_wp_error( $terms ) ) {
+		return null;
+	}
+	$base = $terms[0];
+	if ( function_exists( 'pll_get_term' ) ) {
+		$tid = pll_get_term( $base->term_id ); // traduz para a língua atual
+		if ( $tid ) {
+			$t = get_term( $tid, 'regiao' );
+			if ( $t && ! is_wp_error( $t ) ) {
+				return $t;
+			}
+		}
+	}
+	return $base;
 }

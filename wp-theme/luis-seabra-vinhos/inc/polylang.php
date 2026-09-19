@@ -53,6 +53,8 @@ add_action( 'init', function () {
 		'A gama', 'Xisto e granito', 'Prémios e imprensa', 'Mailing list',
 		'Envio para Portugal continental em 48 h · Europa em 5 dias úteis',
 		'Primeira colheita', 'Vinha trabalhada',
+		// Tipos de vinho (usados no subtítulo dos slides)
+		'Tinto', 'Branco',
 		// Botões
 		'Adicionar', 'Subscrever', 'Marcar visita', 'Importadores', 'Garrafa anterior', 'Garrafa seguinte',
 		// Contactos

@@ -10,8 +10,8 @@
 // Recolhe uma vinha por região, na ordem fixa.
 $vinhas = array();
 foreach ( lsv_region_order() as $slug ) {
-	$regiao = get_term_by( 'slug', $slug, 'regiao' );
-	if ( ! $regiao || is_wp_error( $regiao ) ) {
+	$regiao = lsv_current_region( $slug );
+	if ( ! $regiao ) {
 		continue;
 	}
 	$q = new WP_Query( array(
