@@ -36,6 +36,9 @@ require LSV_DIR . '/inc/settings-page.php';
 require LSV_DIR . '/inc/enqueue.php';
 require LSV_DIR . '/inc/polylang.php';
 require LSV_DIR . '/inc/reservas.php';
+require LSV_DIR . '/inc/security.php';
+require LSV_DIR . '/inc/seo.php';
+require LSV_DIR . '/inc/backoffice.php';
 
 // Nota: o seeder (inc/seed-vinhos.php) NÃO é carregado aqui de propósito.
 // Corre-se uma única vez, à mão: wp eval-file .../inc/seed-vinhos.php

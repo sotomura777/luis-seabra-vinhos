@@ -67,6 +67,8 @@ add_action( 'init', function () {
 		'Cidade / País', 'Perfil', 'Particular', 'Restaurante', 'Importador', 'Enviar pedido',
 		// Rodapé
 		'Beba com moderação',
+		// SEO
+		'Vinhos de xisto e granito do Douro, Dão e Vinho Verde, por Luís Seabra. Vinhas velhas, intervenção mínima, desde 2013.',
 	);
 	foreach ( $strings as $s ) {
 		pll_register_string( sanitize_title( $s ), $s, $g );
