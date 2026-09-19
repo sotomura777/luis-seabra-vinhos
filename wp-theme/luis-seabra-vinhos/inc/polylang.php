@@ -51,6 +51,7 @@ add_action( 'init', function () {
 		'Douro · Dão · Vinho Verde — desde 2013', 'Desça', 'Vinhos',
 		// Secções
 		'A gama', 'Xisto e granito', 'Prémios e imprensa', 'Mailing list',
+		'Avisamos quando abre cada colheita. Duas ou três vezes por ano, nada mais.',
 		'Envio para Portugal continental em 48 h · Europa em 5 dias úteis',
 		'Primeira colheita', 'Vinha trabalhada',
 		// Tipos de vinho (usados no subtítulo dos slides)
