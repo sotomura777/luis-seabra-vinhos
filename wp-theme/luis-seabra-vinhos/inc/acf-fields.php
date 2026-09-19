@@ -42,11 +42,19 @@ function lsv_register_acf_fields() {
 			),
 			array(
 				'key'          => 'field_vinho_descricao',
-				'label'        => 'Descrição / castas',
+				'label'        => 'Descrição',
 				'name'         => 'vinho_descricao',
 				'type'         => 'textarea',
 				'rows'         => 3,
-				'instructions' => 'Texto simples (vai para o carrossel). Ex.: "Rabigato com Códega, Gouveio e Viosinho."',
+				'instructions' => 'Texto simples que aparece no carrossel. A versão inglesa escreve-se na tradução EN do vinho (Polylang).',
+			),
+			array(
+				'key'          => 'field_vinho_castas',
+				'label'        => 'Castas',
+				'name'         => 'vinho_castas',
+				'type'         => 'textarea',
+				'rows'         => 3,
+				'instructions' => 'Uma casta por linha. Ex.: Rabigato / Códega / Gouveio.',
 			),
 			array(
 				'key'   => 'field_vinho_preco',
@@ -65,6 +73,64 @@ function lsv_register_acf_fields() {
 				'library'       => 'all',
 				'instructions'  => 'PNG/WebP com fundo transparente.',
 			),
+			array(
+				'key'           => 'field_vinho_ficha',
+				'label'         => 'Ficha técnica (PDF)',
+				'name'          => 'vinho_ficha',
+				'type'          => 'file',
+				'return_format' => 'array',
+				'library'       => 'all',
+				'mime_types'    => 'pdf',
+			),
+		),
+	) );
+
+	// ===== RESERVA (marcações de visita) =====
+	acf_add_local_field_group( array(
+		'key'      => 'group_reserva',
+		'title'    => 'Detalhes da marcação',
+		'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'reserva' ) ) ),
+		'fields'   => array(
+			array( 'key' => 'field_reserva_estado', 'label' => 'Estado', 'name' => 'reserva_estado', 'type' => 'select', 'return_format' => 'value', 'default_value' => 'pendente',
+				'choices' => array( 'pendente' => 'Pendente', 'confirmada' => 'Confirmada', 'recusada' => 'Recusada' ),
+				'instructions' => 'Mudar para "Confirmada" ou "Recusada" envia automaticamente um email ao visitante.' ),
+			array( 'key' => 'field_reserva_data', 'label' => 'Data', 'name' => 'reserva_data', 'type' => 'date_picker', 'display_format' => 'd/m/Y', 'return_format' => 'Y-m-d' ),
+			array( 'key' => 'field_reserva_hora', 'label' => 'Hora', 'name' => 'reserva_hora', 'type' => 'time_picker', 'display_format' => 'H:i', 'return_format' => 'H:i' ),
+			array( 'key' => 'field_reserva_pessoas', 'label' => 'Nº de pessoas', 'name' => 'reserva_pessoas', 'type' => 'number', 'min' => 1 ),
+			array( 'key' => 'field_reserva_idioma', 'label' => 'Idioma', 'name' => 'reserva_idioma', 'type' => 'select', 'choices' => array( 'pt' => 'Português', 'en' => 'English' ), 'return_format' => 'value' ),
+			array( 'key' => 'field_reserva_nome', 'label' => 'Nome', 'name' => 'reserva_nome', 'type' => 'text' ),
+			array( 'key' => 'field_reserva_email', 'label' => 'Email', 'name' => 'reserva_email', 'type' => 'email' ),
+			array( 'key' => 'field_reserva_tel', 'label' => 'Telefone', 'name' => 'reserva_tel', 'type' => 'text' ),
+			array( 'key' => 'field_reserva_obs', 'label' => 'Observações', 'name' => 'reserva_obs', 'type' => 'textarea', 'rows' => 4 ),
+		),
+	) );
+
+	// ===== PEDIDO "ONDE COMPRAR" =====
+	acf_add_local_field_group( array(
+		'key'      => 'group_pedido_compra',
+		'title'    => 'Pedido "Onde comprar"',
+		'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'pedido_compra' ) ) ),
+		'fields'   => array(
+			array( 'key' => 'field_pc_estado', 'label' => 'Estado', 'name' => 'pc_estado', 'type' => 'select', 'return_format' => 'value', 'default_value' => 'novo',
+				'choices' => array( 'novo' => 'Novo', 'respondido' => 'Respondido' ) ),
+			array( 'key' => 'field_pc_tipo', 'label' => 'Tipo', 'name' => 'pc_tipo', 'type' => 'select', 'return_format' => 'value',
+				'choices' => array( 'particular' => 'Particular', 'restaurante' => 'Restaurante', 'importador' => 'Importador' ) ),
+			array( 'key' => 'field_pc_nome', 'label' => 'Nome', 'name' => 'pc_nome', 'type' => 'text' ),
+			array( 'key' => 'field_pc_email', 'label' => 'Email', 'name' => 'pc_email', 'type' => 'email' ),
+			array( 'key' => 'field_pc_tel', 'label' => 'Telefone', 'name' => 'pc_tel', 'type' => 'text' ),
+			array( 'key' => 'field_pc_local', 'label' => 'Cidade / País', 'name' => 'pc_local', 'type' => 'text' ),
+			array( 'key' => 'field_pc_idioma', 'label' => 'Idioma', 'name' => 'pc_idioma', 'type' => 'select', 'choices' => array( 'pt' => 'Português', 'en' => 'English' ), 'return_format' => 'value' ),
+			array( 'key' => 'field_pc_mensagem', 'label' => 'Mensagem', 'name' => 'pc_mensagem', 'type' => 'textarea', 'rows' => 4 ),
+		),
+	) );
+
+	// ===== SUBSCRITOR (newsletter) =====
+	acf_add_local_field_group( array(
+		'key'      => 'group_subscritor',
+		'title'    => 'Subscritor',
+		'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'subscritor' ) ) ),
+		'fields'   => array(
+			array( 'key' => 'field_sub_idioma', 'label' => 'Idioma', 'name' => 'sub_idioma', 'type' => 'select', 'choices' => array( 'pt' => 'Português', 'en' => 'English' ), 'return_format' => 'value' ),
 		),
 	) );
 

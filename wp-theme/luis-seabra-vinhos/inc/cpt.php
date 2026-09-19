@@ -72,6 +72,51 @@ function lsv_register_content_types() {
 		'supports'     => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
 		'rewrite'      => array( 'slug' => 'vindimas' ),
 	) );
+
+	// --- CPTs PRIVADOS (dados de formulários; nunca visíveis no site) ---
+	// Marcações de visita.
+	register_post_type( 'reserva', array(
+		'labels'              => lsv_cpt_labels( 'Reserva', 'Reservas' ),
+		'public'              => false,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'menu_icon'           => 'dashicons-calendar-alt',
+		'menu_position'       => 26,
+		'supports'            => array( 'title' ),
+		'has_archive'         => false,
+		'exclude_from_search' => true,
+		'publicly_queryable'  => false,
+		'capability_type'     => 'post',
+		'map_meta_cap'        => true,
+	) );
+
+	// Pedidos "Onde comprar".
+	register_post_type( 'pedido_compra', array(
+		'labels'              => lsv_cpt_labels( 'Pedido', 'Onde comprar' ),
+		'public'              => false,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'menu_icon'           => 'dashicons-cart',
+		'menu_position'       => 27,
+		'supports'            => array( 'title' ),
+		'has_archive'         => false,
+		'exclude_from_search' => true,
+		'publicly_queryable'  => false,
+	) );
+
+	// Subscritores da newsletter.
+	register_post_type( 'subscritor', array(
+		'labels'              => lsv_cpt_labels( 'Subscritor', 'Subscritores' ),
+		'public'              => false,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'menu_icon'           => 'dashicons-email',
+		'menu_position'       => 28,
+		'supports'            => array( 'title' ),
+		'has_archive'         => false,
+		'exclude_from_search' => true,
+		'publicly_queryable'  => false,
+	) );
 }
 
 /**

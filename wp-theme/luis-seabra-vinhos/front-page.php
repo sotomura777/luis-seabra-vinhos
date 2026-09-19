@@ -15,6 +15,7 @@ get_header();
 	get_template_part( 'template-parts/gama' );
 	get_template_part( 'template-parts/regioes' );
 	get_template_part( 'template-parts/noticias' );
+	get_template_part( 'template-parts/onde-comprar' );
 	get_template_part( 'template-parts/contactos' );
 	?>
 </div>

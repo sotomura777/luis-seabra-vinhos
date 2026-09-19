@@ -28,13 +28,19 @@ $label_css     = 'display:flex; flex-direction:column; gap:6px; font-size:10px; 
 				<label style="<?php echo esc_attr( $label_css ); ?>"><?php pll_e( 'Nome' ); ?>
 					<input type="text" name="nome" required style="<?php echo esc_attr( $input_css ); ?>"></label>
 
-				<label style="<?php echo esc_attr( $label_css ); ?>"><?php pll_e( 'Email' ); ?>
-					<input type="email" name="email" required placeholder="o.seu@email.pt" style="<?php echo esc_attr( $input_css ); ?>"></label>
+				<div style="display:flex; flex-wrap:wrap; gap:16px">
+					<label style="flex:1 1 200px; <?php echo esc_attr( $label_css ); ?>"><?php pll_e( 'Email' ); ?>
+						<input type="email" name="email" required placeholder="o.seu@email.pt" style="<?php echo esc_attr( $input_css ); ?>"></label>
+					<label style="flex:1 1 140px; <?php echo esc_attr( $label_css ); ?>"><?php pll_e( 'Telefone' ); ?>
+						<input type="tel" name="tel" style="<?php echo esc_attr( $input_css ); ?>"></label>
+				</div>
 
 				<div style="display:flex; flex-wrap:wrap; gap:16px">
-					<label style="flex:1 1 160px; <?php echo esc_attr( $label_css ); ?>"><?php pll_e( 'Data pretendida' ); ?>
-						<input type="date" name="data" min="<?php echo esc_attr( date( 'Y-m-d' ) ); ?>" style="<?php echo esc_attr( $input_css ); ?>; color-scheme:dark"></label>
-					<label style="flex:1 1 120px; <?php echo esc_attr( $label_css ); ?>"><?php pll_e( 'Nº de pessoas' ); ?>
+					<label style="flex:1 1 140px; <?php echo esc_attr( $label_css ); ?>"><?php pll_e( 'Data pretendida' ); ?>
+						<input type="date" name="data" required min="<?php echo esc_attr( date( 'Y-m-d' ) ); ?>" style="<?php echo esc_attr( $input_css ); ?>; color-scheme:dark"></label>
+					<label style="flex:1 1 90px; <?php echo esc_attr( $label_css ); ?>"><?php pll_e( 'Hora' ); ?>
+						<input type="time" name="hora" style="<?php echo esc_attr( $input_css ); ?>; color-scheme:dark"></label>
+					<label style="flex:1 1 90px; <?php echo esc_attr( $label_css ); ?>"><?php pll_e( 'Nº de pessoas' ); ?>
 						<input type="number" name="pessoas" min="1" max="40" step="1" style="<?php echo esc_attr( $input_css ); ?>"></label>
 				</div>
 

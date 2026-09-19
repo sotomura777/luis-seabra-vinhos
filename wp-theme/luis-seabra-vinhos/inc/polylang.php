@@ -60,7 +60,11 @@ add_action( 'init', function () {
 		'Adicionar', 'Subscrever', 'Marcar visita', 'Importadores', 'Garrafa anterior', 'Garrafa seguinte',
 		// Contactos
 		'Contactos', 'Provas e visitas, por marcação',
-		'Nome', 'Email', 'Data pretendida', 'Nº de pessoas', 'Mensagem', 'Não preencher', 'O seu email',
+		'Nome', 'Email', 'Telefone', 'Data pretendida', 'Hora', 'Nº de pessoas', 'Mensagem', 'Não preencher', 'O seu email',
+		// Onde comprar
+		'Onde comprar', 'Procura os nossos vinhos?',
+		'Diga-nos quem é e onde está. Encaminhamos para o ponto de venda ou distribuidor mais próximo.',
+		'Cidade / País', 'Perfil', 'Particular', 'Restaurante', 'Importador', 'Enviar pedido',
 		// Rodapé
 		'Beba com moderação',
 	);
