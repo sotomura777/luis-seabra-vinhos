@@ -33,55 +33,7 @@ add_filter( 'pll_get_taxonomies', function ( $tax, $is_settings ) {
 	return $tax;
 }, 10, 2 );
 
-/**
- * Strings de UI para o ecrã Languages › Strings translations.
- */
-add_action( 'init', function () {
-	if ( ! function_exists( 'pll_register_string' ) ) {
-		return;
-	}
-	$g = 'luisseabra';
-
-	$strings = array(
-		// Header / nav
-		'Loja', 'Menu', 'Fechar',
-		// Navegação (novo design, 10 capítulos)
-		'Início', 'Sobre', 'Vinhos', 'Regiões', 'Vinhas', 'Vindimas', 'Imprensa', 'Visitas', 'Onde comprar', 'Contactos',
-		// Menu overlay
-		'Vinho', 'Vindimas', 'Regiões', 'Mais', 'Vinhas', 'Sobre Nós', 'Visitas', 'Notícias', 'Contactos / Mailing List',
-		// Hero
-		'Douro · Dão · Vinho Verde — desde 2013', 'Desça', 'Vinhos',
-		// Secções
-		'A gama', 'Xisto e granito', 'Prémios e imprensa', 'Mailing list',
-		'Avisamos quando abre cada colheita. Duas ou três vezes por ano, nada mais.',
-		'Envio para Portugal continental em 48 h · Europa em 5 dias úteis',
-		'Primeira colheita', 'Vinha trabalhada',
-		// Tipos de vinho (usados no subtítulo dos slides)
-		'Tinto', 'Branco',
-		// Botões
-		'Adicionar', 'Subscrever', 'Marcar visita', 'Importadores', 'Garrafa anterior', 'Garrafa seguinte',
-		// Contactos
-		'Contactos', 'Provas e visitas, por marcação',
-		'Nome', 'Email', 'Telefone', 'Data pretendida', 'Hora', 'Nº de pessoas', 'Mensagem', 'Não preencher', 'O seu email',
-		// Onde comprar
-		'Onde comprar', 'Procura os nossos vinhos?',
-		'Diga-nos quem é e onde está. Encaminhamos para o ponto de venda ou distribuidor mais próximo.',
-		'Cidade / País', 'Perfil', 'Particular', 'Restaurante', 'Importador', 'Enviar pedido',
-		// Rodapé
-		'Beba com moderação',
-		// SEO
-		'Vinhos de xisto e granito do Douro, Dão e Vinho Verde, por Luís Seabra. Vinhas velhas, intervenção mínima, desde 2013.',
-	);
-	foreach ( $strings as $s ) {
-		pll_register_string( sanitize_title( $s ), $s, $g );
-	}
-
-	// Mensagens de estado dos formulários (podem ser multilinha).
-	pll_register_string( 'ok_visita', 'Pedido enviado. Respondemos dentro de um dia útil.', $g, true );
-	pll_register_string( 'err_visita', 'Não foi possível enviar. Verifique os campos e tente de novo.', $g, true );
-	pll_register_string( 'ok_mailing', 'Subscrição registada. Obrigado.', $g );
-	pll_register_string( 'err_mailing', 'Email inválido. Tente de novo.', $g );
-} );
+// O registo e as traduções das strings de UI vivem em inc/i18n.php (mapa PT→EN único).
 
 /**
  * Switcher PT/EN para o header. Devolve markup ou vazio se o Polylang
