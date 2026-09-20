@@ -45,6 +45,8 @@ add_action( 'init', function () {
 	$strings = array(
 		// Header / nav
 		'Loja', 'Menu', 'Fechar',
+		// Navegação (novo design, 10 capítulos)
+		'Início', 'Sobre', 'Vinhos', 'Regiões', 'Vinhas', 'Vindimas', 'Imprensa', 'Visitas', 'Onde comprar', 'Contactos',
 		// Menu overlay
 		'Vinho', 'Vindimas', 'Regiões', 'Mais', 'Vinhas', 'Sobre Nós', 'Visitas', 'Notícias', 'Contactos / Mailing List',
 		// Hero

@@ -82,6 +82,23 @@ function lsv_register_acf_fields() {
 				'library'       => 'all',
 				'mime_types'    => 'pdf',
 			),
+			array( 'key' => 'field_vinho_sub', 'label' => 'Subtítulo', 'name' => 'vinho_sub', 'type' => 'text', 'instructions' => 'Ex.: "Alfrocheiro · Tinto", "Branco".' ),
+			array( 'key' => 'field_vinho_ambiente', 'label' => 'Foto de ambiente', 'name' => 'vinho_ambiente', 'type' => 'image', 'return_format' => 'id', 'preview_size' => 'medium' ),
+			array( 'key' => 'field_vinho_tom', 'label' => 'Cor de acento', 'name' => 'vinho_tom', 'type' => 'color_picker', 'instructions' => 'Cor da etiqueta usada como acento na página do vinho.' ),
+			array( 'key' => 'field_vinho_destaque', 'label' => 'Destaque na landing', 'name' => 'vinho_destaque', 'type' => 'true_false', 'ui' => 1, 'instructions' => 'Aparece no carrossel da página inicial.' ),
+			// --- Ficha técnica ---
+			array( 'key' => 'field_vinho_tab_ficha', 'label' => 'Ficha técnica', 'type' => 'tab' ),
+			array( 'key' => 'field_vinho_vinha', 'label' => 'Vinha', 'name' => 'vinho_vinha', 'type' => 'text' ),
+			array( 'key' => 'field_vinho_solo', 'label' => 'Solo', 'name' => 'vinho_solo', 'type' => 'text' ),
+			array( 'key' => 'field_vinho_idade', 'label' => 'Idade das vinhas', 'name' => 'vinho_idade', 'type' => 'text' ),
+			array( 'key' => 'field_vinho_plantas', 'label' => 'Plantas/ha', 'name' => 'vinho_plantas', 'type' => 'text' ),
+			array( 'key' => 'field_vinho_altitude', 'label' => 'Altitude', 'name' => 'vinho_altitude', 'type' => 'text' ),
+			array( 'key' => 'field_vinho_fermentacao', 'label' => 'Fermentação', 'name' => 'vinho_fermentacao', 'type' => 'text' ),
+			array( 'key' => 'field_vinho_estagio', 'label' => 'Estágio', 'name' => 'vinho_estagio', 'type' => 'text' ),
+			array( 'key' => 'field_vinho_acidez', 'label' => 'Acidez', 'name' => 'vinho_acidez', 'type' => 'text' ),
+			array( 'key' => 'field_vinho_ph', 'label' => 'pH', 'name' => 'vinho_ph', 'type' => 'text' ),
+			array( 'key' => 'field_vinho_capacidade', 'label' => 'Capacidade', 'name' => 'vinho_capacidade', 'type' => 'text', 'default_value' => '750 ml' ),
+			array( 'key' => 'field_vinho_alc', 'label' => 'Álcool', 'name' => 'vinho_alc', 'type' => 'text' ),
 		),
 	) );
 

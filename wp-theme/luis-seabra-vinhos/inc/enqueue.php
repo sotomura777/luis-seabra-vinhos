@@ -13,16 +13,17 @@ add_action( 'wp_enqueue_scripts', 'lsv_enqueue_assets' );
 
 function lsv_enqueue_assets() {
 
-	// Fonte (Fontshare/Google — Jost, como no site original).
+	// Fontes: Bodoni Moda (títulos) + Jost (corpo).
 	wp_enqueue_style(
 		'lsv-fonts',
-		'https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap',
+		'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@200;300;400;500&display=swap',
 		array(),
 		null
 	);
 
-	// CSS do tema (style.css na raiz).
+	// CSS do tema (header do WP em style.css; sistema visual em theme.css).
 	wp_enqueue_style( 'lsv-style', get_stylesheet_uri(), array( 'lsv-fonts' ), LSV_VERSION );
+	wp_enqueue_style( 'lsv-theme', LSV_URI . '/assets/css/theme.css', array( 'lsv-style' ), LSV_VERSION );
 
 	// Carrossel 3D (inalterado do site estático; injeta o próprio CSS).
 	wp_enqueue_script( 'lsv-carousel', LSV_URI . '/assets/js/carousel.js', array(), LSV_VERSION, true );

@@ -105,6 +105,49 @@ function lsv_wine_sub( $post_id, $regiao = null ) {
 }
 
 /**
+ * Navegação — fonte única para o header, a cortina de menu e o índice da landing.
+ * Cada item: label (traduzível), tipo/slug para resolver o URL, numeral romano, foto de hover.
+ *
+ * @return array[]
+ */
+function lsv_nav() {
+	$img = LSV_URI . '/assets/img/fotos/';
+	return array(
+		array( 'label' => 'Início', 'roman' => 'I', 'kind' => 'home', 'slug' => '', 'img' => $img . 'vinha-douro.webp' ),
+		array( 'label' => 'Sobre', 'roman' => 'II', 'kind' => 'page', 'slug' => 'sobre', 'img' => $img . 'tonelaria.webp' ),
+		array( 'label' => 'Vinhos', 'roman' => 'III', 'kind' => 'cpt', 'slug' => 'vinho', 'path' => 'vinhos', 'img' => $img . 'gama-completa.webp' ),
+		array( 'label' => 'Regiões', 'roman' => 'IV', 'kind' => 'page', 'slug' => 'regioes', 'img' => $img . 'vindima-homem.webp' ),
+		array( 'label' => 'Vinhas', 'roman' => 'V', 'kind' => 'page', 'slug' => 'vinhas', 'img' => $img . 'vinha-douro.webp' ),
+		array( 'label' => 'Vindimas', 'roman' => 'VI', 'kind' => 'cpt', 'slug' => 'vindima', 'path' => 'vindimas', 'img' => $img . 'uvas-navalha.webp' ),
+		array( 'label' => 'Imprensa', 'roman' => 'VII', 'kind' => 'cpt', 'slug' => 'imprensa', 'path' => 'imprensa', 'img' => $img . 'vindimadores.webp' ),
+		array( 'label' => 'Visitas', 'roman' => 'VIII', 'kind' => 'page', 'slug' => 'visitas', 'img' => $img . 'tonelaria.webp' ),
+		array( 'label' => 'Onde comprar', 'roman' => 'IX', 'kind' => 'page', 'slug' => 'onde-comprar', 'img' => $img . 'gama-completa.webp' ),
+		array( 'label' => 'Contactos', 'roman' => 'X', 'kind' => 'page', 'slug' => 'contactos', 'img' => $img . 'padaria.webp' ),
+	);
+}
+
+/**
+ * Resolve o URL de um item de navegação (consciente de Polylang; com fallback
+ * para /slug/ enquanto as páginas/arquivos ainda não existem).
+ */
+function lsv_nav_url( $item ) {
+	if ( 'home' === $item['kind'] ) {
+		return function_exists( 'pll_home_url' ) ? pll_home_url() : home_url( '/' );
+	}
+	if ( 'cpt' === $item['kind'] ) {
+		$url = get_post_type_archive_link( $item['slug'] );
+		return $url ? $url : home_url( '/' . $item['path'] . '/' );
+	}
+	// page
+	$page = get_page_by_path( $item['slug'] );
+	if ( $page ) {
+		$id = function_exists( 'pll_get_post' ) ? ( pll_get_post( $page->ID ) ?: $page->ID ) : $page->ID;
+		return get_permalink( $id );
+	}
+	return home_url( '/' . $item['slug'] . '/' );
+}
+
+/**
  * Ordem fixa das regiões na Gama (get_terms não garante ordem, e evitamos
  * term-meta por causa da tradução no Polylang Free).
  *

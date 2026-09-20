@@ -7,18 +7,49 @@
   // ---------------------------------------------------------------------------
   // Menu overlay
   // ---------------------------------------------------------------------------
+  // Cortina de menu: foto de fundo ao passar o rato (data-img) + Escape fecha.
+  // Abrir/fechar é feito por onclick inline no header (add/remove classe 'on').
   function initMenu() {
     var menu = document.getElementById('lsv-menu');
-    var open = document.getElementById('lsv-menu-open');
-    var close = document.getElementById('lsv-menu-close');
     if (!menu) return;
-    var show = function () { menu.style.display = 'flex'; };
-    var hide = function () { menu.style.display = 'none'; };
-    if (open) open.addEventListener('click', show);
-    if (close) close.addEventListener('click', hide);
-    // fechar ao clicar num link do menu ou com Escape
-    menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', hide); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hide(); });
+    var bg = menu.querySelector('.bgimg');
+    menu.querySelectorAll('.list a').forEach(function (a) {
+      a.addEventListener('mouseenter', function () {
+        if (bg && a.dataset.img) { bg.style.backgroundImage = 'url(' + a.dataset.img + ')'; bg.style.opacity = '.5'; }
+      });
+      a.addEventListener('mouseleave', function () { if (bg) bg.style.opacity = '0'; });
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') menu.classList.remove('on'); });
+  }
+
+  // Fade-in ao entrar no viewport (o CSS anima via classe .in).
+  function initReveal() {
+    var els = document.querySelectorAll('.tl-row, .reveal');
+    if (!els.length || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.2 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  // Índice de capítulos da landing (#lsv-index): destaca a secção à vista.
+  function initChapterIndex() {
+    var index = document.getElementById('lsv-index');
+    if (!index || !('IntersectionObserver' in window)) return;
+    var links = index.querySelectorAll('a[data-ix]');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        links.forEach(function (l) { l.style.opacity = (l.getAttribute('data-ix') === e.target.id) ? '1' : '.45'; });
+      });
+    }, { threshold: 0.5 });
+    links.forEach(function (l) {
+      var sec = document.getElementById(l.getAttribute('data-ix'));
+      if (sec) io.observe(sec);
+    });
   }
 
   // ---------------------------------------------------------------------------
@@ -107,7 +138,7 @@
     requestAnimationFrame(tick);
   }
 
-  function boot() { initMenu(); initHero(); }
+  function boot() { initMenu(); initReveal(); initChapterIndex(); initHero(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();
