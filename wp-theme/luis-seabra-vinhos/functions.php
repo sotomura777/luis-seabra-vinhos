@@ -106,6 +106,49 @@ function lsv_wine_sub( $post_id, $regiao = null ) {
 }
 
 /**
+ * Ficha técnica de um vinho: pares [label, valor] por ordem, omitindo
+ * vazios / "—" / "a confirmar". Reutilizada na página do vinho e no overlay.
+ *
+ * @param int $post_id
+ * @return array[] [ [label, valor], ... ]
+ */
+function lsv_wine_ficha( $post_id ) {
+	// tipo (label) e origem (termo) são compostos; os restantes são campos diretos.
+	$obj      = function_exists( 'get_field_object' ) ? get_field_object( 'vinho_tipo', $post_id ) : false;
+	$tipo_key = get_field( 'vinho_tipo', $post_id );
+	$tipo     = ( $obj && isset( $obj['choices'][ $tipo_key ] ) ) ? pll__( $obj['choices'][ $tipo_key ] ) : '';
+	$terms    = get_the_terms( $post_id, 'regiao' );
+	$origem   = ( $terms && ! is_wp_error( $terms ) ) ? $terms[0]->name : '';
+
+	$fields = array(
+		array( pll__( 'Vinho' ), $tipo ),
+		array( pll__( 'Ano' ), get_field( 'vinho_ano', $post_id ) ),
+		array( pll__( 'Castas' ), get_field( 'vinho_castas', $post_id ) ),
+		array( pll__( 'Origem' ), $origem ),
+		array( pll__( 'Solo' ), get_field( 'vinho_solo', $post_id ) ),
+		array( pll__( 'Idade das vinhas' ), get_field( 'vinho_idade', $post_id ) ),
+		array( pll__( 'Plantas por ha' ), get_field( 'vinho_plantas', $post_id ) ),
+		array( pll__( 'Altitude' ), get_field( 'vinho_altitude', $post_id ) ),
+		array( pll__( 'Fermentação' ), get_field( 'vinho_fermentacao', $post_id ) ),
+		array( pll__( 'Estágio' ), get_field( 'vinho_estagio', $post_id ) ),
+		array( pll__( 'Acidez total' ), get_field( 'vinho_acidez', $post_id ) ),
+		array( pll__( 'pH' ), get_field( 'vinho_ph', $post_id ) ),
+		array( pll__( 'Capacidade' ), get_field( 'vinho_capacidade', $post_id ) ),
+		array( pll__( 'Álcool' ), get_field( 'vinho_alc', $post_id ) ),
+	);
+
+	$out = array();
+	foreach ( $fields as $f ) {
+		$v = trim( (string) $f[1] );
+		if ( '' === $v || '—' === $v || preg_match( '/a confirmar/i', $v ) ) {
+			continue;
+		}
+		$out[] = array( $f[0], $v );
+	}
+	return $out;
+}
+
+/**
  * Navegação — fonte única para o header, a cortina de menu e o índice da landing.
  * Cada item: label (traduzível), tipo/slug para resolver o URL, numeral romano, foto de hover.
  *
