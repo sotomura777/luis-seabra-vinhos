@@ -188,3 +188,7 @@ footer{color:#4F4D49!important}
 #lsv-menu .foot{display:flex;gap:26px;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:#B5B0A7}
 @media (max-width:700px){#lsv-menu .list{grid-template-columns:1fr}#lsv-menu .list a{font-size:24px}}
 
+
+/* --- Compat: secções de fundo claro do layout anterior (serão refeitas) --- */
+[style*="background:#FFFFFF"], [style*="background:#F5F4F2"], [style*="background:#F4F1EB"] { color:#1E1E20; }
+[style*="background:#FFFFFF"] a:hover, [style*="background:#F5F4F2"] a:hover { color:#6E6E6E; }
