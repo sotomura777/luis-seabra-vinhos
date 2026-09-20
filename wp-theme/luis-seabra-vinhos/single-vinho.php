@@ -1,0 +1,1 @@
+<?php get_header(); the_post(); echo "<main><section class=\"sec\" style=\"padding-top:14vh\"><div class=\"wrap\"><h1 class=\"h2\">".esc_html(get_the_title())."</h1><p class=\"muted\">Ficha em breve.</p></div></section></main>"; get_footer();

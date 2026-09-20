@@ -33,6 +33,7 @@ add_action( 'after_setup_theme', function () {
 require LSV_DIR . '/inc/cpt.php';
 require LSV_DIR . '/inc/acf-fields.php';
 require LSV_DIR . '/inc/settings-page.php';
+require LSV_DIR . '/inc/pages.php';
 require LSV_DIR . '/inc/enqueue.php';
 require LSV_DIR . '/inc/polylang.php';
 require LSV_DIR . '/inc/reservas.php';

@@ -33,10 +33,10 @@ function lsv_register_content_types() {
 	register_post_type( 'vinho', array(
 		'labels'       => lsv_cpt_labels( 'Vinho', 'Vinhos' ),
 		'public'       => true,
-		'has_archive'  => false,
+		'has_archive'  => 'vinhos',
 		'show_in_rest' => true,
 		'menu_icon'    => 'dashicons-carrot',
-		'supports'     => array( 'title', 'page-attributes' ),
+		'supports'     => array( 'title', 'thumbnail', 'page-attributes' ),
 		'rewrite'      => array( 'slug' => 'vinhos' ),
 	) );
 
@@ -55,10 +55,10 @@ function lsv_register_content_types() {
 	register_post_type( 'imprensa', array(
 		'labels'       => lsv_cpt_labels( 'Imprensa', 'Imprensa' ),
 		'public'       => true,
-		'has_archive'  => false,
+		'has_archive'  => 'imprensa',
 		'show_in_rest' => true,
 		'menu_icon'    => 'dashicons-awards',
-		'supports'     => array( 'title', 'page-attributes' ),
+		'supports'     => array( 'title', 'editor', 'page-attributes' ),
 		'rewrite'      => array( 'slug' => 'imprensa' ),
 	) );
 
@@ -66,7 +66,7 @@ function lsv_register_content_types() {
 	register_post_type( 'vindima', array(
 		'labels'       => lsv_cpt_labels( 'Vindima', 'Vindimas' ),
 		'public'       => true,
-		'has_archive'  => false,
+		'has_archive'  => 'vindimas',
 		'show_in_rest' => true,
 		'menu_icon'    => 'dashicons-calendar-alt',
 		'supports'     => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
