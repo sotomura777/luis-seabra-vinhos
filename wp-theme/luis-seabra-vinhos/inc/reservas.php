@@ -234,6 +234,64 @@ function lsv_handle_ondecomprar() {
 }
 
 /* ==========================================================================
+   2b) CONTACTO — formulário geral (guarda em pedido_compra + email à empresa)
+   ========================================================================== */
+add_action( 'admin_post_lsv_contacto', 'lsv_handle_contacto' );
+add_action( 'admin_post_nopriv_lsv_contacto', 'lsv_handle_contacto' );
+
+function lsv_handle_contacto() {
+	$redirect = isset( $_POST['redirect'] ) ? esc_url_raw( wp_unslash( $_POST['redirect'] ) ) : home_url( '/' );
+	check_admin_referer( 'lsv_contacto', 'lsv_contacto_nonce' );
+
+	if ( ! empty( $_POST['lsv_hp'] ) ) {
+		lsv_form_redirect( $redirect, 'contacto', 'ok' );
+	}
+
+	$nome    = isset( $_POST['nome'] ) ? sanitize_text_field( wp_unslash( $_POST['nome'] ) ) : '';
+	$email   = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+	$tel     = isset( $_POST['tel'] ) ? sanitize_text_field( wp_unslash( $_POST['tel'] ) ) : '';
+	$assunto = isset( $_POST['assunto'] ) ? sanitize_text_field( wp_unslash( $_POST['assunto'] ) ) : '';
+	$msg     = isset( $_POST['mensagem'] ) ? sanitize_textarea_field( wp_unslash( $_POST['mensagem'] ) ) : '';
+	$lang    = function_exists( 'pll_current_language' ) ? pll_current_language() : 'pt';
+	$lang    = in_array( $lang, array( 'pt', 'en' ), true ) ? $lang : 'pt';
+
+	if ( '' === $nome || ! is_email( $email ) ) {
+		lsv_form_redirect( $redirect, 'contacto', 'err' );
+	}
+
+	$post_id = wp_insert_post( array(
+		'post_type'   => 'pedido_compra',
+		'post_status' => 'publish',
+		'post_title'  => wp_strip_all_tags( $nome . ( $assunto ? ' — ' . $assunto : '' ) ),
+	), true );
+	if ( is_wp_error( $post_id ) ) {
+		lsv_form_redirect( $redirect, 'contacto', 'err' );
+	}
+
+	update_field( 'pc_estado', 'novo', $post_id );
+	update_field( 'pc_tipo', 'contacto', $post_id );
+	update_field( 'pc_nome', $nome, $post_id );
+	update_field( 'pc_email', $email, $post_id );
+	update_field( 'pc_tel', $tel, $post_id );
+	update_field( 'pc_idioma', $lang, $post_id );
+	update_field( 'pc_mensagem', ( $assunto ? '[' . $assunto . '] ' : '' ) . $msg, $post_id );
+
+	$body  = "Novo contacto — Luís Seabra Vinhos\n";
+	$body .= "-------------------------------------------\n";
+	$body .= 'Nome:     ' . $nome . "\n";
+	$body .= 'Email:    ' . $email . "\n";
+	$body .= 'Telefone: ' . ( $tel ? $tel : '—' ) . "\n";
+	$body .= 'Assunto:  ' . ( $assunto ? $assunto : '—' ) . "\n";
+	$body .= 'Idioma:   ' . strtoupper( $lang ) . "\n";
+	$body .= "-------------------------------------------\n";
+	$body .= "Mensagem:\n" . ( $msg ? $msg : '(sem mensagem)' ) . "\n\n";
+	$body .= 'Gerir: ' . admin_url( 'post.php?post=' . $post_id . '&action=edit' ) . "\n";
+	wp_mail( lsv_form_recipient(), 'Contacto: ' . $nome, $body, lsv_mail_headers( $email ) );
+
+	lsv_form_redirect( $redirect, 'contacto', 'ok' );
+}
+
+/* ==========================================================================
    3) NEWSLETTER — guarda subscritor (anti-duplicado) + email de aviso
    ========================================================================== */
 add_action( 'admin_post_lsv_mailing', 'lsv_handle_mailing' );
@@ -295,6 +353,8 @@ function lsv_form_status_message( $form ) {
 		'err_visita'  => 'Não foi possível enviar. Verifique os campos e tente de novo.',
 		'ok_compra'   => 'Pedido enviado. Entramos em contacto em breve.',
 		'err_compra'  => 'Não foi possível enviar. Verifique os campos e tente de novo.',
+		'ok_contacto'  => 'Mensagem enviada. Respondemos dentro de dois dias úteis.',
+		'err_contacto' => 'Não foi possível enviar. Verifique os campos e tente de novo.',
 		'ok_mailing'  => 'Subscrição registada. Obrigado.',
 		'err_mailing' => 'Email inválido. Tente de novo.',
 	);
