@@ -25,6 +25,12 @@ foreach ( lsv_region_order() as $slug ) {
 			'field'    => 'term_id',
 			'terms'    => $regiao->term_id,
 		) ),
+		// Só os blocos de região (as parcelas ficam para a página Vinhas).
+		'meta_query'     => array(
+			'relation' => 'OR',
+			array( 'key' => 'vinha_tipo', 'value' => 'regiao', 'compare' => '=' ),
+			array( 'key' => 'vinha_tipo', 'compare' => 'NOT EXISTS' ),
+		),
 	) );
 	if ( $q->have_posts() ) {
 		$q->the_post();

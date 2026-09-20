@@ -8,6 +8,35 @@
  */
 
 get_header();
+
+// Dados de contacto — editáveis na página "Definições" (fallback = valores atuais).
+$c_tel   = lsv_setting( 'contacto_tel', '+351 254 090 044' );
+$c_tel2  = lsv_setting( 'contacto_tel2', '+351 913 190 201' );
+$c_email = lsv_setting( 'contacto_email', 'geral@luisseabravinhos.com' );
+
+$locais = array(
+	array(
+		'cap'    => pll__( 'Sede · Adega' ),
+		'll'     => '41.1236,-7.4210',
+		'nome'   => lsv_setting( 'loc1_nome', 'S. João da Pesqueira' ),
+		'morada' => lsv_setting( 'loc1_morada', "Estrada Nacional 222, Lugar do Seixinhal\n5130-557 Vilarouco\nS. João da Pesqueira, Viseu" ),
+		'tel'    => lsv_setting( 'loc1_tel', '+351 254 090 044 · +351 913 190 201' ),
+	),
+	array(
+		'cap'    => pll__( 'Armazém' ),
+		'll'     => '41.1210,-7.8060',
+		'nome'   => lsv_setting( 'loc2_nome', 'Lamego' ),
+		'morada' => lsv_setting( 'loc2_morada', "Zona Industrial Britiande, Quinta do Godim, Lote 1\n5100-454 Cepões, Lamego\nPortugal" ),
+		'tel'    => lsv_setting( 'loc2_tel', '+351 254 096 518 · +351 913 190 201' ),
+	),
+	array(
+		'cap'    => pll__( 'Escritório' ),
+		'll'     => '41.1330,-8.6060',
+		'nome'   => lsv_setting( 'loc3_nome', pll__( 'Escritório' ) ),
+		'morada' => lsv_setting( 'loc3_morada', "Avenida da República 333\n2º Andar sala 16\n4430-999" ),
+		'tel'    => lsv_setting( 'loc3_tel', '+351 223 166 509' ),
+	),
+);
 ?>
 
 <style>
@@ -113,8 +142,8 @@ get_header();
 				<p class="in d3"><?php pll_e( 'Para provas, visitas, encomendas ou imprensa. Respondemos em dois dias úteis — a vindima é a única exceção.' ); ?></p>
 			</div>
 			<div class="r in d4">
-				<div class="crow"><span class="cap"><?php pll_e( 'Telefone' ); ?></span><span class="v"><a href="tel:+351254090044">+351 254 090 044</a><small>+351 913 190 201</small></span></div>
-				<div class="crow"><span class="cap"><?php pll_e( 'Email' ); ?></span><span class="v"><a href="mailto:geral@luisseabravinhos.com">geral@luisseabravinhos.com</a><small><?php pll_e( 'Resposta em 48 horas' ); ?></small></span></div>
+				<div class="crow"><span class="cap"><?php pll_e( 'Telefone' ); ?></span><span class="v"><a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', $c_tel ) ); ?>"><?php echo esc_html( $c_tel ); ?></a><small><?php echo esc_html( $c_tel2 ); ?></small></span></div>
+				<div class="crow"><span class="cap"><?php pll_e( 'Email' ); ?></span><span class="v"><a href="mailto:<?php echo esc_attr( $c_email ); ?>"><?php echo esc_html( $c_email ); ?></a><small><?php pll_e( 'Resposta em 48 horas' ); ?></small></span></div>
 				<div class="crow"><span class="cap"><?php pll_e( 'Visitas' ); ?></span><span class="v"><a href="<?php echo esc_url( home_url( '/visitas/' ) ); ?>"><?php pll_e( 'Por marcação' ); ?></a><small><?php pll_e( 'Segunda a sexta das 9h00 às 16h00' ); ?></small></span></div>
 			</div>
 		</div>
@@ -127,9 +156,16 @@ get_header();
 	<section class="places">
 		<div id="lmap" aria-hidden="true"></div>
 		<div class="wrap">
-			<div class="pl" data-ll="41.1236,-7.4210"><span class="cap on"><?php pll_e( 'Sede · Adega' ); ?></span><h3 class="h2">S. João da Pesqueira</h3><address class="muted">Estrada Nacional 222, Lugar do Seixinhal<br>5130-557 Vilarouco<br>S. João da Pesqueira, Viseu</address><span class="hours"><span>+351 254 090 044</span><span>+351 913 190 201</span></span></div>
-			<div class="pl" data-ll="41.1210,-7.8060"><span class="cap on"><?php pll_e( 'Armazém' ); ?></span><h3 class="h2">Lamego</h3><address class="muted">Zona Industrial Britiande, Quinta do Godim, Lote 1<br>5100-454 Cepões, Lamego<br>Portugal</address><span class="hours"><span>+351 254 096 518</span><span>+351 913 190 201</span></span></div>
-			<div class="pl" data-ll="41.1330,-8.6060"><span class="cap on"><?php pll_e( 'Escritório' ); ?></span><h3 class="h2"><?php pll_e( 'Escritório' ); ?></h3><address class="muted">Avenida da República 333<br>2º Andar sala 16<br>4430-999</address><span class="hours"><span>+351 223 166 509</span><span></span></span></div>
+			<?php foreach ( $locais as $l ) :
+				$tels = array_values( array_filter( array_map( 'trim', explode( '·', (string) $l['tel'] ) ) ) );
+				?>
+				<div class="pl" data-ll="<?php echo esc_attr( $l['ll'] ); ?>">
+					<span class="cap on"><?php echo esc_html( $l['cap'] ); ?></span>
+					<h3 class="h2"><?php echo esc_html( $l['nome'] ); ?></h3>
+					<address class="muted"><?php echo nl2br( esc_html( $l['morada'] ) ); ?></address>
+					<span class="hours"><span><?php echo esc_html( $tels[0] ?? '' ); ?></span><span><?php echo esc_html( $tels[1] ?? '' ); ?></span></span>
+				</div>
+			<?php endforeach; ?>
 		</div>
 	</section>
 

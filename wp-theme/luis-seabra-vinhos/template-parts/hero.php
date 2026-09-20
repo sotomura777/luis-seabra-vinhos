@@ -38,8 +38,8 @@ $cap3 = lsv_setting( 'hero_cap3', 'Framboesa, cereja ácida, pedra molhada. 12% 
 				<div id="lsv-cap-3" style="position:absolute; inset:auto auto 0 0; max-width:min(520px,88vw); color:#FFFFFF; opacity:0">
 					<span style="font-size:10px; letter-spacing:.3em; text-transform:uppercase; opacity:.55">No copo</span>
 					<p style="margin:14px 0 18px; font-size:clamp(22px,3.1vw,38px); line-height:1.24; font-weight:200; letter-spacing:.005em"><?php echo esc_html( $cap3 ); ?></p>
-					<a href="#gama" class="lsv-cta" style="display:inline-flex; align-items:center; gap:14px; border:1px solid rgba(255,255,255,.5); padding:13px 22px; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#FFFFFF">
-						<span>Comprar Xisto Cru</span>
+					<a href="<?php echo esc_url( home_url( '/onde-comprar/' ) ); ?>" class="lsv-cta" style="display:inline-flex; align-items:center; gap:14px; border:1px solid rgba(255,255,255,.5); padding:13px 22px; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#FFFFFF">
+						<span><?php pll_e( 'Onde comprar' ); ?></span>
 					</a>
 				</div>
 			</div>

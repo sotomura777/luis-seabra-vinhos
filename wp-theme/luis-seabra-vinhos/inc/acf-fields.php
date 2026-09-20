@@ -158,11 +158,35 @@ function lsv_register_acf_fields() {
 		'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'vinha' ) ) ),
 		'fields'   => array(
 			array(
+				'key'          => 'field_vinha_tipo',
+				'label'        => 'Tipo',
+				'name'         => 'vinha_tipo',
+				'type'         => 'select',
+				'choices'      => array( 'regiao' => 'Bloco de região (landing)', 'parcela' => 'Parcela (página Vinhas + tabela Regiões)' ),
+				'default_value' => 'parcela',
+				'instructions' => '"Região" = os 3 blocos com foto na página inicial. "Parcela" = as linhas da página Vinhas e da tabela das Regiões.',
+			),
+			array(
 				'key'          => 'field_vinha_subtitulo',
-				'label'        => 'Subtítulo',
+				'label'        => 'Subtítulo (blocos de região)',
 				'name'         => 'vinha_subtitulo',
 				'type'         => 'text',
 				'instructions' => 'Ex.: "Xisto micáceo, 400 a 700 metros". O corpo vai no editor; a imagem na imagem destacada.',
+			),
+			array(
+				'key'          => 'field_vinha_solo',
+				'label'        => 'Solo / altitude (parcelas)',
+				'name'         => 'vinha_solo',
+				'type'         => 'text',
+				'instructions' => 'Ex.: "Xisto micáceo, 650–700 m".',
+			),
+			array(
+				'key'          => 'field_vinha_detalhe',
+				'label'        => 'Detalhe (parcelas)',
+				'name'         => 'vinha_detalhe',
+				'type'         => 'textarea',
+				'rows'         => 2,
+				'instructions' => 'Ex.: "Vinha única plantada entre 1920 e 1933. Rabigato, Códega… → Xisto Cru Branco". O nome do lugar é o título do post.',
 			),
 		),
 	) );
@@ -205,6 +229,20 @@ function lsv_register_acf_fields() {
 				array( 'key' => 'field_sobre_lead', 'label' => 'Sobre — destaque', 'name' => 'sobre_lead', 'type' => 'textarea', 'rows' => 3 ),
 				array( 'key' => 'field_sobre_body', 'label' => 'Sobre — corpo', 'name' => 'sobre_body', 'type' => 'wysiwyg', 'media_upload' => 0, 'tabs' => 'visual' ),
 				array( 'key' => 'field_contacto_body', 'label' => 'Contactos — corpo', 'name' => 'contacto_body', 'type' => 'textarea', 'rows' => 3 ),
+				// Contactos — dados gerais (cabeçalho da página).
+				array( 'key' => 'field_contacto_tel', 'label' => 'Contactos — telefone principal', 'name' => 'contacto_tel', 'type' => 'text', 'placeholder' => '+351 254 090 044' ),
+				array( 'key' => 'field_contacto_tel2', 'label' => 'Contactos — telefone secundário', 'name' => 'contacto_tel2', 'type' => 'text', 'placeholder' => '+351 913 190 201' ),
+				array( 'key' => 'field_contacto_email', 'label' => 'Contactos — email', 'name' => 'contacto_email', 'type' => 'text', 'placeholder' => 'geral@luisseabravinhos.com' ),
+				// Contactos — 3 locais no mapa.
+				array( 'key' => 'field_loc1_nome', 'label' => 'Local 1 — cidade', 'name' => 'loc1_nome', 'type' => 'text', 'placeholder' => 'S. João da Pesqueira' ),
+				array( 'key' => 'field_loc1_morada', 'label' => 'Local 1 — morada', 'name' => 'loc1_morada', 'type' => 'textarea', 'rows' => 3 ),
+				array( 'key' => 'field_loc1_tel', 'label' => 'Local 1 — telefones', 'name' => 'loc1_tel', 'type' => 'text', 'instructions' => 'Separe dois números por " · ".' ),
+				array( 'key' => 'field_loc2_nome', 'label' => 'Local 2 — cidade', 'name' => 'loc2_nome', 'type' => 'text', 'placeholder' => 'Lamego' ),
+				array( 'key' => 'field_loc2_morada', 'label' => 'Local 2 — morada', 'name' => 'loc2_morada', 'type' => 'textarea', 'rows' => 3 ),
+				array( 'key' => 'field_loc2_tel', 'label' => 'Local 2 — telefones', 'name' => 'loc2_tel', 'type' => 'text' ),
+				array( 'key' => 'field_loc3_nome', 'label' => 'Local 3 — cidade', 'name' => 'loc3_nome', 'type' => 'text', 'placeholder' => 'Escritório' ),
+				array( 'key' => 'field_loc3_morada', 'label' => 'Local 3 — morada', 'name' => 'loc3_morada', 'type' => 'textarea', 'rows' => 3 ),
+				array( 'key' => 'field_loc3_tel', 'label' => 'Local 3 — telefones', 'name' => 'loc3_tel', 'type' => 'text' ),
 			),
 		) );
 	}

@@ -8,15 +8,15 @@
 
 get_header();
 
-// Parcelas (conteúdo real do protótipo; migrar para o CPT `vinha` numa fase seguinte).
-$parcelas = array(
-	array( 'Meda · Douro', 'Xisto micáceo, 650–700 m', 'Vinha única plantada entre 1920 e 1933. Rabigato, Códega, Gouveio, Viosinho. → Xisto Cru Branco' ),
-	array( 'Cima Corgo · Douro', 'Xisto micáceo, 500–600 m', 'Vinhas de 30 a 45 anos. → Xisto Ilimitado' ),
-	array( 'Alijó · Douro', 'Vinha única, xisto', 'Tinta Roriz, Touriga Franca, Tinta Amarela, Rufete, Tinta Barroca. → Indie Xisto' ),
-	array( 'Baixo Corgo · Douro', 'Xisto amarelo, 450 m', 'Plantada em 1993. 100% Castelão. → Mono C' ),
-	array( 'Vila Nova de Tazém · Dão', 'Franco arenoso de origem granítica, 490 m', 'Mais de 35 anos, mais de 4500 plantas por hectare. → Granito Cru, Mono A' ),
-	array( 'Monção e Melgaço · Vinho Verde', 'Granito', 'Alvarinho. → Granito Cru Alvarinho' ),
-);
+// Parcelas a partir do CPT `vinha` (tipo=parcela) — editáveis no backoffice.
+$q = new WP_Query( array(
+	'post_type'      => 'vinha',
+	'posts_per_page' => -1,
+	'orderby'        => 'menu_order',
+	'order'          => 'ASC',
+	'no_found_rows'  => true,
+	'meta_query'     => array( array( 'key' => 'vinha_tipo', 'value' => 'parcela', 'compare' => '=' ) ),
+) );
 ?>
 
 <main>
@@ -34,12 +34,14 @@ $parcelas = array(
 	<section class="sec lt"><div class="wrap">
 		<span class="cap on"><?php pll_e( 'Parcelas' ); ?></span>
 		<div class="ledger" style="margin-top:clamp(24px,4vh,44px)">
-			<?php foreach ( $parcelas as $p ) : ?>
+			<?php if ( $q->have_posts() ) : while ( $q->have_posts() ) : $q->the_post(); ?>
 				<div class="row">
-					<span class="cap"><?php echo esc_html( $p[0] ); ?></span>
-					<span class="v"><?php echo esc_html( $p[1] ); ?><small><?php echo esc_html( $p[2] ); ?></small></span>
+					<span class="cap"><?php the_title(); ?></span>
+					<span class="v"><?php echo esc_html( get_field( 'vinha_solo', get_the_ID() ) ); ?><small><?php echo esc_html( get_field( 'vinha_detalhe', get_the_ID() ) ); ?></small></span>
 				</div>
-			<?php endforeach; ?>
+			<?php endwhile; wp_reset_postdata(); else : ?>
+				<p class="muted"><?php pll_e( 'Em breve.' ); ?></p>
+			<?php endif; ?>
 		</div>
 	</div></section>
 </main>
