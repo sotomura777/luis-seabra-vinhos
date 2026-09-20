@@ -45,7 +45,7 @@ $cap3 = lsv_setting( 'hero_cap3', 'Framboesa, cereja ácida, pedra molhada. 12% 
 			</div>
 		</div>
 		<div style="position:absolute; bottom:0; left:0; right:0; height:1px; background:rgba(255,255,255,.18)">
-			<div id="lsv-prog" style="height:100%; width:0%; background:#FFFFFF"></div>
+			<div id="lsv-prog" style="height:100%; width:0%; background:#D9C39E"></div>
 		</div>
 	</div>
 </section>
