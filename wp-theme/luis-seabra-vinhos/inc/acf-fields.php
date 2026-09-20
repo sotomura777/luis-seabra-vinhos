@@ -187,6 +187,7 @@ function lsv_register_acf_fields() {
 		'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'vindima' ) ) ),
 		'fields'   => array(
 			array( 'key' => 'field_vindima_ano', 'label' => 'Ano', 'name' => 'vindima_ano', 'type' => 'number' ),
+			array( 'key' => 'field_vindima_periodo', 'label' => 'Período', 'name' => 'vindima_periodo', 'type' => 'text', 'instructions' => 'Ex.: "23 Set - 02 Out".' ),
 		),
 	) );
 
