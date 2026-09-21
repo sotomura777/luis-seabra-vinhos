@@ -125,3 +125,90 @@ add_action( 'pre_get_posts', function ( $q ) {
 add_filter( 'admin_footer_text', function () {
 	return 'Luís Seabra Vinhos — backoffice';
 } );
+
+/* ==========================================================================
+   ADMIN SIMPLIFICADO — quem não é administrador (perfil "cliente"/editor)
+   vê só o essencial. O administrador continua a ver tudo.
+   ========================================================================== */
+
+/* Esconde os menus técnicos e dá um atalho directo aos "Textos do site". */
+add_action( 'admin_menu', function () {
+	if ( current_user_can( 'manage_options' ) ) {
+		return; // administrador vê tudo
+	}
+	remove_menu_page( 'edit.php' );                // Publicações (blog — não é usado)
+	remove_menu_page( 'edit-comments.php' );       // Comentários
+	remove_menu_page( 'tools.php' );               // Ferramentas
+	remove_menu_page( 'edit.php?post_type=page' ); // Páginas (o conteúdo é gerido em Textos do site + nos menus próprios)
+	remove_menu_page( 'rank-math' );               // Rank Math SEO (técnico; o SEO de cada página edita-se dentro do post)
+
+	// Atalho directo para a página de textos editáveis (Definições).
+	$settings_id = (int) get_option( 'lsv_settings_page_id' );
+	if ( $settings_id ) {
+		add_menu_page(
+			'Textos do site',
+			'Textos do site',
+			'edit_pages',
+			'post.php?post=' . $settings_id . '&action=edit',
+			'',
+			'dashicons-edit',
+			58
+		);
+	}
+}, 999 );
+
+/* Limpa o painel inicial dos widgets do WordPress que não interessam à adega. */
+add_action( 'wp_dashboard_setup', function () {
+	if ( current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	remove_meta_box( 'dashboard_primary', 'dashboard', 'side' );     // Notícias do WordPress
+	remove_meta_box( 'dashboard_quick_press', 'dashboard', 'side' );  // Rascunho rápido
+	remove_meta_box( 'dashboard_activity', 'dashboard', 'normal' );   // Atividade
+	remove_meta_box( 'dashboard_right_now', 'dashboard', 'normal' );  // De relance
+	remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' ); // Saúde do site
+}, 99 );
+
+/* Painel de boas-vindas com atalhos (aparece no topo do painel). */
+add_action( 'wp_dashboard_setup', function () {
+	wp_add_dashboard_widget( 'lsv_welcome', 'Bem-vindo ao backoffice', 'lsv_welcome_widget' );
+	// Empurra o widget para o topo.
+	global $wp_meta_boxes;
+	$normal = &$wp_meta_boxes['dashboard']['normal']['core'];
+	if ( isset( $normal['lsv_welcome'] ) ) {
+		$w = array( 'lsv_welcome' => $normal['lsv_welcome'] );
+		unset( $normal['lsv_welcome'] );
+		$normal = $w + $normal;
+	}
+}, 1 );
+
+function lsv_welcome_widget() {
+	$settings_id = (int) get_option( 'lsv_settings_page_id' );
+	$atalhos = array(
+		array( 'Adicionar vinho', admin_url( 'post-new.php?post_type=vinho' ) ),
+		array( 'Gerir vinhos', admin_url( 'edit.php?post_type=vinho' ) ),
+		array( 'Adicionar notícia / prémio', admin_url( 'post-new.php?post_type=imprensa' ) ),
+		array( 'Nota de vindima', admin_url( 'post-new.php?post_type=vindima' ) ),
+		array( 'Marcações de visita', admin_url( 'edit.php?post_type=reserva' ) ),
+		array( 'Subscritores da newsletter', admin_url( 'edit.php?post_type=subscritor' ) ),
+	);
+	if ( $settings_id ) {
+		$atalhos[] = array( 'Textos do site', admin_url( 'post.php?post=' . $settings_id . '&action=edit' ) );
+	}
+	echo '<p style="margin-top:0">Bem-vindo. Use os atalhos abaixo para gerir o site. Se tiver dúvidas, cada ecrã tem indicações nos campos.</p>';
+	echo '<div style="display:flex;flex-wrap:wrap;gap:8px">';
+	foreach ( $atalhos as $a ) {
+		printf( '<a class="button button-primary" href="%s" style="margin:0">%s</a>', esc_url( $a[1] ), esc_html( $a[0] ) );
+	}
+	echo '</div>';
+}
+
+/* Barra de topo mais limpa para o cliente (tira o logótipo do WordPress e os comentários). */
+add_action( 'admin_bar_menu', function ( $bar ) {
+	if ( current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	$bar->remove_node( 'wp-logo' );
+	$bar->remove_node( 'comments' );
+	$bar->remove_node( 'new-post' );
+}, 999 );
