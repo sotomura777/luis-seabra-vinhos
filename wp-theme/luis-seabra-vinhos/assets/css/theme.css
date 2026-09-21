@@ -9,6 +9,8 @@ main,header,footer{position:relative;z-index:2}a{color:inherit;text-decoration:n
 .num{font-family:var(--serif);font-size:12px;letter-spacing:.2em;color:var(--ink-3)}
 .wrap{max-width:1440px;margin:0 auto;padding:0 clamp(24px,6vw,104px)}
 header{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px clamp(24px,4.5vw,64px);z-index:50;mix-blend-mode:difference}
+/* Na landing a barra é gerida pelo JS do hero (transparente sobre o vídeo, branca sobre o resto) — sem blend, senão o branco inverte para preto. */
+.home #lsv-head{mix-blend-mode:normal}
 header .wm{font-family:var(--serif);font-size:20px;font-weight:400}header .wm small{font-family:var(--sans);font-size:9px;letter-spacing:.4em;text-transform:uppercase;margin-left:12px;opacity:.7}
 header nav{display:flex;align-items:center;gap:clamp(14px,2.2vw,32px);font-size:10px;letter-spacing:.3em;text-transform:uppercase}
 header nav a{position:relative;padding-bottom:4px}header nav a:after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:currentColor;transition:right .5s cubic-bezier(.7,0,.2,1)}
