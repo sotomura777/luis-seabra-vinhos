@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LSV_I18N_SEED', '2026-09-20-1' );
+define( 'LSV_I18N_SEED', '2026-09-21-1' );
 
 /**
  * @return array<string,string> msgid PT => tradução EN.
@@ -47,6 +47,9 @@ function lsv_i18n_map() {
 		'Notícias'          => 'News',
 		'Todos'             => 'All',
 		'Todos os vinhos'   => 'All wines',
+		'Ver ficha'         => 'View sheet',
+		'Anterior'          => 'Previous',
+		'Seguinte'          => 'Next',
 
 		// Hero / landing.
 		'Douro · Dão · Vinho Verde — desde 2013' => 'Douro · Dão · Vinho Verde — since 2013',

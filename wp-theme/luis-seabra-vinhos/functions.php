@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LSV_VERSION', '1.0.5' );
+define( 'LSV_VERSION', '1.0.6' );
 define( 'LSV_DIR', get_template_directory() );
 define( 'LSV_URI', get_template_directory_uri() );
 
@@ -147,6 +147,49 @@ function lsv_wine_ficha( $post_id ) {
 		$out[] = array( $f[0], $v );
 	}
 	return $out;
+}
+
+/**
+ * Dados de todos os vinhos para o carrossel/overlay da landing (reutilizável).
+ * Inclui garrafa recortada (cut), foto de ambiente (img), região (nome+slug) e ficha.
+ *
+ * @return array[]
+ */
+function lsv_wines_data() {
+	$q = new WP_Query( array(
+		'post_type'      => 'vinho',
+		'posts_per_page' => -1,
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC',
+		'no_found_rows'  => true,
+	) );
+	$wines = array();
+	while ( $q->have_posts() ) {
+		$q->the_post();
+		$pid    = get_the_ID();
+		$terms  = get_the_terms( $pid, 'regiao' );
+		$region = ( $terms && ! is_wp_error( $terms ) ) ? $terms[0] : null;
+		$cut    = wp_get_attachment_image_url( get_field( 'vinho_garrafa', $pid ), 'large' );
+		$amb    = wp_get_attachment_image_url( get_field( 'vinho_ambiente', $pid ), 'large' );
+		$fpdf   = get_field( 'vinho_ficha', $pid );
+		$wines[] = array(
+			'nome'   => get_the_title(),
+			'sub'    => get_field( 'vinho_sub', $pid ),
+			'regiao' => $region ? $region->name : '',
+			'region' => $region ? $region->slug : '',
+			'ano'    => get_field( 'vinho_ano', $pid ),
+			'texto'  => get_field( 'vinho_descricao', $pid ),
+			'castas' => get_field( 'vinho_castas', $pid ),
+			'cut'    => $cut ? $cut : '',
+			'img'    => $amb ? $amb : $cut,
+			'pdf'    => ( is_array( $fpdf ) && ! empty( $fpdf['url'] ) ) ? $fpdf['url'] : '',
+			'url'    => get_permalink(),
+			'tom'    => get_field( 'vinho_tom', $pid ),
+			'ficha'  => lsv_wine_ficha( $pid ),
+		);
+	}
+	wp_reset_postdata();
+	return $wines;
 }
 
 /**
