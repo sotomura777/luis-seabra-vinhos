@@ -149,7 +149,7 @@ footer{color:#4F4D49!important}
 .tl-node{position:relative;width:1px}.tl-node:before{content:"";position:absolute;left:50%;top:.55em;width:14px;height:14px;border:1px solid #7A5F3C;border-radius:50%;background:var(--lt);transform:translateX(-50%)}
 .tl-node:after{content:"";position:absolute;left:50%;top:calc(.55em + 4px);width:6px;height:6px;border-radius:50%;background:#7A5F3C;transform:translateX(-50%);opacity:0;transition:opacity .6s .3s}
 .tl-row.in .tl-node:after{opacity:1}
-.tl-ch{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,60px);letter-spacing:.14em;text-transform:uppercase;line-height:1;color:#151517}
+.tl-ch{font-family:var(--serif);font-weight:400;font-size:clamp(20px,2.6vw,38px);letter-spacing:.12em;text-transform:uppercase;line-height:1.05;color:#151517;max-width:100%}
 .tl-body h3{margin:.25em 0 14px;font-family:var(--sans)!important;font-weight:400!important;font-size:12.5px!important;letter-spacing:.3em!important;text-transform:uppercase;color:#5A5650!important}
 .tl-body p{margin:0;font-size:clamp(16px,1.25vw,18px)!important;line-height:1.85!important;color:#1F1D1A!important;max-width:44ch;display:inline-block}
 .tl-src{display:block;margin-top:14px;font-family:var(--serif);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#7A5F3C}
@@ -207,6 +207,8 @@ footer{color:#4F4D49!important}
 .filters button[aria-pressed="true"]{background:#151517;color:#E6E4DF;border-color:#151517}
 #sheet{position:fixed;inset:0;z-index:80;background:#0B0B0C;color:#fff;display:none;grid-template-columns:minmax(0,1fr) auto;overflow:hidden}
 #sheet.on{display:grid}
+/* Com a ficha aberta, esconde a barra do site (o overlay tem a sua própria: nome + ‹ › Fechar). */
+body.lsv-sheet-open #lsv-head{display:none}
 #sheet .bg{position:absolute;inset:0;background:center/cover;filter:blur(48px) brightness(.3) saturate(.8);transform:scale(1.15)}
 #sheet .photo{position:relative;grid-column:2;height:100svh;aspect-ratio:2/3;max-width:70vw;background:center/cover;box-shadow:-40px 0 90px rgba(0,0,0,.5)}
 #sheet .info{position:relative;grid-column:1;grid-row:1;align-self:center;min-width:0;padding:clamp(90px,14vh,140px) clamp(22px,4vw,64px) clamp(40px,7vh,80px);display:flex;flex-direction:column;gap:clamp(20px,3vh,32px);overflow-y:auto;max-height:100%}

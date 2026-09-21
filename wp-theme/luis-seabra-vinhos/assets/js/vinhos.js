@@ -35,9 +35,10 @@
     // acento por vinho
     if (w.tom) { sheet.style.setProperty('--tom', w.tom); }
     sheet.classList.add('on');
+    document.body.classList.add('lsv-sheet-open');
     document.body.style.overflow = 'hidden';
   }
-  function close() { sheet.classList.remove('on'); document.body.style.overflow = ''; }
+  function close() { sheet.classList.remove('on'); document.body.classList.remove('lsv-sheet-open'); document.body.style.overflow = ''; }
   function step(d) { open((cur + d + W.length) % W.length); }
 
   // Cartões → abrir overlay (sem navegar)
