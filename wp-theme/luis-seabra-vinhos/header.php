@@ -29,20 +29,11 @@ function lsv_nav_is_current( $item ) {
 
 <header id="lsv-head">
 	<a class="wm" href="<?php echo esc_url( function_exists( 'pll_home_url' ) ? pll_home_url() : home_url( '/' ) ); ?>">Luís Seabra<small>Vinhos</small></a>
+	<?php $sw = function_exists( 'lsv_language_switcher' ) ? lsv_language_switcher() : ''; ?>
 	<nav>
-		<?php
-		foreach ( $lsv_nav as $item ) :
-			if ( 'home' === $item['kind'] ) {
-				continue; // a nav inline não mostra "Início" (o wordmark faz isso).
-			}
-			$cur = lsv_nav_is_current( $item ) ? ' aria-current="page"' : '';
-			printf( '<a href="%s"%s>%s</a>', esc_url( lsv_nav_url( $item ) ), $cur, esc_html( pll__( $item['label'] ) ) );
-		endforeach;
-		?>
-		<?php $sw = function_exists( 'lsv_language_switcher' ) ? lsv_language_switcher() : ''; ?>
 		<?php if ( $sw ) : ?><span class="lang"><?php echo wp_kses_post( $sw ); ?></span><?php endif; ?>
+		<button class="menu-btn" type="button" onclick="document.getElementById('lsv-menu').classList.add('on')"><?php pll_e( 'Menu' ); ?></button>
 	</nav>
-	<button class="menu-btn" type="button" onclick="document.getElementById('lsv-menu').classList.add('on')"><?php pll_e( 'Menu' ); ?></button>
 </header>
 
 <div id="lsv-menu">

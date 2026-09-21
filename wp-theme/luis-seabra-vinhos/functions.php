@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LSV_VERSION', '1.0.4' );
+define( 'LSV_VERSION', '1.0.5' );
 define( 'LSV_DIR', get_template_directory() );
 define( 'LSV_URI', get_template_directory_uri() );
 

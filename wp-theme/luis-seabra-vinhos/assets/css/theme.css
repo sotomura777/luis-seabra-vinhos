@@ -45,7 +45,7 @@ footer{padding:clamp(40px,6vh,64px) clamp(24px,6vw,104px);display:flex;flex-wrap
 
 header .wm{white-space:nowrap;flex:0 0 auto}header nav a{white-space:nowrap}
 header .menu-btn{display:none;background:none;border:1px solid currentColor;color:inherit;font:inherit;font-size:10px;letter-spacing:.3em;text-transform:uppercase;padding:9px 14px;cursor:pointer}
-header .menu-btn{display:inline-flex;margin-left:12px}@media (max-width:1180px){header nav{display:none}}
+header .menu-btn{display:inline-flex;margin-left:12px}
 /* contrast-fix */
 .lt{color:var(--lt-ink)}.lt .muted,.lt p{color:#2E2B27}.lt .cap{color:#5A5650}.lt .row .v small{color:#3B3833}
 .lt input,.lt textarea{color:var(--lt-ink)!important;border-bottom-color:rgba(21,21,23,.35)!important}
