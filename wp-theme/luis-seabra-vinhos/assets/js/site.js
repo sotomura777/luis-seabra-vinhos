@@ -57,85 +57,154 @@
   // Idêntico ao site estático: seek por evento de scroll + rAF, sem estados
   // presos, com o "unlock" de autoplay mudo necessário ao seek.
   // ---------------------------------------------------------------------------
+  // Scrub por SEQUÊNCIA DE IMAGENS desenhadas num <canvas> (~0ms/frame),
+  // em vez de saltar num <video> (seek caro → encrava, ainda pior via túnel).
   function initHero() {
-    var a = document.getElementById('lsv-vid-a');
-    var b = document.getElementById('lsv-vid-b');
     var pin = document.getElementById('top');
+    var stage = pin ? pin.firstElementChild : null;
+    var canvas = document.getElementById('lsv-canvas');
     var head = document.getElementById('lsv-head');
     var name = document.getElementById('lsv-name');
     var prog = document.getElementById('lsv-prog');
     var caps = [1, 2, 3].map(function (i) { return document.getElementById('lsv-cap-' + i); });
-    if (!a || !b || !pin) return;
+    if (!pin || !canvas) return;
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    // desbloqueio do seek: alguns browsers só deixam mexer no currentTime
-    // depois de um play() (mesmo mudo). Tocar e pausar de imediato.
-    [a, b].forEach(function (v) {
-      v.muted = true; v.pause();
-      var p = v.play();
-      if (p && p.then) p.then(function () { v.pause(); v.currentTime = 0; }).catch(function () {});
-    });
-
-    var dur = function (v) { return (isFinite(v.duration) && v.duration > 0 ? v.duration : 6); };
+    var BASE = window.LSV_HERO_BASE || 'assets/hero/';
     var clamp = function (x, lo, hi) { return Math.max(lo, Math.min(hi, x)); };
     var band = function (p, s, e, f) { return clamp(Math.min((p - s) / f, (e - p) / f), 0, 1); };
+    var smooth = function (t) { return t * t * (3 - 2 * t); };
+    var pad3 = function (n) { return ('00' + n).slice(-3); };
 
-    var seekTo = function (v, T) {
-      if (v.readyState < 1 || v.seeking) return;
-      var t = clamp(T, 0, dur(v));
-      if (Math.abs(t - v.currentTime) > 0.01) v.currentTime = t;
+    // A = a garrafa aparece, B = o copo enche
+    var SRC_W = 640, SRC_H = 854, HAND = 0.46, CF = 0.03, NA = 60, NB = 80;
+    var A = new Array(NA), B = new Array(NB);
+    var urlA = function (i) { return BASE + 'a-' + pad3(i + 1) + '.jpg'; };
+    var urlB = function (i) { return BASE + 'b-' + pad3(i + 1) + '.jpg'; };
+
+    var loadedAny = false, headLight = null, pinBottom = 0;
+    var posv = 0, target = 0, lastT = 0, running = false;
+    var stepN = 1, buildW = SRC_W, buildH = SRC_H, builtW = 0, fails = 0, jobs = [], ji = 0, rzT;
+
+    var computeBuild = function () {
+      var cw = stage ? stage.clientWidth : window.innerWidth;
+      var ch = stage ? stage.clientHeight : window.innerHeight;
+      stepN = cw < 700 ? 2 : 1;
+      buildW = Math.round(clamp(Math.min(cw, ch * SRC_W / SRC_H), 340, SRC_W));
+      buildH = Math.round(buildW * SRC_H / SRC_W);
     };
+    var resizeCanvas = function () {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var cw = stage ? stage.clientWidth : window.innerWidth;
+      var ch = stage ? stage.clientHeight : window.innerHeight;
+      canvas.width = Math.max(1, Math.round(cw * dpr));
+      canvas.height = Math.max(1, Math.round(ch * dpr));
+    };
+    computeBuild(); resizeCanvas();
 
-    var HAND = 0.48;
-    var apply = function (p) {
-      var onB = p >= HAND;
-      var pa = clamp(p / HAND, 0, 1);
-      var pb = clamp((p - HAND) / (1 - HAND), 0, 1);
-      if (!a.paused) a.pause();
-      if (!b.paused) b.pause();
-      if (onB) {
-        seekTo(b, pb * (dur(b) - 0.02));
-        seekTo(a, dur(a) - 0.02);
-      } else {
-        seekTo(a, pa * (dur(a) - 0.02));
+    var drawFit = function (bmp, alpha) {
+      if (!bmp) return;
+      var s = Math.min(canvas.width / bmp.width, canvas.height / bmp.height);
+      var w = bmp.width * s, h = bmp.height * s;
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(bmp, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
+      ctx.globalAlpha = 1;
+    };
+    var pick = function (arr, idx) {
+      idx = clamp(idx, 0, arr.length - 1);
+      if (arr[idx]) return arr[idx];
+      for (var d = 1; d < arr.length; d++) {
+        if (arr[idx - d]) return arr[idx - d];
+        if (arr[idx + d]) return arr[idx + d];
       }
-      a.style.opacity = onB ? '0' : '1';
-      b.style.opacity = onB ? '1' : '0';
+      return null;
+    };
+    var drawFrame = function (p) {
+      if (!loadedAny) return;
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      var ai = Math.round(clamp(p / HAND, 0, 1) * (NA - 1));
+      var bi = Math.round(clamp((p - HAND) / (1 - HAND), 0, 1) * (NB - 1));
+      var bAlpha = smooth(clamp((p - (HAND - CF)) / (2 * CF), 0, 1));
+      if (bAlpha < 1) drawFit(pick(A, ai), 1);
+      if (bAlpha > 0) drawFit(pick(B, bi), bAlpha);
+    };
+    var overlays = function (p) {
       if (prog) prog.style.width = (p * 100).toFixed(2) + '%';
       if (name) {
-        var o = clamp(1 - p / 0.09, 0, 1);
-        name.style.opacity = String(o);
+        name.style.opacity = String(clamp(1 - p / 0.09, 0, 1));
         name.style.transform = 'translateY(' + (-p * 90).toFixed(1) + 'px)';
       }
       if (caps[0]) caps[0].style.opacity = String(band(p, 0.16, 0.40, 0.06));
       if (caps[1]) caps[1].style.opacity = String(band(p, 0.46, 0.68, 0.06));
       if (caps[2]) caps[2].style.opacity = String(band(p, 0.76, 1.1, 0.06));
       if (head) {
-        var light = window.scrollY > pin.offsetTop + pin.offsetHeight - 110;
-        head.style.color = light ? '#000000' : '#FFFFFF';
-        head.style.backgroundColor = light ? 'rgba(255,255,255,.92)' : 'transparent';
-        head.style.backdropFilter = light ? 'blur(6px)' : 'none';
+        var light = window.scrollY > pinBottom;
+        if (light !== headLight) {
+          headLight = light;
+          head.style.color = light ? '#000000' : '#FFFFFF';
+          head.style.backgroundColor = light ? 'rgba(255,255,255,.92)' : 'transparent';
+          head.style.backdropFilter = light ? 'blur(6px)' : 'none';
+        }
       }
     };
+    var apply = function (p) { drawFrame(p); overlays(p); };
 
-    var pos = 0, target = 0, lastT = 0;
-    var step = function (nowT) {
+    // decodifica com downscale garantido (Safari ignora resize do createImageBitmap)
+    var canBitmap = typeof createImageBitmap === 'function';
+    var decode = function (blob) {
+      if (buildW >= SRC_W) return createImageBitmap(blob);
+      return createImageBitmap(blob).then(function (big) {
+        var c = document.createElement('canvas');
+        c.width = buildW; c.height = buildH;
+        c.getContext('2d').drawImage(big, 0, 0, buildW, buildH);
+        if (big.close) big.close();
+        return createImageBitmap(c);
+      });
+    };
+    var loadInto = function (arr, idx, url) {
+      return fetch(url).then(function (r) { return r.blob(); }).then(decode).then(function (bmp) {
+        var old = arr[idx]; arr[idx] = bmp; if (old && old.close) old.close();
+        loadedAny = true;
+        if (!running) apply(posv);
+      }).catch(function () { fails++; });
+    };
+    var pump = function () { if (ji >= jobs.length || fails > 12) return; var j = jobs[ji++]; loadInto(j[0], j[1], j[2]).then(pump); };
+    var startLoading = function () {
+      builtW = buildW;
+      jobs = [[A, 0, urlA(0)], [A, NA - 1, urlA(NA - 1)], [B, 0, urlB(0)], [B, NB - 1, urlB(NB - 1)]];
+      for (var i = 0; i < NA; i += stepN) jobs.push([A, i, urlA(i)]);
+      for (var k = 0; k < NB; k += stepN) jobs.push([B, k, urlB(k)]);
+      ji = 0; fails = 0;
+      for (var m = 0; m < 6; m++) pump();
+    };
+    if (canBitmap) startLoading();
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var tick = function (nowT) {
       var dt = lastT ? Math.min(0.05, (nowT - lastT) / 1000) : 0.016;
       lastT = nowT;
-      pos += (target - pos) * (1 - Math.exp(-dt * 12));
-      if (Math.abs(target - pos) < 0.0004) pos = target;
-      apply(pos);
+      if (reduce) { posv = target; apply(posv); running = false; return; }
+      posv += (target - posv) * (1 - Math.exp(-dt * 11));
+      if (Math.abs(target - posv) > 0.0006) { apply(posv); requestAnimationFrame(tick); }
+      else { posv = target; apply(posv); running = false; }
     };
+    var kick = function () { if (!running && !reduce) { running = true; lastT = 0; requestAnimationFrame(tick); } };
+
     var readTarget = function () {
       var r = pin.getBoundingClientRect();
-      var span = pin.offsetHeight - window.innerHeight;
+      var span = r.height - window.innerHeight;
       target = clamp(-r.top / (span > 0 ? span : 1), 0, 1);
+      pinBottom = window.scrollY + r.top + r.height - 110;
     };
-
-    window.addEventListener('scroll', function () { readTarget(); step(performance.now()); }, { passive: true });
-    readTarget(); pos = target; apply(pos);
-
-    var tick = function () { step(performance.now()); requestAnimationFrame(tick); };
-    requestAnimationFrame(tick);
+    window.addEventListener('scroll', function () { readTarget(); if (reduce) { posv = target; apply(posv); } else kick(); }, { passive: true });
+    window.addEventListener('resize', function () {
+      resizeCanvas(); apply(posv);
+      clearTimeout(rzT);
+      rzT = setTimeout(function () { computeBuild(); resizeCanvas(); if (canBitmap && buildW > builtW + 8) startLoading(); apply(posv); }, 200);
+    }, { passive: true });
+    readTarget(); apply(target);
   }
 
   function boot() { initMenu(); initReveal(); initChapterIndex(); initHero(); }

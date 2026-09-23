@@ -9,10 +9,15 @@ $cap1 = lsv_setting( 'hero_cap1', 'Uma vinha de 80 anos, plantada em xisto micá
 $cap2 = lsv_setting( 'hero_cap2', 'Fermentação espontânea, cachos inteiros, extração mínima.' );
 $cap3 = lsv_setting( 'hero_cap3', 'Framboesa, cereja ácida, pedra molhada. 12% de álcool.' );
 ?>
-<section id="top" data-screen-label="Hero vídeo" style="position:relative; height:560vh; background:#000000">
+<section id="top" data-screen-label="Hero" style="position:relative; height:400vh; background:#000000">
 	<div class="lsv-hero-sticky" style="position:sticky; top:0; height:100svh; overflow:hidden; background:#000000">
-		<video id="lsv-vid-a" src="<?php echo esc_url( LSV_URI . '/assets/videos/video-6.mp4' ); ?>" muted playsinline preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:1"></video>
-		<video id="lsv-vid-b" src="<?php echo esc_url( LSV_URI . '/assets/videos/video-5.mp4' ); ?>" muted playsinline preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0"></video>
+		<?php
+		// Fotogramas do hero, servidos a partir do próprio tema.
+		$lsv_hero_base = LSV_URI . '/assets/hero/';
+		?>
+		<script>window.LSV_HERO_BASE = <?php echo wp_json_encode( $lsv_hero_base ); ?>;</script>
+		<img id="lsv-poster" src="<?php echo esc_url( LSV_URI . '/assets/hero/a-001.jpg' ); ?>" alt="Luís Seabra Vinhos — Douro, Dão, Vinho Verde" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain" />
+		<canvas id="lsv-canvas" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; display:block"></canvas>
 
 		<div id="lsv-name" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(14px,2.6vh,26px); text-align:center; color:#FFFFFF; padding:0 clamp(20px,5vw,60px); pointer-events:none">
 			<span style="font-size:clamp(26px,6.4vw,74px); letter-spacing:.24em; text-transform:uppercase; font-weight:300; line-height:1.15; padding-left:.24em">Luís Seabra</span>
