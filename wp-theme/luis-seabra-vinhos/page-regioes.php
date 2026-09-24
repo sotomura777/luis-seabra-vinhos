@@ -69,11 +69,11 @@ svg#map{display:block;width:100%;flex:1 1 auto;min-height:0;overflow:visible}
 		<span class="lbl"><?php pll_e( 'As parcelas' ); ?></span>
 		<div style="margin-top:clamp(22px,4vh,38px)">
 			<div class="prow" style="border-top:none;cursor:default"><span class="lbl"><?php pll_e( 'Lugar' ); ?></span><span class="lbl"><?php pll_e( 'Região' ); ?></span><span class="lbl"><?php pll_e( 'Solo' ); ?></span><span class="lbl"><?php pll_e( 'Vinho' ); ?></span></div>
-			<div class="prow" data-go="douro"><span class="nm"><i style="background:var(--douro)"></i>Meda</span><span class="mt muted">Douro Superior</span><span class="mt muted"><?php echo esc_html( pll__( 'Xisto micáceo, 650–700 m' ) ); ?></span><span class="mt muted">Xisto Cru Branco</span></div>
-			<div class="prow" data-go="douro"><span class="nm"><i style="background:var(--douro)"></i>Alvites</span><span class="mt muted">Mirandela</span><span class="mt muted">Xisto</span><span class="mt muted">Xisto Cru</span></div>
-			<div class="prow" data-go="douro"><span class="nm"><i style="background:var(--douro)"></i>Alijó</span><span class="mt muted">Douro</span><span class="mt muted">Xisto</span><span class="mt muted">Indie Xisto</span></div>
-			<div class="prow" data-go="dao"><span class="nm"><i style="background:var(--dao)"></i>Vila Nova de Tazém</span><span class="mt muted">Gouveia, Dão</span><span class="mt muted">Granito</span><span class="mt muted">Granito Cru Branco</span></div>
-			<div class="prow" data-go="vv"><span class="nm"><i style="background:var(--vv)"></i>Melgaço</span><span class="mt muted">Monção e Melgaço</span><span class="mt muted">Granito</span><span class="mt muted">Granito Cru Alvarinho</span></div>
+			<div class="prow" data-go="douro"><span class="nm"><i style="background:var(--douro)"></i>Meda</span><span class="mt muted">Douro Superior</span><span class="mt muted"><?php echo esc_html( pll__( 'Xisto micáceo, 650–700 m' ) ); ?></span><span class="mt muted"><?php echo esc_html( pll__( 'Xisto Cru Branco' ) ); ?></span></div>
+			<div class="prow" data-go="douro"><span class="nm"><i style="background:var(--douro)"></i>Alvites</span><span class="mt muted">Mirandela</span><span class="mt muted"><?php echo esc_html( pll__( 'Xisto' ) ); ?></span><span class="mt muted">Xisto Cru</span></div>
+			<div class="prow" data-go="douro"><span class="nm"><i style="background:var(--douro)"></i>Alijó</span><span class="mt muted">Douro</span><span class="mt muted"><?php echo esc_html( pll__( 'Xisto' ) ); ?></span><span class="mt muted">Indie Xisto</span></div>
+			<div class="prow" data-go="dao"><span class="nm"><i style="background:var(--dao)"></i>Vila Nova de Tazém</span><span class="mt muted">Gouveia, Dão</span><span class="mt muted"><?php echo esc_html( pll__( 'Granito' ) ); ?></span><span class="mt muted"><?php echo esc_html( pll__( 'Granito Cru Branco' ) ); ?></span></div>
+			<div class="prow" data-go="vv"><span class="nm"><i style="background:var(--vv)"></i>Melgaço</span><span class="mt muted">Monção e Melgaço</span><span class="mt muted"><?php echo esc_html( pll__( 'Granito' ) ); ?></span><span class="mt muted">Granito Cru Alvarinho</span></div>
 		</div>
 	</div>
 </main>

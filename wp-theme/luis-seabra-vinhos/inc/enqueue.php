@@ -38,6 +38,7 @@ function lsv_enqueue_assets() {
 		wp_localize_script( 'lsv-regioes-map', 'LSV_MAP', array(
 			'mapUrl'    => LSV_URI . '/assets/data/mapa-pt.json',
 			'vinhosUrl' => get_post_type_archive_link( 'vinho' ),
+			'i18n'      => array_combine( array_keys( lsv_i18n_regioes() ), array_map( 'pll__', array_keys( lsv_i18n_regioes() ) ) ),
 		) );
 	}
 

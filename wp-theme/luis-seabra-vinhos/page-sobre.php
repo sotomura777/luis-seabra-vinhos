@@ -8,7 +8,7 @@
 
 get_header();
 $fotos    = LSV_URI . '/assets/img/fotos/';
-$testemunho = lsv_setting( 'sobre_testemunho', 'Após muitos anos a trabalhar para outros, decidi seguir o meu próprio caminho, em 2013 foi criada a Luis Seabra Vinhos, com a missão de criar vinhos que expressem o sítio de onde vêem, feitos com uma filosofia de intervenção mínima respeitando a sua natureza e o seu carácter. Queremos que os vinhos mostrem os diferentes solos onde estão plantadas as vinhas, as diferentes altitudes e exposições, as suas diferenças e semelhanças. Queremos acima de tudo criar vinhos que sejam únicos. Com a consciência que estes são apenas os primeiros passos de um longo caminho, a aventura é ainda descobrir vinhas velhas desconhecidas que vão resistindo ao longo dos anos. Ao longo dos anos que fui trabalhando na região, criei uma relação especial com estas vinhas velhas.' );
+$testemunho = lsv_setting( 'sobre_testemunho', pll__( 'Após muitos anos a trabalhar para outros, decidi seguir o meu próprio caminho, em 2013 foi criada a Luis Seabra Vinhos, com a missão de criar vinhos que expressem o sítio de onde vêem, feitos com uma filosofia de intervenção mínima respeitando a sua natureza e o seu carácter. Queremos que os vinhos mostrem os diferentes solos onde estão plantadas as vinhas, as diferentes altitudes e exposições, as suas diferenças e semelhanças. Queremos acima de tudo criar vinhos que sejam únicos. Com a consciência que estes são apenas os primeiros passos de um longo caminho, a aventura é ainda descobrir vinhas velhas desconhecidas que vão resistindo ao longo dos anos. Ao longo dos anos que fui trabalhando na região, criei uma relação especial com estas vinhas velhas.' ) );
 ?>
 
 <main>
@@ -39,6 +39,9 @@ $testemunho = lsv_setting( 'sobre_testemunho', 'Após muitos anos a trabalhar pa
 			);
 			foreach ( $timeline as $t ) :
 				list( $n, $chapter, $side, $h, $body, $src ) = $t;
+				$chapter = pll__( $chapter );
+				$h       = pll__( $h );
+				$body    = pll__( $body );
 				$ch   = '<div class="tl-ch">' . esc_html( $chapter ) . '</div>';
 				$card = '<div class="tl-body"><h3>' . esc_html( $h ) . '</h3><p>' . esc_html( $body ) . '</p>' . ( $src ? '<span class="tl-src">' . esc_html( $src ) . '</span>' : '' ) . '</div>';
 				?>
