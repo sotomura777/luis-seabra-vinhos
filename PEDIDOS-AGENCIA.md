@@ -1,20 +1,29 @@
-# O que pedir à empresa / agência atual (antes de migrar)
+# O que pedir à empresa, à Site.pt e à Cosmicode (antes de migrar)
 
 Lista pronta a adaptar para um email. O objetivo é ter **tudo em mãos antes de mexer em qualquer coisa** — em especial no DNS, para não interromper o email da empresa.
 
 ---
 
-## 1. Domínio e DNS (o ponto mais sensível)
-- [ ] Confirmar **quem é o titular** do domínio `luisseabravinhos.com` (deve ser a empresa, não a agência).
-- [ ] **Acesso ao registrar** (onde o domínio está registado) ou, no mínimo, acesso a editar os registos DNS.
-- [ ] **Código de transferência (EPP/Auth)** do domínio — caso se queira transferir o domínio para a titularidade/registrar da empresa.
-- [ ] **Export ou print de todos os registos DNS atuais**: `A`, `AAAA`, `CNAME`, **`MX`**, `TXT` (SPF/DKIM/DMARC), `NS`.
-  > Isto é essencial: precisamos de saber para onde apontam os `MX` para **os preservarmos intactos** e nunca cortar o email.
+## Quem tem o quê (verificado em 2026-09-24 pelos registos públicos do domínio)
+| Peça | Onde está | Custo atual |
+|---|---|---|
+| Domínio `luisseabravinhos.com` (expira a **2 jul 2027**) | **Site.pt** | 128,95 €/ano (junto com o email) |
+| DNS (`ns7/ns8.sitedns.pt`) | **Site.pt** | incluído |
+| Email (`mail.luisseabravinhos.com`, servidor próprio) | **Site.pt** | incluído |
+| Site atual (servidor na DigitalOcean) | **Cosmicode** (agência) | 260 €/ano (alojamento + manutenção) |
 
-## 2. Email @luisseabravinhos.com (não pode parar)
-- [ ] **Onde estão alojadas as caixas de correio?** (cPanel/host, Google Workspace, Microsoft 365, outro?)
-- [ ] Confirmar que **mudar o site NÃO obriga a mudar o email**.
-- [ ] Registos de email atuais: **MX, SPF, DKIM, DMARC** (fazem parte do export do ponto 1).
+**Consequência:** para mudar o site só precisamos da **conta da Site.pt** (onde está o DNS). A Cosmicode não é precisa para nada técnico. O email não é afetado, porque tem endereço próprio (`mail.`), separado do site.
+
+## 1. Site.pt — domínio, DNS e email (pedir à empresa)
+- [ ] **Quem tem o login da conta Site.pt** da empresa? Precisamos de acesso (ou de alguém que faça a alteração connosco no dia).
+- [ ] Confirmar que o domínio está **em nome da empresa** (e não de uma pessoa ou agência).
+- [ ] **Quantas caixas de email** têm (para avaliar se os 128,95 €/ano são bom preço).
+- [x] ~~Export dos registos DNS~~ — já levantados publicamente: MX → `mail.luisseabravinhos.com` (167.235.169.140); SPF `v=spf1 +a +mx +ip4:167.235.169.140 +ip4:94.126.174.29 ~all`; DKIM e DMARC (`p=none`) configurados.
+  > No dia da mudança: alterar **só** o registo `A` (e `www`) para o novo alojamento, e acrescentar ao SPF o serviço de envio de emails do site novo. **Nunca mexer no MX nem em `mail.`.**
+
+## 2. Cosmicode — site atual (pedir à agência, via empresa)
+- [ ] Data de fim do contrato / aviso prévio para **cancelar os 260 €/ano** — cancelar só **depois** de o site novo estar no ar e testado.
+- [ ] (Opcional) Imagens originais em alta resolução e PDFs das fichas técnicas, se não os tiverem do lado da empresa.
 
 ## 3. Conteúdo e ficheiros do site atual
 - [ ] **Código-fonte completo** do site atual.
@@ -70,7 +79,7 @@ Regra de ouro no cutover: **muda-se só o registo `A` (e `www`) para o novo aloj
 
 ---
 
-## Email pronto a enviar à empresa (secções 8–10) — POR ENVIAR
+## Email pronto a enviar à empresa — POR ENVIAR
 
 > Olá,
 >
@@ -93,5 +102,8 @@ Regra de ouro no cutover: **muda-se só o registo `A` (e `www`) para o novo aloj
 > 10. Mailchimp: a chave de API e o ID da lista, para a newsletter passar a funcionar sozinha.
 > 11. Uma conta Google Drive para os backups automáticos.
 > 12. Acesso ao Google Search Console do domínio.
+> 13. Quem tem o login da conta da Site.pt (onde está o domínio e o email)? No dia da mudança só precisamos de alterar lá um registo — os emails não são afetados.
+> 14. Quantas caixas de email @luisseabravinhos.com têm atualmente?
+> 15. Qual é o prazo de aviso para cancelar o contrato com a Cosmicode? (Só cancelamos depois de o site novo estar no ar.)
 >
 > Obrigado!
