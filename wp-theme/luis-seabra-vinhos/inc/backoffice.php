@@ -262,3 +262,16 @@ function lsv_settings_intro( $post ) {
 	}
 	echo '</p></div>';
 }
+
+/* --- Vindimas: a ordem na lista segue sempre o ano (uma vindima nova não fica perdida no fim). --- */
+add_action( 'acf/save_post', function ( $post_id ) {
+	if ( 'vindima' !== get_post_type( $post_id ) ) {
+		return;
+	}
+	$ano = (int) get_field( 'vindima_ano', $post_id );
+	if ( $ano ) {
+		global $wpdb; // update direto: wp_update_post voltaria a disparar o save
+		$wpdb->update( $wpdb->posts, array( 'menu_order' => $ano ), array( 'ID' => (int) $post_id ) );
+		clean_post_cache( $post_id );
+	}
+}, 20 );

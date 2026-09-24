@@ -194,10 +194,11 @@ function lsv_register_acf_fields() {
 		'title'    => 'Detalhes da menção',
 		'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'imprensa' ) ) ),
 		'fields'   => array(
-			array( 'key' => 'field_imprensa_fonte', 'label' => 'Fonte', 'name' => 'imprensa_fonte', 'type' => 'text' ),
-			array( 'key' => 'field_imprensa_pontuacao', 'label' => 'Pontuação', 'name' => 'imprensa_pontuacao', 'type' => 'text', 'instructions' => 'Ex.: "97 · 94".' ),
-			array( 'key' => 'field_imprensa_data', 'label' => 'Data', 'name' => 'imprensa_data', 'type' => 'text', 'instructions' => 'Ex.: "Porto · Fevereiro 2026".' ),
-			array( 'key' => 'field_imprensa_link', 'label' => 'Link', 'name' => 'imprensa_link', 'type' => 'url' ),
+			array( 'key' => 'field_imprensa_msg', 'label' => '', 'type' => 'message', 'message' => 'O <strong>título</strong> é o nome do artigo ou do prémio; no texto principal ponha a citação ou um resumo curto. As menções novas aparecem em primeiro lugar. A versão em inglês escreve-se na versão EN (caixa "Languages", à direita).' ),
+			array( 'key' => 'field_imprensa_fonte', 'label' => 'Fonte', 'name' => 'imprensa_fonte', 'type' => 'text', 'instructions' => 'Quem publicou. Ex.: "Wineanorak", "Falstaff". Aparece na secção de notícias da página inicial.' ),
+			array( 'key' => 'field_imprensa_pontuacao', 'label' => 'Pontuação', 'name' => 'imprensa_pontuacao', 'type' => 'text', 'instructions' => 'Opcional. Ex.: "97 · 94".' ),
+			array( 'key' => 'field_imprensa_data', 'label' => 'Data', 'name' => 'imprensa_data', 'type' => 'text', 'instructions' => 'Como deve aparecer. Ex.: "29 Jun 2026".' ),
+			array( 'key' => 'field_imprensa_link', 'label' => 'Link', 'name' => 'imprensa_link', 'type' => 'url', 'instructions' => 'Endereço do artigo (aparece o botão "Ler mais"). Se for um episódio do Spotify, aparece o botão para ouvir.' ),
 		),
 	) );
 
@@ -207,8 +208,9 @@ function lsv_register_acf_fields() {
 		'title'    => 'Detalhes da vindima',
 		'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'vindima' ) ) ),
 		'fields'   => array(
-			array( 'key' => 'field_vindima_ano', 'label' => 'Ano', 'name' => 'vindima_ano', 'type' => 'number' ),
-			array( 'key' => 'field_vindima_periodo', 'label' => 'Período', 'name' => 'vindima_periodo', 'type' => 'text', 'instructions' => 'Ex.: "23 Set - 02 Out".' ),
+			array( 'key' => 'field_vindima_msg', 'label' => '', 'type' => 'message', 'message' => 'Título: região e ano (ex.: "Douro 2025"). No texto principal descreva o ano. <strong>Escolha a região na caixa "Regiões", à direita — sem região, a vindima não aparece no site.</strong> A ordem na lista é automática, pelo ano.' ),
+			array( 'key' => 'field_vindima_ano', 'label' => 'Ano', 'name' => 'vindima_ano', 'type' => 'number', 'min' => 2000, 'max' => 2100, 'required' => 1 ),
+			array( 'key' => 'field_vindima_periodo', 'label' => 'Período da vindima', 'name' => 'vindima_periodo', 'type' => 'text', 'instructions' => 'Datas de início e fim. Ex.: "23 Set - 02 Out".' ),
 		),
 	) );
 
