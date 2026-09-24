@@ -20,7 +20,7 @@ Lista pronta a adaptar para um email. O objetivo é ter **tudo em mãos antes de
 - [ ] **Código-fonte completo** do site atual.
 - [ ] **Backup da base de dados**.
 - [ ] **Todas as imagens** em alta resolução (vinhos, vinhas, regiões, equipa).
-- [ ] **PDFs das fichas técnicas** de cada vinho.
+- [ ] **PDFs das fichas técnicas** de cada vinho (os 10). _Os dados técnicos já foram copiados do site atual; faltam só os PDFs para descarregar._
 - [ ] **Textos** de todas as páginas (PT e EN, se existirem) — sobre, regiões, vinhos, imprensa, etc.
 - [ ] **Lista de prémios / imprensa** (fonte, pontuação, data, link).
 
@@ -28,7 +28,7 @@ Lista pronta a adaptar para um email. O objetivo é ter **tudo em mãos antes de
 - [ ] Acesso (ou verificação de propriedade) à **Google Search Console** do domínio atual.
 - [ ] **URL do sitemap antigo** (`/sitemap.xml`), se existir.
 - [ ] **Lista de URLs antigos** indexados (exportável da Search Console) — para fazer os redirects 301.
-- [ ] **Estrutura de URLs atual** (ex.: `/pt/vinhos/nome-do-vinho`) para desenhar as regras.
+- [x] ~~**Estrutura de URLs atual**~~ — levantada a partir do código do site atual; redirects 301 já feitos (`inc/redirects.php`).
 - [ ] Redirects já existentes, se os houver.
 
 ## 5. Analytics
@@ -42,6 +42,26 @@ Lista pronta a adaptar para um email. O objetivo é ter **tudo em mãos antes de
 ## 7. Acessos gerais
 - [ ] Acesso ao **painel de alojamento atual** (para retirar ficheiros/BD, se preciso).
 - [ ] Qualquer **conta de serviço** ligada ao site (mapas, chat, etc.).
+
+## 8. Confirmações de conteúdo (levantadas em 2026-09-24)
+- [ ] **Xisto Ilimitado Tinto — castas:** no site atual, a versão PT e a EN têm listas diferentes. Usámos a PT (Touriga Franca, Malvasia Preta, Alicante Bouschet, Tinta Roriz, Tinta Barroca, Tinta Amarela e outras). Qual é a certa?
+- [ ] **Mono M — plantas por hectare:** no site atual aparece só "." — qual é o valor?
+- [ ] **Cronologia (página Sobre):** a feira da estreia chama-se "Vinhos e Sabores" ou "Vinhos e Sabor"?
+- [ ] **Imprensa:** texto original em inglês das citações da **Falstaff** e do **@thevineswinemakers** (as versões EN do site foram traduzidas por nós).
+- [ ] **Contactos:** confirmar moradas, telefones e email das 3 moradas (Sede/Adega, Armazém Lamego, Escritório) — vieram do site atual.
+- [ ] **Fotos das parcelas/regiões** (Douro, Dão, Vinho Verde) — hoje o site usa fotos genéricas.
+- [ ] **Logótipo em ficheiro vetorial** (SVG/PDF), para o ícone do separador do browser (favicon).
+
+## 9. Política de Privacidade (antes de publicar)
+- [ ] Confirmar o **prazo de guarda** de marcações, pedidos e mensagens (proposta: 2 anos após o último contacto).
+- [ ] **Revisão jurídica** do texto (rascunho em `/politica-de-privacidade/` e `/en/privacy-policy/`).
+- [ ] _(Interno)_ Preencher na política o **fornecedor de alojamento** e o **fornecedor de envio de email**, quando estiverem escolhidos.
+
+## 10. Contas a ligar (quando houver acesso)
+- [ ] **Google Analytics:** criar uma propriedade GA4 na conta Google da empresa (ou dar-nos acesso) → código `G-…` para o `wp-config.php`. Retenção de dados: 14 meses; Google Signals desligado.
+- [ ] **Mailchimp:** API key + Audience ID → `wp-config.php` (a newsletter passa a sincronizar sozinha).
+- [ ] **Google Drive** para os backups automáticos (UpdraftPlus).
+- [ ] **Google Search Console** do domínio (ponto 4).
 
 ---
 
