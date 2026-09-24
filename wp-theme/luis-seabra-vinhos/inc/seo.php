@@ -59,6 +59,21 @@ function lsv_meta_description() {
 	return $tag ? $tag : pll__( 'Vinhos de xisto e granito do Douro, Dão e Vinho Verde, por Luís Seabra.' );
 }
 
+/* --- Título dos arquivos (Imprensa/Vindimas): nome traduzido em vez de "Imprensa Archive" --- */
+function lsv_archive_title( $title ) {
+	$labels = array( 'imprensa' => 'Imprensa', 'vindima' => 'Vindimas' );
+	foreach ( $labels as $type => $label ) {
+		if ( is_post_type_archive( $type ) ) {
+			return pll__( $label ) . ' - ' . get_bloginfo( 'name' );
+		}
+	}
+	return $title;
+}
+add_filter( 'rank_math/frontend/title', 'lsv_archive_title' );
+add_filter( 'pre_get_document_title', function ( $title ) {
+	return lsv_seo_plugin_active() ? $title : lsv_archive_title( $title );
+} );
+
 /* --- Evitar canonical duplicado: usamos o nosso, tiramos o do core --- */
 add_action( 'init', function () {
 	if ( ! lsv_seo_plugin_active() ) {
