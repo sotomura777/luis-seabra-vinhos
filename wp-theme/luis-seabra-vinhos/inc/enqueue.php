@@ -13,13 +13,8 @@ add_action( 'wp_enqueue_scripts', 'lsv_enqueue_assets' );
 
 function lsv_enqueue_assets() {
 
-	// Fontes: Bodoni Moda (títulos) + Jost (corpo).
-	wp_enqueue_style(
-		'lsv-fonts',
-		'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@200;300;400;500&display=swap',
-		array(),
-		null
-	);
+	// Fontes: Bodoni Moda (títulos) + Jost (corpo), servidas pelo próprio site (RGPD: sem pedidos à Google).
+	wp_enqueue_style( 'lsv-fonts', LSV_URI . '/assets/css/fonts.css', array(), LSV_VERSION );
 
 	// CSS do tema (header do WP em style.css; sistema visual em theme.css).
 	wp_enqueue_style( 'lsv-style', get_stylesheet_uri(), array( 'lsv-fonts' ), LSV_VERSION );
@@ -72,10 +67,11 @@ function lsv_sri_tag( $tag, $handle ) {
 }
 
 /**
- * Preconnect às fontes (pequena optimização, como no original).
+ * Pré-carrega as duas fontes mais usadas (latin) para não haver "salto" de letra.
  */
 add_action( 'wp_head', function () {
-	echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
-	echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+	foreach ( array( 'jost-normal-latin', 'bodoni-moda-normal-latin' ) as $f ) {
+		echo '<link rel="preload" href="' . esc_url( LSV_URI . '/assets/fonts/' . $f . '.woff2' ) . '" as="font" type="font/woff2" crossorigin>' . "\n";
+	}
 	echo '<meta name="theme-color" content="#000000">' . "\n";
 }, 1 );
