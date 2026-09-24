@@ -248,3 +248,23 @@ body.lsv-sheet-open #lsv-head{display:none}
 [style*="background:#FFFFFF"] a:hover, [style*="background:#F5F4F2"] a:hover { color:#6E6E6E; }
 /* Página do vinho em ecrã estreito: foto em cima, texto em baixo (as colunas lado a lado ficavam com ~200px cada). */
 @media (max-width:760px){.wine-single>section:first-child{grid-template-columns:1fr!important}.wine-single>section:first-child>div:nth-child(2){order:-1;min-height:70svh!important}.wine-single>section:first-child>div:first-child{padding-top:clamp(36px,6vh,60px)!important}}
+/* Rodapé: links legais. */
+footer .legal{display:flex;gap:18px;flex-wrap:wrap}footer .legal a,footer .legal button{font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;border-bottom:1px solid transparent;transition:border-color .2s}footer .legal a:hover,footer .legal button:hover,footer .legal a:focus-visible,footer .legal button:focus-visible{border-bottom-color:currentColor;outline:none}
+/* Aviso de cookies: "Recusar" e "Aceitar" com o mesmo destaque (exigência RGPD/CNPD). */
+#lsv-consent{position:fixed;z-index:80;left:clamp(12px,3vw,32px);right:clamp(12px,3vw,32px);bottom:calc(clamp(12px,3vw,32px) + env(safe-area-inset-bottom,0px));max-width:560px;background:#141416;color:#E9E6E0;border:1px solid rgba(185,155,107,.35);box-shadow:0 24px 60px rgba(0,0,0,.45);padding:22px 24px;display:flex;flex-direction:column;gap:18px;font-size:14px;line-height:1.7}
+#lsv-consent p{margin:0}#lsv-consent a{color:#D9C39E;border-bottom:1px solid currentColor;margin-left:4px}
+#lsv-consent .btns{display:flex;gap:10px;flex-wrap:wrap}
+#lsv-consent button{flex:1 1 140px;font:inherit;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;padding:13px 16px;background:transparent;color:#E9E6E0;border:1px solid rgba(233,230,224,.4);cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+#lsv-consent button:hover{border-color:#D9C39E;color:#D9C39E}#lsv-consent button:focus-visible{outline:2px solid #D9C39E;outline-offset:2px}#lsv-consent button:active{background:rgba(217,195,158,.12)}
+/* Imprensa: botão que carrega o leitor do Spotify. */
+.lsv-spotify{margin-top:18px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}.lsv-spotify button{font:inherit;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;background:none;border:0;border-bottom:1px solid currentColor;padding:0 0 2px;cursor:pointer;color:inherit}.lsv-spotify button:hover{opacity:.7}.lsv-spotify button:focus-visible{outline:2px solid currentColor;outline-offset:3px}.lsv-spotify small{font-size:12px;color:#6E6A64}
+/* Páginas de texto (page.php): Política de Privacidade, etc. */
+.legal-page{max-width:820px}.legal-body{margin-top:clamp(28px,5vh,48px);font-size:16px;line-height:1.8;color:var(--lt-ink-2)}
+.legal-body h2{font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.2vw,28px);color:var(--lt-ink);margin:2.2em 0 .6em;line-height:1.25}
+.legal-body h3{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--lt-ink);margin:1.8em 0 .4em;font-weight:400}
+.legal-body p,.legal-body ul{margin:0 0 1em}.legal-body ul{padding-left:1.2em}.legal-body li{margin:.35em 0}
+.legal-body a{color:var(--lt-ink);border-bottom:1px solid currentColor}.legal-body strong{color:var(--lt-ink);font-weight:400}
+.legal-body .tbl{overflow-x:auto;margin:0 0 1.2em}.legal-body table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px}.legal-body th,.legal-body td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--lt-hair)}.legal-body th{font-weight:400;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--lt-ink)}
+.legal-body mark{background:#F3E3B5;color:#151517;padding:0 4px}
+/* Nota de privacidade no fim dos formulários. */
+.form-note{margin:4px 0 0;font-size:12px;line-height:1.6;opacity:.75}.form-note a{border-bottom:1px solid currentColor}

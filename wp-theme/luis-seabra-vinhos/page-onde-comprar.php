@@ -74,6 +74,7 @@ $mercados = array(
 					<label style="<?php echo esc_attr( $lab ); ?>"><?php pll_e( 'Mensagem' ); ?><textarea name="mensagem" rows="3" style="<?php echo esc_attr( $in ); ?>; resize:vertical"></textarea></label>
 					<div aria-hidden="true" style="position:absolute; left:-9999px"><label><?php pll_e( 'Não preencher' ); ?><input type="text" name="lsv_hp" tabindex="-1" autocomplete="off"></label></div>
 					<button type="submit" class="lsv-btn-ghost" style="align-self:flex-start; margin-top:6px; background:none; border:1px solid #151517; color:#151517; font:inherit; font-size:11px; letter-spacing:.24em; text-transform:uppercase; padding:14px 24px; cursor:pointer"><?php pll_e( 'Enviar pedido' ); ?></button>
+					<?php lsv_form_privacy_note(); ?>
 				</form>
 			</div>
 		</div>

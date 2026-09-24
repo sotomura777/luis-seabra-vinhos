@@ -49,6 +49,7 @@ $lab = 'display:flex; flex-direction:column; gap:6px; font-size:10px; letter-spa
 			</div>
 
 			<button type="submit" class="lsv-btn-ghost" style="align-self:flex-start; margin-top:4px; background:none; border:1px solid #000; color:#000; font:inherit; font-size:11px; letter-spacing:.24em; text-transform:uppercase; padding:14px 22px; cursor:pointer"><?php pll_e( 'Enviar pedido' ); ?></button>
+			<?php lsv_form_privacy_note(); ?>
 		</form>
 	</div>
 </section>

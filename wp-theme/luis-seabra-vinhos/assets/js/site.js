@@ -225,7 +225,22 @@
     }, { passive: true });
   }
 
-  function boot() { initMenu(); initReveal(); initChapterIndex(); initHero(); initHeadHide(); }
+  // Imprensa: o leitor do Spotify (que põe cookies) só é carregado quando o visitante carrega no botão.
+  function initSpotify() {
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest('.lsv-spotify button');
+      if (!b) return;
+      var box = b.parentNode, f = document.createElement('iframe');
+      f.src = box.getAttribute('data-src');
+      f.title = box.getAttribute('data-title') || 'Spotify';
+      f.width = '100%'; f.height = '152';
+      f.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture');
+      f.style.cssText = 'border:0; border-radius:12px; display:block';
+      box.replaceChildren(f);
+    });
+  }
+
+  function boot() { initMenu(); initReveal(); initChapterIndex(); initHero(); initHeadHide(); initSpotify(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();

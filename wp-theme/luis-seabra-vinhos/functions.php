@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LSV_VERSION', '1.0.10' );
+define( 'LSV_VERSION', '1.0.13' );
 define( 'LSV_DIR', get_template_directory() );
 define( 'LSV_URI', get_template_directory_uri() );
 
@@ -41,6 +41,7 @@ require LSV_DIR . '/inc/reservas.php';
 require LSV_DIR . '/inc/security.php';
 require LSV_DIR . '/inc/seo.php';
 require LSV_DIR . '/inc/redirects.php';
+require LSV_DIR . '/inc/consent.php';
 require LSV_DIR . '/inc/backoffice.php';
 
 // Nota: o seeder (inc/seed-vinhos.php) NÃO é carregado aqui de propósito.

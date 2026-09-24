@@ -52,6 +52,7 @@ $label_css     = 'display:flex; flex-direction:column; gap:6px; font-size:10px; 
 				</div>
 
 				<button type="submit" class="lsv-cta lsv-cta-invert" style="align-self:flex-start; margin-top:4px; border:1px solid #FFFFFF; background:#FFFFFF; color:#000000; padding:14px 22px; font:inherit; font-size:11px; letter-spacing:.24em; text-transform:uppercase; cursor:pointer"><?php pll_e( 'Marcar visita' ); ?></button>
+				<?php lsv_form_privacy_note(); ?>
 			</form>
 		</div>
 
@@ -75,6 +76,7 @@ $label_css     = 'display:flex; flex-direction:column; gap:6px; font-size:10px; 
 				</div>
 
 				<button type="submit" class="lsv-sub-btn" style="background:none; border:1px solid rgba(255,255,255,.4); color:#FFFFFF; font:inherit; font-size:11px; letter-spacing:.24em; text-transform:uppercase; padding:13px 20px; cursor:pointer"><?php pll_e( 'Subscrever' ); ?></button>
+				<?php lsv_form_privacy_note(); ?>
 			</form>
 
 			<a href="mailto:<?php echo esc_attr( get_option( 'admin_email' ) ); ?>?subject=Importadores" style="margin-top:10px; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#C9C6C1; border-bottom:1px solid rgba(255,255,255,.3); align-self:flex-start; padding-bottom:2px"><?php pll_e( 'Importadores' ); ?></a>

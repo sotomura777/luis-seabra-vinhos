@@ -45,7 +45,11 @@ $q = new WP_Query( array(
 							<p style="margin:0; font-family:var(--sans); font-size:clamp(15px,1.15vw,17px); line-height:1.8; color:#2E2B27; max-width:70ch"><?php echo esc_html( wp_strip_all_tags( get_the_content() ) ); ?></p>
 						<?php endif; ?>
 						<?php if ( $spotify ) : ?>
-							<iframe title="<?php echo esc_attr( get_the_title() ); ?>" style="border-radius:12px; margin-top:18px; display:block" src="https://open.spotify.com/embed/episode/<?php echo esc_attr( $spotify ); ?>?theme=0" width="100%" height="152" frameborder="0" allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+							<?php // O leitor do Spotify põe cookies: só é carregado depois do clique (RGPD). ?>
+							<div class="lsv-spotify" data-src="https://open.spotify.com/embed/episode/<?php echo esc_attr( $spotify ); ?>?theme=0" data-title="<?php echo esc_attr( get_the_title() ); ?>">
+								<button type="button"><?php pll_e( 'Ouvir episódio' ); ?> &rarr;</button>
+								<small><?php pll_e( 'Ao carregar, o leitor do Spotify é aberto e pode guardar cookies.' ); ?></small>
+							</div>
 						<?php elseif ( $link ) : ?>
 							<a href="<?php echo esc_url( $link ); ?>" target="_blank" rel="noopener" style="display:inline-block; margin-top:14px; font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; border-bottom:1px solid currentColor; padding-bottom:2px"><?php pll_e( 'Ler mais' ); ?> &rarr;</a>
 						<?php endif; ?>

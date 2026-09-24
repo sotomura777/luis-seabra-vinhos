@@ -189,7 +189,7 @@ $locais = array(
 					<div class="f"><input id="p" name="tel" type="tel" autocomplete="tel"><label for="p"><?php pll_e( 'Telefone' ); ?></label></div>
 					<div class="f full"><textarea id="m" name="mensagem" rows="3"></textarea><label for="m"><?php pll_e( 'Mensagem' ); ?></label></div>
 					<div aria-hidden="true" style="position:absolute;left:-9999px"><label><?php pll_e( 'Não preencher' ); ?><input type="text" name="lsv_hp" tabindex="-1" autocomplete="off"></label></div>
-					<label class="consent"><input type="checkbox" required> <?php pll_e( 'Aceito que os meus dados sejam usados apenas para responder a este pedido.' ); ?></label>
+					<label class="consent"><input type="checkbox" required> <span><?php pll_e( 'Aceito que os meus dados sejam usados apenas para responder a este pedido.' ); ?><?php if ( lsv_privacy_url() ) : ?> <a href="<?php echo esc_url( lsv_privacy_url() ); ?>" style="border-bottom:1px solid currentColor"><?php pll_e( 'Política de Privacidade' ); ?></a><?php endif; ?></span></label>
 					<button class="send" type="submit"><span><?php pll_e( 'Enviar' ); ?></span><span class="ln"></span></button>
 				</form>
 			</div>
@@ -208,6 +208,7 @@ $locais = array(
 					<div class="f"><input id="ml" name="email" type="email" required><label for="ml"><?php pll_e( 'O seu email' ); ?></label></div>
 					<div aria-hidden="true" style="position:absolute;left:-9999px"><label><?php pll_e( 'Não preencher' ); ?><input type="text" name="lsv_hp" tabindex="-1" autocomplete="off"></label></div>
 					<button class="send" type="submit"><span><?php pll_e( 'Subscrever' ); ?></span><span class="ln"></span></button>
+					<?php lsv_form_privacy_note(); ?>
 				</form>
 			</div>
 		</div>

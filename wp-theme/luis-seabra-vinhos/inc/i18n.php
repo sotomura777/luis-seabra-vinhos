@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LSV_I18N_SEED', '2026-09-24-1' );
+define( 'LSV_I18N_SEED', '2026-09-24-2' );
 
 /**
  * @return array<string,string> msgid PT => tradução EN.
@@ -213,7 +213,7 @@ function lsv_i18n_map() {
 		// SEO.
 		'Vinhos de xisto e granito do Douro, Dão e Vinho Verde, por Luís Seabra. Vinhas velhas, intervenção mínima, desde 2013.' => 'Schist and granite wines from Douro, Dão and Vinho Verde, by Luís Seabra. Old vines, minimal intervention, since 2013.',
 		'Vinhos de xisto e granito do Douro, Dão e Vinho Verde, por Luís Seabra.' => 'Schist and granite wines from Douro, Dão and Vinho Verde, by Luís Seabra.',
-	), lsv_i18n_sobre(), lsv_i18n_regioes() );
+	), lsv_i18n_sobre(), lsv_i18n_regioes(), lsv_i18n_legal() );
 }
 
 /**
@@ -284,6 +284,24 @@ function lsv_i18n_regioes() {
 		'As vinhas não foram escolhidas por região, mas por solo. Xisto micáceo no Douro, granito no Dão e no vale do Minho — as mesmas castas dariam vinhos diferentes em cada um deles.' => 'The vineyards were not chosen by region but by soil. Mica schist in the Douro, granite in the Dão and the Minho valley — the same grapes would give different wines in each.',
 		'Carregue numa região do mapa. As manchas mais fortes são os concelhos onde estão as vinhas.' => 'Click a region on the map. The darker patches are the municipalities where the vineyards are.',
 		'Ver tudo'       => 'View all',
+	);
+}
+
+/**
+ * Privacidade: aviso de cookies, rodapé, nota nos formulários, Spotify.
+ *
+ * @return array<string,string>
+ */
+function lsv_i18n_legal() {
+	return array(
+		'Política de Privacidade' => 'Privacy Policy',
+		'Preferências de cookies' => 'Cookie preferences',
+		'Usamos cookies de estatística (Google Analytics) para perceber como o site é visitado. Só são ativados se aceitar.' => 'We use statistics cookies (Google Analytics) to understand how the site is visited. They are only activated if you accept.',
+		'Aceitar'        => 'Accept',
+		'Recusar'        => 'Decline',
+		'Ao enviar, os seus dados são tratados de acordo com a nossa' => 'By sending, your data is handled in accordance with our',
+		'Ouvir episódio' => 'Listen to episode',
+		'Ao carregar, o leitor do Spotify é aberto e pode guardar cookies.' => 'Clicking opens the Spotify player, which may set cookies.',
 	);
 }
 
