@@ -186,6 +186,7 @@ function lsv_welcome_widget() {
 		array( 'Adicionar notícia / prémio', admin_url( 'post-new.php?post_type=imprensa' ) ),
 		array( 'Nota de vindima', admin_url( 'post-new.php?post_type=vindima' ) ),
 		array( 'Marcações de visita', admin_url( 'edit.php?post_type=reserva' ) ),
+		array( 'Pedidos "Onde comprar" e contactos', admin_url( 'edit.php?post_type=pedido_compra' ) ),
 		array( 'Subscritores da newsletter', admin_url( 'edit.php?post_type=subscritor' ) ),
 	);
 	if ( $settings_id ) {
@@ -297,3 +298,35 @@ add_action( 'admin_head', function () {
 		remove_action( 'network_admin_notices', 'update_nag', 3 );
 	}
 }, 1 );
+
+/* --- Vinho: aviso do que falta (não bloqueia; só evita publicar um vinho "a meio" sem dar por isso). --- */
+add_action( 'admin_notices', function () {
+	$screen = get_current_screen();
+	if ( ! $screen || 'vinho' !== $screen->post_type || 'post' !== $screen->base ) {
+		return;
+	}
+	$id = isset( $_GET['post'] ) ? (int) $_GET['post'] : 0; // phpcs:ignore WordPress.Security.NonceVerification
+	if ( ! $id ) {
+		return;
+	}
+	$falta = array();
+	if ( ! get_field( 'vinho_garrafa', $id ) ) {
+		$falta[] = 'a <strong>garrafa</strong> (separador Imagens) — sem ela o vinho aparece sem imagem no carrossel e na lista';
+	}
+	if ( ! trim( (string) get_field( 'vinho_descricao', $id ) ) ) {
+		$falta[] = 'a <strong>descrição</strong> (separador Apresentação)';
+	}
+	if ( ! wp_get_object_terms( $id, 'regiao', array( 'fields' => 'ids' ) ) ) {
+		$falta[] = 'a <strong>região</strong> (caixa "Regiões", à direita) — sem ela o vinho não aparece nos filtros por região';
+	}
+	if ( function_exists( 'pll_get_post_language' ) && 'pt' === pll_get_post_language( $id ) && ! pll_get_post( $id, 'en' ) ) {
+		$falta[] = 'a <strong>versão em inglês</strong> (botão "+" ao lado da bandeira inglesa, na caixa "Languages") — até lá, o vinho não aparece no site em inglês';
+	}
+	if ( $falta ) {
+		echo '<div class="notice notice-warning"><p><strong>Este vinho ainda não está completo.</strong> Falta:</p><ul style="list-style:disc;margin-left:20px">';
+		foreach ( $falta as $f ) {
+			echo '<li>' . wp_kses( $f, array( 'strong' => array() ) ) . '</li>';
+		}
+		echo '</ul></div>';
+	}
+} );
