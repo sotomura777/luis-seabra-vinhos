@@ -40,6 +40,7 @@ require LSV_DIR . '/inc/i18n.php';
 require LSV_DIR . '/inc/reservas.php';
 require LSV_DIR . '/inc/security.php';
 require LSV_DIR . '/inc/seo.php';
+require LSV_DIR . '/inc/redirects.php';
 require LSV_DIR . '/inc/backoffice.php';
 
 // Nota: o seeder (inc/seed-vinhos.php) NÃO é carregado aqui de propósito.

@@ -17,12 +17,12 @@ add_action( 'after_switch_theme', 'lsv_ensure_pages' );
  */
 function lsv_ensure_pages() {
 	$defs = array(
-		'sobre'        => array( 'pt' => 'Sobre', 'en' => 'About', 'tpl' => 'page-sobre.php' ),
-		'regioes'      => array( 'pt' => 'Regiões', 'en' => 'Regions', 'tpl' => 'page-regioes.php' ),
-		'vinhas'       => array( 'pt' => 'Vinhas', 'en' => 'Vineyards', 'tpl' => 'page-vinhas.php' ),
-		'visitas'      => array( 'pt' => 'Visitas', 'en' => 'Visits', 'tpl' => 'page-visitas.php' ),
-		'onde-comprar' => array( 'pt' => 'Onde comprar', 'en' => 'Where to buy', 'tpl' => 'page-onde-comprar.php' ),
-		'contactos'    => array( 'pt' => 'Contactos', 'en' => 'Contact', 'tpl' => 'page-contactos.php' ),
+		'sobre'        => array( 'pt' => 'Sobre', 'en' => 'About', 'en_slug' => 'about', 'tpl' => 'page-sobre.php' ),
+		'regioes'      => array( 'pt' => 'Regiões', 'en' => 'Regions', 'en_slug' => 'regions', 'tpl' => 'page-regioes.php' ),
+		'vinhas'       => array( 'pt' => 'Vinhas', 'en' => 'Vineyards', 'en_slug' => 'vineyards', 'tpl' => 'page-vinhas.php' ),
+		'visitas'      => array( 'pt' => 'Visitas', 'en' => 'Visits', 'en_slug' => 'visits', 'tpl' => 'page-visitas.php' ),
+		'onde-comprar' => array( 'pt' => 'Onde comprar', 'en' => 'Where to buy', 'en_slug' => 'where-to-buy', 'tpl' => 'page-onde-comprar.php' ),
+		'contactos'    => array( 'pt' => 'Contactos', 'en' => 'Contact', 'en_slug' => 'contact', 'tpl' => 'page-contactos.php' ),
 	);
 
 	$ids = (array) get_option( 'lsv_page_ids', array() );
@@ -53,7 +53,7 @@ function lsv_ensure_pages() {
 				$en = wp_insert_post( array(
 					'post_type'   => 'page',
 					'post_title'  => $d['en'],
-					'post_name'   => $slug . '-en',
+					'post_name'   => $d['en_slug'],
 					'post_status' => 'publish',
 				) );
 				if ( $en && ! is_wp_error( $en ) ) {
