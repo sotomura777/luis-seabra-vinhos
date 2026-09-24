@@ -36,7 +36,7 @@ if ( empty( $wines ) ) {
 			<button type="button" class="lc-nav lc-prev" aria-label="<?php echo esc_attr( pll__( 'Garrafa anterior' ) ); ?>">&lsaquo;</button>
 			<div class="lc-deck" id="lc-deck">
 				<?php foreach ( $wines as $i => $w ) : ?>
-					<button type="button" class="lc-bottle" data-idx="<?php echo (int) $i; ?>" data-region="<?php echo esc_attr( $w['region'] ); ?>" aria-label="<?php echo esc_attr( $w['nome'] ); ?>" style="background-image:url('<?php echo esc_url( $w['cut'] ); ?>')"></button>
+					<button type="button" class="lc-bottle" data-idx="<?php echo (int) $i; ?>" data-region="<?php echo esc_attr( $w['region'] ); ?>" aria-label="<?php echo esc_attr( trim( $w['nome'] . ( $w['sub'] ? ', ' . $w['sub'] : '' ) . ( $w['ano'] ? ' ' . $w['ano'] : '' ) ) ); ?>" style="background-image:url('<?php echo esc_url( $w['cut'] ); ?>')"></button>
 				<?php endforeach; ?>
 			</div>
 			<button type="button" class="lc-nav lc-next" aria-label="<?php echo esc_attr( pll__( 'Garrafa seguinte' ) ); ?>">&rsaquo;</button>
