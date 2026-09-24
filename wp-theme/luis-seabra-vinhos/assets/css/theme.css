@@ -11,6 +11,9 @@ main,header,footer{position:relative;z-index:2}a{color:inherit;text-decoration:n
 header{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px clamp(24px,4.5vw,64px);z-index:50;mix-blend-mode:difference}
 /* Na landing a barra é gerida pelo JS do hero (transparente sobre o vídeo, branca sobre o resto) — sem blend, senão o branco inverte para preto. */
 .home #lsv-head{mix-blend-mode:normal}
+/* Páginas interiores: o JS esconde a barra ao descer e mostra ao subir (ou ao receber foco pelo teclado). */
+#lsv-head{transition:transform .4s cubic-bezier(.2,.7,.2,1)}#lsv-head.lsv-hide:not(:focus-within){transform:translateY(-100%)}
+@media (prefers-reduced-motion:reduce){#lsv-head{transition:none}}
 /* Todo o texto da barra herda a cor que o JS define (branca sobre o vídeo, preta sobre as secções claras). */
 .home #lsv-head .wm,.home #lsv-head .wm small,.home #lsv-head nav a,.home #lsv-head nav button,.home #lsv-head .menu-btn{color:inherit!important}
 .home #lsv-head nav a:after{background:currentColor!important}

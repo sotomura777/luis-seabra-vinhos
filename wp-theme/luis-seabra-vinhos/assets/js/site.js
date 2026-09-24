@@ -207,7 +207,25 @@
     readTarget(); apply(target);
   }
 
-  function boot() { initMenu(); initReveal(); initChapterIndex(); initHero(); }
+  // Páginas interiores: o header transparente esconde-se ao descer (para não
+  // ficar por cima do texto) e volta ao subir. A landing tem lógica própria no hero.
+  function initHeadHide() {
+    var head = document.getElementById('lsv-head');
+    if (!head || document.body.classList.contains('home')) return;
+    var lastY = window.scrollY, ticking = false;
+    var update = function () {
+      var y = window.scrollY, dy = y - lastY;
+      if (y < 80 || dy < -6) head.classList.remove('lsv-hide');
+      else if (dy > 6) head.classList.add('lsv-hide');
+      if (Math.abs(dy) > 6 || y < 80) lastY = y;
+      ticking = false;
+    };
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+  }
+
+  function boot() { initMenu(); initReveal(); initChapterIndex(); initHero(); initHeadHide(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();
