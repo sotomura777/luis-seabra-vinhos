@@ -212,3 +212,57 @@ add_action( 'admin_bar_menu', function ( $bar ) {
 	$bar->remove_node( 'comments' );
 	$bar->remove_node( 'new-post' );
 }, 999 );
+
+/* ==========================================================================
+   ECRÃ "TEXTOS DO SITE" (página Definições, PT e EN)
+   Sem editor de blocos nem corpo de página: só os campos, logo à vista.
+   ========================================================================== */
+
+/** A página que está a ser editada é a de Definições (em qualquer língua)? */
+function lsv_is_settings_page( $post_id ) {
+	$main = (int) get_option( 'lsv_settings_page_id' );
+	if ( ! $main || ! $post_id ) {
+		return false;
+	}
+	$ids = function_exists( 'pll_get_post_translations' ) ? array_map( 'intval', pll_get_post_translations( $main ) ) : array();
+	$ids[] = $main;
+	return in_array( (int) $post_id, $ids, true );
+}
+
+add_filter( 'use_block_editor_for_post', function ( $use, $post ) {
+	return lsv_is_settings_page( $post->ID ) ? false : $use;
+}, 10, 2 );
+
+add_action( 'load-post.php', function () {
+	$id = isset( $_GET['post'] ) ? (int) $_GET['post'] : 0; // phpcs:ignore WordPress.Security.NonceVerification
+	if ( ! lsv_is_settings_page( $id ) ) {
+		return;
+	}
+	foreach ( array( 'editor', 'thumbnail', 'comments', 'author', 'page-attributes', 'revisions' ) as $f ) {
+		remove_post_type_support( 'page', $f );
+	}
+	add_action( 'edit_form_after_title', 'lsv_settings_intro' );
+	add_filter( 'get_sample_permalink_html', '__return_empty_string' ); // endereço de página privada: só confunde
+	add_action( 'add_meta_boxes', function () {
+		remove_meta_box( 'pageparentdiv', 'page', 'side' );
+		remove_meta_box( 'rank_math_metabox', 'page', 'normal' );
+		remove_meta_box( 'rank_math_metabox', 'page', 'advanced' );
+		remove_meta_box( 'rank_math_metabox_link_suggestions', 'page', 'side' );
+	}, 999 );
+} );
+
+/** Nota no topo do ecrã: o que se edita aqui e atalho para a outra língua. */
+function lsv_settings_intro( $post ) {
+	$lang  = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $post->ID ) : 'pt';
+	$other = 'en' === $lang ? 'pt' : 'en';
+	$tr    = function_exists( 'pll_get_post' ) ? pll_get_post( $post->ID, $other ) : 0;
+	echo '<div class="notice notice-info inline" style="margin:16px 0 0"><p>';
+	printf(
+		'Aqui edita os textos fixos do site em <strong>%s</strong>. Cada campo diz onde aparece. Se deixar um campo vazio, o site mostra o texto original. ',
+		'en' === $lang ? 'inglês' : 'português'
+	);
+	if ( $tr ) {
+		printf( '<a href="%s">Editar a versão em %s &rarr;</a>', esc_url( get_edit_post_link( $tr ) ), 'en' === $other ? 'inglês' : 'português' );
+	}
+	echo '</p></div>';
+}

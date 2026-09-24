@@ -221,28 +221,40 @@ function lsv_register_acf_fields() {
 		acf_add_local_field_group( array(
 			'key'      => 'group_definicoes',
 			'title'    => 'Textos do site',
-			'location' => array( array( array( 'param' => 'page', 'operator' => '==', 'value' => $settings_id ) ) ),
+			// Mostra os campos na página de Definições em todas as línguas (PT e a tradução EN).
+			'location' => array_map(
+				function ( $id ) {
+					return array( array( 'param' => 'page', 'operator' => '==', 'value' => (int) $id ) );
+				},
+				array_unique( array_merge( array( $settings_id ), function_exists( 'pll_get_post_translations' ) ? array_values( pll_get_post_translations( $settings_id ) ) : array() ) )
+			),
 			'fields'   => array(
-				array( 'key' => 'field_hero_cap1', 'label' => 'Hero — legenda 1', 'name' => 'hero_cap1', 'type' => 'textarea', 'rows' => 2 ),
-				array( 'key' => 'field_hero_cap2', 'label' => 'Hero — legenda 2', 'name' => 'hero_cap2', 'type' => 'textarea', 'rows' => 2 ),
-				array( 'key' => 'field_hero_cap3', 'label' => 'Hero — legenda 3', 'name' => 'hero_cap3', 'type' => 'textarea', 'rows' => 2 ),
-				array( 'key' => 'field_sobre_lead', 'label' => 'Sobre — destaque', 'name' => 'sobre_lead', 'type' => 'textarea', 'rows' => 3 ),
-				array( 'key' => 'field_sobre_body', 'label' => 'Sobre — corpo', 'name' => 'sobre_body', 'type' => 'wysiwyg', 'media_upload' => 0, 'tabs' => 'visual' ),
-				array( 'key' => 'field_contacto_body', 'label' => 'Contactos — corpo', 'name' => 'contacto_body', 'type' => 'textarea', 'rows' => 3 ),
-				// Contactos — dados gerais (cabeçalho da página).
-				array( 'key' => 'field_contacto_tel', 'label' => 'Contactos — telefone principal', 'name' => 'contacto_tel', 'type' => 'text', 'placeholder' => '+351 254 090 044' ),
-				array( 'key' => 'field_contacto_tel2', 'label' => 'Contactos — telefone secundário', 'name' => 'contacto_tel2', 'type' => 'text', 'placeholder' => '+351 913 190 201' ),
-				array( 'key' => 'field_contacto_email', 'label' => 'Contactos — email', 'name' => 'contacto_email', 'type' => 'text', 'placeholder' => 'geral@luisseabravinhos.com' ),
-				// Contactos — 3 locais no mapa.
-				array( 'key' => 'field_loc1_nome', 'label' => 'Local 1 — cidade', 'name' => 'loc1_nome', 'type' => 'text', 'placeholder' => 'S. João da Pesqueira' ),
-				array( 'key' => 'field_loc1_morada', 'label' => 'Local 1 — morada', 'name' => 'loc1_morada', 'type' => 'textarea', 'rows' => 3 ),
-				array( 'key' => 'field_loc1_tel', 'label' => 'Local 1 — telefones', 'name' => 'loc1_tel', 'type' => 'text', 'instructions' => 'Separe dois números por " · ".' ),
-				array( 'key' => 'field_loc2_nome', 'label' => 'Local 2 — cidade', 'name' => 'loc2_nome', 'type' => 'text', 'placeholder' => 'Lamego' ),
-				array( 'key' => 'field_loc2_morada', 'label' => 'Local 2 — morada', 'name' => 'loc2_morada', 'type' => 'textarea', 'rows' => 3 ),
-				array( 'key' => 'field_loc2_tel', 'label' => 'Local 2 — telefones', 'name' => 'loc2_tel', 'type' => 'text' ),
-				array( 'key' => 'field_loc3_nome', 'label' => 'Local 3 — cidade', 'name' => 'loc3_nome', 'type' => 'text', 'placeholder' => 'Escritório' ),
-				array( 'key' => 'field_loc3_morada', 'label' => 'Local 3 — morada', 'name' => 'loc3_morada', 'type' => 'textarea', 'rows' => 3 ),
-				array( 'key' => 'field_loc3_tel', 'label' => 'Local 3 — telefones', 'name' => 'loc3_tel', 'type' => 'text' ),
+				// --- Página inicial ---
+				array( 'key' => 'field_tab_inicio', 'label' => 'Página inicial', 'type' => 'tab' ),
+				array( 'key' => 'field_hero_cap1', 'label' => 'Frase 1 da abertura', 'name' => 'hero_cap1', 'type' => 'textarea', 'rows' => 2, 'instructions' => 'A abertura da página inicial mostra três frases, uma de cada vez, no canto da imagem, à medida que a pessoa desce. Esta é a primeira. Curta: uma frase.' ),
+				array( 'key' => 'field_hero_cap2', 'label' => 'Frase 2 da abertura', 'name' => 'hero_cap2', 'type' => 'textarea', 'rows' => 2, 'instructions' => 'A segunda frase da abertura.' ),
+				array( 'key' => 'field_hero_cap3', 'label' => 'Frase 3 da abertura', 'name' => 'hero_cap3', 'type' => 'textarea', 'rows' => 2, 'instructions' => 'A terceira e última frase da abertura.' ),
+				array( 'key' => 'field_sobre_lead', 'label' => 'Secção "Sobre" — frase de destaque', 'name' => 'sobre_lead', 'type' => 'textarea', 'rows' => 3, 'instructions' => 'A frase grande da secção sobre o Luís, na página inicial.' ),
+				array( 'key' => 'field_sobre_body', 'label' => 'Secção "Sobre" — texto', 'name' => 'sobre_body', 'type' => 'wysiwyg', 'media_upload' => 0, 'tabs' => 'visual', 'toolbar' => 'basic', 'instructions' => 'O texto por baixo da frase de destaque, na página inicial.' ),
+				array( 'key' => 'field_contacto_body', 'label' => 'Secção "Provas e visitas" — texto', 'name' => 'contacto_body', 'type' => 'textarea', 'rows' => 3, 'instructions' => 'O convite para visitar a adega, ao lado do formulário de marcação na página inicial.' ),
+				// --- Página Sobre ---
+				array( 'key' => 'field_tab_sobre', 'label' => 'Página Sobre', 'type' => 'tab' ),
+				array( 'key' => 'field_sobre_testemunho', 'label' => 'Nas palavras do Luís', 'name' => 'sobre_testemunho', 'type' => 'textarea', 'rows' => 8, 'instructions' => 'O testemunho do Luís na página Sobre, a seguir à cronologia.' ),
+				// --- Contactos ---
+				array( 'key' => 'field_tab_contactos', 'label' => 'Contactos', 'type' => 'tab' ),
+				array( 'key' => 'field_contacto_tel', 'label' => 'Telefone principal', 'name' => 'contacto_tel', 'type' => 'text', 'placeholder' => '+351 254 090 044', 'instructions' => 'No topo da página Contactos.' ),
+				array( 'key' => 'field_contacto_tel2', 'label' => 'Telefone secundário', 'name' => 'contacto_tel2', 'type' => 'text', 'placeholder' => '+351 913 190 201' ),
+				array( 'key' => 'field_contacto_email', 'label' => 'Email', 'name' => 'contacto_email', 'type' => 'text', 'placeholder' => 'geral@luisseabravinhos.com' ),
+				array( 'key' => 'field_msg_locais', 'label' => 'Moradas no mapa', 'type' => 'message', 'message' => 'As três moradas que aparecem na página Contactos, cada uma com um pino no mapa. Para mudar a posição do pino é preciso pedir ao programador.' ),
+				array( 'key' => 'field_loc1_nome', 'label' => 'Morada 1 (Sede · Adega) — localidade', 'name' => 'loc1_nome', 'type' => 'text', 'placeholder' => 'S. João da Pesqueira' ),
+				array( 'key' => 'field_loc1_morada', 'label' => 'Morada 1 — morada completa', 'name' => 'loc1_morada', 'type' => 'textarea', 'rows' => 3, 'instructions' => 'Uma linha por cada parte da morada.' ),
+				array( 'key' => 'field_loc1_tel', 'label' => 'Morada 1 — telefones', 'name' => 'loc1_tel', 'type' => 'text', 'instructions' => 'Para dois números, separe-os com " · ".' ),
+				array( 'key' => 'field_loc2_nome', 'label' => 'Morada 2 (Armazém) — localidade', 'name' => 'loc2_nome', 'type' => 'text', 'placeholder' => 'Lamego' ),
+				array( 'key' => 'field_loc2_morada', 'label' => 'Morada 2 — morada completa', 'name' => 'loc2_morada', 'type' => 'textarea', 'rows' => 3 ),
+				array( 'key' => 'field_loc2_tel', 'label' => 'Morada 2 — telefones', 'name' => 'loc2_tel', 'type' => 'text' ),
+				array( 'key' => 'field_loc3_nome', 'label' => 'Morada 3 (Escritório) — localidade', 'name' => 'loc3_nome', 'type' => 'text', 'placeholder' => 'Escritório' ),
+				array( 'key' => 'field_loc3_morada', 'label' => 'Morada 3 — morada completa', 'name' => 'loc3_morada', 'type' => 'textarea', 'rows' => 3 ),
+				array( 'key' => 'field_loc3_tel', 'label' => 'Morada 3 — telefones', 'name' => 'loc3_tel', 'type' => 'text' ),
 			),
 		) );
 	}
