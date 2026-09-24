@@ -26,9 +26,9 @@ function lsv_enqueue_assets() {
 	// Scrubber do hero + menu (portado do runtime DC).
 	wp_enqueue_script( 'lsv-site', LSV_URI . '/assets/js/site.js', array(), LSV_VERSION, true );
 
-	// Página Regiões: mapa D3 (só aqui, CDN + SRI).
+	// Página Regiões: mapa D3 (só aqui; servido pelo próprio site, com SRI).
 	if ( is_page_template( 'page-regioes.php' ) ) {
-		wp_enqueue_script( 'd3', 'https://unpkg.com/d3@7.9.0/dist/d3.min.js', array(), '7.9.0', true );
+		wp_enqueue_script( 'd3', LSV_URI . '/assets/vendor/d3.min.js', array(), '7.9.0', true );
 		wp_enqueue_script( 'lsv-regioes-map', LSV_URI . '/assets/js/regioes-map.js', array( 'd3' ), LSV_VERSION, true );
 		wp_localize_script( 'lsv-regioes-map', 'LSV_MAP', array(
 			'mapUrl'    => LSV_URI . '/assets/data/mapa-pt.json',
@@ -37,10 +37,10 @@ function lsv_enqueue_assets() {
 		) );
 	}
 
-	// Página Contactos: mapa Leaflet (só aqui, CDN + SRI). Tiles OSM = pedido externo (nota RGPD na política).
+	// Página Contactos: mapa Leaflet (só aqui; servido pelo próprio site, com SRI). Tiles OSM = pedido externo (nota RGPD na política).
 	if ( is_page_template( 'page-contactos.php' ) ) {
-		wp_enqueue_style( 'leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', array(), '1.9.4' );
-		wp_enqueue_script( 'leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array(), '1.9.4', true );
+		wp_enqueue_style( 'leaflet', LSV_URI . '/assets/vendor/leaflet/leaflet.css', array(), '1.9.4' );
+		wp_enqueue_script( 'leaflet', LSV_URI . '/assets/vendor/leaflet/leaflet.js', array(), '1.9.4', true );
 		wp_enqueue_script( 'lsv-contactos-map', LSV_URI . '/assets/js/contactos-map.js', array( 'leaflet' ), LSV_VERSION, true );
 	}
 }
