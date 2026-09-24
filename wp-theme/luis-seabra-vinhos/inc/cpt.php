@@ -36,7 +36,7 @@ function lsv_register_content_types() {
 		'has_archive'  => 'vinhos',
 		'show_in_rest' => true,
 		'menu_icon'    => 'dashicons-carrot',
-		'supports'     => array( 'title', 'thumbnail', 'page-attributes' ),
+		'supports'     => array( 'title', 'page-attributes' ), // imagens vêm dos campos Garrafa/Ambiente
 		'rewrite'      => array( 'slug' => 'vinhos' ),
 	) );
 

@@ -74,14 +74,13 @@ add_filter( 'add_menu_classes', function ( $menu ) {
 	return $menu;
 } );
 
-/* --- Lista de vinhos: colunas com miniatura, região, tipo, ano, preço --- */
+/* --- Lista de vinhos: colunas com miniatura, região, tipo, ano --- */
 add_filter( 'manage_vinho_posts_columns', function ( $cols ) {
 	$new = array( 'cb' => $cols['cb'], 'lsv_thumb' => '' );
 	$new['title']     = 'Vinho';
 	$new['lsv_reg']   = 'Região';
 	$new['lsv_tipo']  = 'Tipo';
 	$new['lsv_ano']   = 'Ano';
-	$new['lsv_preco'] = 'Preço';
 	$new['menu_order'] = 'Ordem';
 	return $new;
 } );
@@ -103,9 +102,6 @@ add_action( 'manage_vinho_posts_custom_column', function ( $col, $post_id ) {
 			break;
 		case 'lsv_ano':
 			echo esc_html( (string) get_field( 'vinho_ano', $post_id ) );
-			break;
-		case 'lsv_preco':
-			echo esc_html( (string) get_field( 'vinho_preco', $post_id ) );
 			break;
 		case 'menu_order':
 			echo (int) get_post_field( 'menu_order', $post_id );
