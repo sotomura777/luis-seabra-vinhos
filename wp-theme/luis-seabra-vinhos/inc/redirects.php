@@ -26,7 +26,7 @@ function lsv_old_wine_map() {
 		'2/mono-c'            => 'mono-c',
 		'2/mono-m'            => 'mono-m',
 		'2/xisto-cru'         => 'xisto-cru',             // branco
-		'2/xisto-cru-1'       => '',                      // tinto — ainda não existe no site novo → lista de vinhos
+		'2/xisto-cru-1'       => 'xisto-cru-tinto',       // tinto
 		'2/xisto-ilimitado'   => 'xisto-ilimitado',       // tinto
 		'2/xisto-ilimitado-1' => 'xisto-ilimitado-2',     // branco
 		'3/granito-cru-1'     => 'granito-cru',           // Dão
