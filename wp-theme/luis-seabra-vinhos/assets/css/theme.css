@@ -246,3 +246,5 @@ body.lsv-sheet-open #lsv-head{display:none}
 /* --- Compat: secções de fundo claro do layout anterior (serão refeitas) --- */
 [style*="background:#FFFFFF"], [style*="background:#F5F4F2"], [style*="background:#F4F1EB"] { color:#1E1E20; }
 [style*="background:#FFFFFF"] a:hover, [style*="background:#F5F4F2"] a:hover { color:#6E6E6E; }
+/* Página do vinho em ecrã estreito: foto em cima, texto em baixo (as colunas lado a lado ficavam com ~200px cada). */
+@media (max-width:760px){.wine-single>section:first-child{grid-template-columns:1fr!important}.wine-single>section:first-child>div:nth-child(2){order:-1;min-height:70svh!important}.wine-single>section:first-child>div:first-child{padding-top:clamp(36px,6vh,60px)!important}}
