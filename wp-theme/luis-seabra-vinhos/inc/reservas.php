@@ -164,12 +164,30 @@ function lsv_reserva_estado_change( $post_id ) {
 	$anterior = get_post_meta( $post_id, '_lsv_estado_anterior', true );
 
 	if ( $novo && $novo !== $anterior && in_array( $novo, array( 'confirmada', 'recusada' ), true ) ) {
-		lsv_send_visitor_email( $novo, $post_id );
+		$ok = lsv_send_visitor_email( $novo, $post_id );
+		// Aviso no ecrã seguinte: o cliente tem de saber se o visitante foi mesmo avisado.
+		set_transient( 'lsv_mail_notice_' . get_current_user_id(), array( $ok ? 'ok' : 'falhou', (string) get_field( 'reserva_email', $post_id ) ), 120 );
 	}
 	if ( $novo ) {
 		update_post_meta( $post_id, '_lsv_estado_anterior', $novo );
 	}
 }
+
+/** Mostra (uma vez) se o email ao visitante foi enviado ou falhou. */
+add_action( 'admin_notices', function () {
+	$key = 'lsv_mail_notice_' . get_current_user_id();
+	$n   = get_transient( $key );
+	if ( ! $n ) {
+		return;
+	}
+	delete_transient( $key );
+	list( $estado, $email ) = $n;
+	if ( 'ok' === $estado ) {
+		printf( '<div class="notice notice-success is-dismissible"><p>&#10003; Email enviado ao visitante (%s).</p></div>', esc_html( $email ) );
+	} else {
+		printf( '<div class="notice notice-error"><p><strong>&#9888; O email ao visitante NÃO foi enviado</strong> (%s). A marcação ficou gravada, mas contacte o visitante diretamente por email ou telefone.</p></div>', esc_html( $email ) );
+	}
+} );
 
 /* ==========================================================================
    2) "ONDE COMPRAR" — guarda + email à empresa

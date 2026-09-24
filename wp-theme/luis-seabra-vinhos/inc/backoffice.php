@@ -289,3 +289,11 @@ add_filter( 'user_has_cap', function ( $allcaps, $caps ) {
 	}
 	return $allcaps;
 }, 10, 2 );
+
+/* --- Avisos de atualização do WordPress só para o administrador (o cliente não tem de tratar disso). --- */
+add_action( 'admin_head', function () {
+	if ( ! current_user_can( 'update_core' ) ) {
+		remove_action( 'admin_notices', 'update_nag', 3 );
+		remove_action( 'network_admin_notices', 'update_nag', 3 );
+	}
+}, 1 );
