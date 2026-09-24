@@ -312,6 +312,9 @@ function lsv_handle_mailing() {
 	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : 'pt';
 	$lang = in_array( $lang, array( 'pt', 'en' ), true ) ? $lang : 'pt';
 
+	// Envia para o Mailchimp (se estiver configurado no wp-config); a cópia local abaixo é a salvaguarda.
+	lsv_mailchimp_subscribe( $email, $lang );
+
 	// Anti-duplicado: já existe um subscritor com este email?
 	$dup = get_posts( array(
 		'post_type'   => 'subscritor',
@@ -335,6 +338,49 @@ function lsv_handle_mailing() {
 	}
 
 	lsv_form_redirect( $redirect, 'mailing', 'ok' );
+}
+
+/**
+ * Envia (ou atualiza) um subscritor no Mailchimp, se estiver configurado.
+ *
+ * As credenciais vivem no wp-config.php (fora do Git). Para ativar, adicionar lá:
+ *   define( 'LSV_MAILCHIMP_API_KEY', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-usXX' );
+ *   define( 'LSV_MAILCHIMP_AUDIENCE_ID', 'xxxxxxxxxx' );
+ * Sem elas, não faz nada — a subscrição fica na mesma guardada localmente.
+ */
+function lsv_mailchimp_subscribe( $email, $lang = 'pt' ) {
+	if ( ! defined( 'LSV_MAILCHIMP_API_KEY' ) || ! defined( 'LSV_MAILCHIMP_AUDIENCE_ID' ) ) {
+		return;
+	}
+	$api_key  = (string) LSV_MAILCHIMP_API_KEY;
+	$audience = (string) LSV_MAILCHIMP_AUDIENCE_ID;
+	if ( '' === $api_key || '' === $audience || false === strpos( $api_key, '-' ) ) {
+		return;
+	}
+
+	$dc   = substr( strrchr( $api_key, '-' ), 1 ); // datacenter, ex.: us21
+	$hash = md5( strtolower( $email ) );            // id idempotente do membro
+	$url  = "https://{$dc}.api.mailchimp.com/3.0/lists/{$audience}/members/{$hash}";
+
+	$response = wp_remote_request( $url, array(
+		'method'  => 'PUT', // add-or-update: não dá erro se o email já existir
+		'timeout' => 8,
+		'headers' => array(
+			'Authorization' => 'Basic ' . base64_encode( 'lsv:' . $api_key ),
+			'Content-Type'  => 'application/json',
+		),
+		'body'    => wp_json_encode( array(
+			'email_address' => $email,
+			'status_if_new' => 'subscribed',
+			'language'      => $lang,
+		) ),
+	) );
+
+	if ( is_wp_error( $response ) ) {
+		error_log( 'LSV Mailchimp: falha de rede ao subscrever.' );
+	} elseif ( (int) wp_remote_retrieve_response_code( $response ) >= 400 ) {
+		error_log( 'LSV Mailchimp: resposta ' . wp_remote_retrieve_response_code( $response ) );
+	}
 }
 
 /* ==========================================================================
