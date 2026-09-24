@@ -67,3 +67,31 @@ Lista pronta a adaptar para um email. O objetivo é ter **tudo em mãos antes de
 
 ### Nota de segurança para a migração (interna)
 Regra de ouro no cutover: **muda-se só o registo `A` (e `www`) para o novo alojamento; nunca se toca no `MX`.** O site e o email são independentes — o site usa `A`, o email usa `MX`. Baixar o TTL 24-48 h antes, mudar o `A`, confirmar visualmente que os `MX`/SPF/DKIM ficaram iguais, emitir o SSL, e só depois testar envio+receção de um email real para uma caixa @luisseabravinhos.com antes de dar por concluído.
+
+---
+
+## Email pronto a enviar à empresa (secções 8–10) — POR ENVIAR
+
+> Olá,
+>
+> O novo site está praticamente pronto. Para fecharmos, precisamos de algumas confirmações e acessos:
+>
+> **Conteúdo**
+> 1. Xisto Ilimitado Tinto: no site atual, as castas da versão portuguesa e da inglesa não coincidem. Qual é a lista certa?
+> 2. Mono M: qual é o número de plantas por hectare?
+> 3. Na história do Luís, a feira onde os vinhos se estrearam chama-se "Vinhos e Sabores" ou "Vinhos e Sabor"?
+> 4. Têm o texto original em inglês das citações da Falstaff e do @thevineswinemakers?
+> 5. Podem confirmar as moradas e os telefones da Adega, do Armazém de Lamego e do Escritório?
+> 6. Se tiverem: PDFs das fichas técnicas dos vinhos, fotos das vinhas por região e o logótipo em ficheiro vetorial (SVG ou PDF).
+>
+> **Privacidade**
+> 7. Durante quanto tempo querem guardar os pedidos de visita e as mensagens? Propomos 2 anos.
+> 8. Convém que alguém da vossa parte (jurista ou contabilista) reveja a Política de Privacidade antes de publicarmos.
+>
+> **Acessos** (só quando for altura de pôr o site no ar)
+> 9. Google Analytics: criar uma propriedade na conta Google da empresa, ou dar-nos acesso.
+> 10. Mailchimp: a chave de API e o ID da lista, para a newsletter passar a funcionar sozinha.
+> 11. Uma conta Google Drive para os backups automáticos.
+> 12. Acesso ao Google Search Console do domínio.
+>
+> Obrigado!
