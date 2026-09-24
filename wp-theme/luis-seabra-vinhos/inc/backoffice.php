@@ -275,3 +275,17 @@ add_action( 'acf/save_post', function ( $post_id ) {
 		clean_post_cache( $post_id );
 	}
 }, 20 );
+
+/* --- SEO (Rank Math) só para o administrador: o cliente não vê caixas, colunas nem pontuações a vermelho.
+       Os títulos e descrições para o Google são gerados automaticamente. --- */
+add_filter( 'user_has_cap', function ( $allcaps, $caps ) {
+	if ( ! empty( $allcaps['manage_options'] ) ) {
+		return $allcaps;
+	}
+	foreach ( $caps as $cap ) {
+		if ( 0 === strpos( $cap, 'rank_math_' ) ) {
+			$allcaps[ $cap ] = false;
+		}
+	}
+	return $allcaps;
+}, 10, 2 );
